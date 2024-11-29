@@ -9,4 +9,5 @@ For the "uploading to Git" side of things, I use [LazyGit](https://github.com/je
 ## How do I install these dotfiles?
 Currently there is no install script (coming soon :tm: ), so you need to run `stow` followed by the name of the dotfile folder you want.
 > NOTE: You *probably* could use `stow *` to install everything swiftly, but that's for another day.
+
 > **TIP: ** For installing the NixOS configuration files, use `sudo stow -t /etc/nixos nixos` to place them in the correct place (after removing the /etc/nixos/ folder ofcourse)
