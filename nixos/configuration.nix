@@ -216,7 +216,6 @@
     neo-cowsay
     dotacat
     gh
-    jetbrains-toolbox
     grimblast
     legcord
     winetricks
@@ -228,6 +227,8 @@
     stow
     lazygit
     networkmanagerapplet
+    jetbrains.webstorm
+    jetbrains.pycharm-professional
 ];
 
   # Some programs need SUID wrappers, can be configured further or are
