@@ -1,3 +1,4 @@
+
 # My Linux Dotfiles
 These are my dotfiles that I use on the daily. I like using dotfiles.
 
@@ -11,3 +12,6 @@ Currently there is no install script (coming soon :tm: ), so you need to run `st
 > NOTE: You *probably* could use `stow *` to install everything swiftly, but that's for another day.
 
 > **TIP: ** For installing the NixOS configuration files, use `sudo stow -t /etc/nixos nixos` to place them in the correct place (after removing the /etc/nixos/ folder ofcourse)
+
+## How does this look like?
+![this is a screenshot of the dotfiles postinstalation also hi what are you doing here?](https://github.com/FormunaGit/dotfiles/blob/main/Images/screenshot-1.png?raw=true)
