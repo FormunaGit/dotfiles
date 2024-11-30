@@ -229,6 +229,7 @@
     networkmanagerapplet
     jetbrains.webstorm
     jetbrains.pycharm-professional
+    lmms
 ];
 
   # Some programs need SUID wrappers, can be configured further or are
