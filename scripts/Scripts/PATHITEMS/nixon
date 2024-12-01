@@ -1,0 +1,5 @@
+#!/nix/store/746q5z6jjljha3p7rn48qv5nsz5jlqq2-system-path/bin/bash
+
+source /home/formuna/Scripts/.venv/bin/activate
+[[ "$1" == "edit" ]] && nixedit
+[[ "$1" == "update" ]] && python3 /home/formuna/Scripts/__main__.py -u

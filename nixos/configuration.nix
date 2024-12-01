@@ -21,6 +21,12 @@
     options v4l2loopback devices=1 video_nr=1 card_label="OBS Cam" exclusive_caps=1
   '';
 
+  # Add Swapfile
+  swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 8*1024;
+  } ];
+
 
   networking.hostName = "unimag"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -146,7 +152,7 @@
     
     ohMyZsh = {
       enable = true;
-      plugins = ["git"];
+      plugins = ["git" "sudo"];
       theme = "robbyrussell";
     };
   };
@@ -166,9 +172,23 @@
     useRoutingFeatures = "client";
   };
 
-  # Potential Codeium Fix? (yes I use AI, get over it.)
+  # Codeium Fix (yes I use AI, get over it.)
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = [];
+  
+  # Enable Auto-CPUFREQ
+  services.power-profiles-daemon.enable = false;
+  services.auto-cpufreq.enable = true;
+  services.auto-cpufreq.settings = {
+    battery = {
+      governor = "powersave";
+      turbo = "never";
+    };
+    charger = {
+      governor = "performance";
+      turbo = "auto";
+    };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -234,6 +254,8 @@
     jetbrains.webstorm
     jetbrains.pycharm-professional
     lmms
+    blender
+    mission-center
 ];
 
   # Some programs need SUID wrappers, can be configured further or are

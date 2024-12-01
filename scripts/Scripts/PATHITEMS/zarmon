@@ -1,0 +1,28 @@
+#!/usr/bin/env zsh
+
+source /home/formuna/Scripts/.venv/bin/activate
+if [[ "$1" == "nix" ]]; then # NixOS-related commands
+    if [[ "$2" == "edit" ]]; then # Edit NixOS Config File
+        nvim /etc/nixos/configuration.nix
+        echo "Rebuild System?"
+        select yn in "Yes" "No"; do
+            case $yn in
+                Yes ) sudo nixos-rebuild switch; break;;
+                No ) exit;;
+            esac
+        done
+    fi
+elif [[ "$1" == "warp" ]]; then # Cloudflare Warp-related commands
+    if [[ "$2" == "on" ]]; then # Enable Warp+
+      sudo wg-quick up ~/Wireguard\ VPNs/warpp-1.conf
+    elif [[ "$2" == "off" ]]; then # Disable Warp+
+        sudo wg-quick down ~/Wireguard\ VPNs/warpp-1.conf
+    elif [[ "$2" == "status" ]]; then # Check Warp Status via CDN-CGI-TRACE
+        status="$(curl -s https://1.1.1.1/cdn-cgi/trace | grep warp)"
+        echo "Warp Status: \"${status:5}\""
+    fi
+elif [[ "$1" == "stats" ]]; then
+    if [[ "$2" == "ram" ]]; then
+        echo under construction :/
+    fi
+fi
