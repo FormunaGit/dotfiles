@@ -1,6 +1,0 @@
-#!/nix/store/746q5z6jjljha3p7rn48qv5nsz5jlqq2-system-path/bin/bash
-
-source /home/formuna/Scripts/.venv/bin/activate
-[[ "$1" == "on" ]] && python3 /home/formuna/Scripts/warp.py -on
-[[ "$1" == "off" ]] && python3 /home/formuna/Scripts/warp.py -off
-[[ "$1" == "status" ]] && python3 /home/formuna/Scripts/warp.py -status
