@@ -166,6 +166,10 @@
     useRoutingFeatures = "client";
   };
 
+  # Potential Codeium Fix? (yes I use AI, get over it.)
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = [];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
