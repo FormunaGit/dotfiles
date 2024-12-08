@@ -1,5 +1,11 @@
 { config, pkgs, ... }:
 
+# Define Waybar configuration (Part 1/2)
+let
+  # Import the Waybar configuration
+  waybarConfig = import ./dotfiles/waybar/config.nix;
+in
+
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -14,6 +20,7 @@
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
+
 
   # Enable Kitty
   programs.kitty = {
@@ -39,84 +46,17 @@
     extraConfig = toString (builtins.readFile ./dotfiles/hypr/hyprland.conf);
   };
 
-  # Enable Waybar
-  programs.waybar = {
-    enable = true;
-    settings = {
-      top-bar = {
-        layer = "top";
-        modules-left = [ "hyprland/workspaces" ];
-        modules-center = [ "hyprland/window" ];
-        modules-right = [ "tray" ];
-        position = "top";
-
-        tray = {
-          icon-size = 20;
-          spacing = 10;
-        };
-      };
-      bottom-bar = {
-        layer = "bottom";
-        modules-left = [ "battery" ];
-        modules-center = [ "clock" ];
-        modules-right = [ "cpu" "backlight" "memory" "pulseaudio" ];
-        position = "bottom";
-
-        battery = {
-          format = "{capacity}% {icon}";
-          format-icons = [ "" "" "" "" "" ];
-        };
-
-        cpu = {
-          interval = 10;
-          format = "{}%  ";
-          max-length = 10;
-        };
-
-      pulseaudio = {
-        format = "{volume}% {icon}";
-        format-bluetooth = "{volume}% {icon}";
-        format-muted = "";
-        format-icons = {
-          headphone = "";
-          hands-free = "";
-          headset = "";
-          phone = "";
-          phone-muted = " ";
-          portable = " ";
-          car = " ";
-          default = [ "" "" ];
-        };
-        scroll-step = 1;
-        on-click = "pavucontrol";
-        ignored-sinks = [ "Easy Effects Sink" ];
-      };
-      };
-    };
-
-    style = builtins.readFile ./dotfiles/waybar/style.css;
-  };
+  # Import Waybar configuration from waybarConfig variable (Part 2/2)
+  programs.waybar = waybarConfig.programs.waybar;
 
   # Enable the default Home Manager configuration.
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-  ];
+  home.packages = [];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
+  home.file = {  };
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
