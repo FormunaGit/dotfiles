@@ -1,11 +1,8 @@
 { config, pkgs, ... }:
-
-# Define Waybar configuration (Part 1/2)
 let
   # Import the Waybar configuration
   waybarConfig = import ./dotfiles/waybar/config.nix;
 in
-
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -21,6 +18,25 @@ in
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
+  # Enable (and configure) ZSH]
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "powerlevel10k-config";
+        src = ./dotfiles/p10k;
+        file = "p10k.zsh";
+      }
+    ];
+  };
 
   # Enable Kitty
   programs.kitty = {

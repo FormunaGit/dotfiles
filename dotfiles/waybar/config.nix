@@ -9,20 +9,20 @@
         modules-center = [ "hyprland/window" ];
         modules-right = [ "tray" ];
         position = "top";
-
         tray = {
           icon-size = 20;
           spacing = 10;
         };
       };
+
       bottom-bar = {
-        layer = "bottom";
+        layer = "top";
         modules-left = [ "battery" "cpu" "backlight" "memory" "pulseaudio" ];
         modules-center = [ "clock" ];
         modules-right = [ "custom/clearnotifs" ];
         position = "bottom";
 
-       "custom/clearnotifs" = {
+        "custom/clearnotifs" = { # Clears all Mako notifications
           format = "Clear Notifications";
           on-click = "makoctl dismiss -a";
         };
@@ -33,8 +33,14 @@
         };
 
         cpu = {
-          interval = 10;
+          interval = 1;
           format = "{}%  ";
+          max-length = 10;
+        };
+
+        memory = {
+          interval = 1;
+          format = "{}%  ";
           max-length = 10;
         };
 

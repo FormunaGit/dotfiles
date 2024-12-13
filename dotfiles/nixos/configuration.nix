@@ -106,37 +106,6 @@
       thunderbird
     ];
   };
-
-  /*home-manager.users.formuna = {
-    home.stateVersion = "18.09";
-    programs.kitty.enable = true;
-    wayland.windowManager.hyprland = {
-      enable = true;
-      settings = {
-        "$terminal" = "kitty";
-        "$fileManager" = "dolphin";
-        "$menu" = "nwg-drawer";
-        "$screenshot" = "grimblast copysave area";
-        "$mod" = "SUPER";
-        bind = [
-          "$mod, R, exec, $menu"
-          "$mod, P, exec, $screenshot"
-        ]
-        ++ (
-          # workspaces
-            builtins.concatLists (builtins.genList (i:
-            let ws = i + 1;
-            in [
-              "$mod, code:1${toString i}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-            ]
-          )
-          9)
-        );
-      };
-    };
-  };*/
-  
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -178,17 +147,11 @@
   virtualisation.waydroid.enable = true;
   programs.adb.enable = true;
   
-  # Enable ZSH
+  # Enable ZSH (Configuration in home manager)
   programs.zsh = {
     enable = true;
-    enableCompletion = true;
     autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
-    
-    shellAliases = {
-      nixedit = "/home/formuna/Scripts/PATHITEMS/nixedit";
-    }; 
-    
+
     ohMyZsh = {
       enable = true;
       plugins = ["git" "sudo"];
