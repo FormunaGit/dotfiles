@@ -101,10 +101,7 @@
     isNormalUser = true;
     description = "Formuna";
     extraGroups = [ "networkmanager" "wheel" "adbusers" "scanner" "lp"];
-    packages = with pkgs; [
-      kdePackages.kate
-      thunderbird
-    ];
+    packages = [];
   };
   # Install firefox.
   programs.firefox.enable = true;
@@ -131,6 +128,7 @@
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    protontricks.enable = true;
   };
 
   # Enable WireGuard
@@ -189,68 +187,27 @@
     xsaneGimp = pkgs.xsane.override { gimpSupport = true; };
   };
 
+  # Enable Virt-Manager
+  programs.virt-manager.enable = true;
+  users.groups.libvirtd.members = [ "formuna" ];
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+
+  # Declaratively enable DCONF
+  programs.dconf = {
+    enable = true;
+  };
+
+  # Declaratively enable Node-RED
+  services.node-red = {
+    enable = true;
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim
-    lutris
-    vscodium
-    python313
-    temurin-bin
-    wineWowPackages.stable
-    kitty
-    xdg-desktop-portal-hyprland
-    jetbrains-mono
-    dconf
-    nwg-drawer
-    nwg-look
-    grim
-    slurp
-    waybar
-    pavucontrol
-    obs-studio
-    kdePackages.kdenlive
-    grim
-    slurp
-    fastfetch
-    node-red
-    killall
-    r2modman
     qemu
     quickemu
-    nwg-panel
-    git
-    pamixer
-    playerctl
-    mako
-    waypaper
-    swww
-    libnotify
-    prismlauncher
-    chezmoi
-    neo-cowsay
-    dotacat
-    gh
-    grimblast
-    legcord
-    winetricks
-    protontricks
-    nodejs
-    trayscale
-    wgcf
-    protonvpn-gui
-    stow
-    lazygit
-    networkmanagerapplet
-    jetbrains.webstorm
-    jetbrains.pycharm-professional
-    lmms
-    blender
-    mission-center
-    inotify-tools
-    nixd
-    system-config-printer
-    gimp
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

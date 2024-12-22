@@ -1,7 +1,24 @@
 { config, pkgs, ... }:
+######################################################
+### IMPORTANT THINGS TO KNOW WHEN EDITING DOTFILES ###
+######################################################
+# Try to add stuff in a declarative form. Don't just #
+# add random stuff to the system config file. These  #
+# dotfiles are made to work for a single-user system #
+# (not counting Nix's build users.) Instead, try to  #
+# install apps here, in the user-specific HM config  #
+# to not clutter up the system, and to not require   #
+# root access to install Spotify, or some other gen- #
+# eric app that doesn't need root access.            #
+######## INSTALL THINGS IN A DECLARATIVE WAY! ########
+######## USE MYNIXOS.COM TO FIND HM OPTIONS! #########
+######################################################
+
+
 let
   # Import the Waybar configuration
   waybarConfig = import ./dotfiles/waybar/config.nix;
+  extras = import ./dotfiles/extras.nix;
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -23,6 +40,10 @@ in
     enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
+
+    shellAliases = {
+      sysman = "~/.config/home-manager/scripts/sysman.py";
+    };
 
     plugins = [
       {
@@ -47,12 +68,6 @@ in
     };
   };
 
-  # Enable Mako
-  services.mako = {
-    enable = true;
-    extraConfig = toString (builtins.readFile ./dotfiles/mako/config);
-  };
-
   # Enable Hyprland (and get it actually running)
   wayland.windowManager.hyprland = {
     enable = true;
@@ -65,14 +80,21 @@ in
   # Import Waybar configuration from waybarConfig variable (Part 2/2)
   programs.waybar = waybarConfig.programs.waybar;
 
+  # Import apps from extras.nix
+  imports = [ extras ];
+
+
+
   # Enable the default Home Manager configuration.
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [];
+  ##### home.packages is in extras.nix
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {  };
+  home.file = {
+    
+   };
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

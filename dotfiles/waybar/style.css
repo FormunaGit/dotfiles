@@ -30,7 +30,19 @@ window#waybar {
 }
 
 #workspaces button.urgent {
-    background-color: #f38ba8;
+    animation: blink-red 1s infinite;
+}
+
+@keyframes blink-red {
+    0% {
+        background-color: #f38ba8;
+    }
+    50% {
+        background-color: #1e1e2e;
+    }
+    100% {
+        background-color: #f38ba8;
+    }
 }
 
 #workspaces button:hover {

@@ -4,8 +4,8 @@
     enable = true;
     settings = {
       top-bar = {
-        layer = "top";
-        modules-left = [ "hyprland/workspaces" ];
+        layer = "bottom";
+        modules-left = [ "custom/ilovemypc" "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
         modules-right = [ "tray" ];
         position = "top";
@@ -13,10 +13,15 @@
           icon-size = 20;
           spacing = 10;
         };
+
+        "custom/ilovemypc" = {
+          format = " +  = 󰋑 ";
+          tooltip-format = "I love NixOS. I love Hyprland. I love Firefox. I love Waybar.";
+        };
       };
 
       bottom-bar = {
-        layer = "top";
+        layer = "bottom";
         modules-left = [ "battery" "cpu" "backlight" "memory" "pulseaudio" ];
         modules-center = [ "clock" ];
         modules-right = [ "custom/clearnotifs" ];
