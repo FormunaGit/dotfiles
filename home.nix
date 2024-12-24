@@ -93,7 +93,10 @@ in
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    
+    ".config/ags" = {
+      source = ./dotfiles/ags;
+      recursive = true;
+    };
    };
 
   # Home Manager can also manage your environment variables through

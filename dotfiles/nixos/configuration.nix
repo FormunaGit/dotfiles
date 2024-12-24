@@ -37,6 +37,24 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+  # Configure Sudo
+  security.sudo = {
+    enable = true;
+    extraRules = [{
+      commands = [
+        {
+          command = "/home/formuna/home-manager/scripts/quicksudos/clean.sh";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/home/formuna/home-manager/scripts/quicksudos/upgrade.sh";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+      groups = [ "wheel" ];
+    }];
+  };
+
   # Enable networking
   networking.networkmanager.enable = true;
 

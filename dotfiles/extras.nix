@@ -46,7 +46,7 @@
   home.packages = with pkgs; [
     wl-clipboard # For Wayland clipboard support
     motrix # Download manager
-    busybox # Some useful tools
+    coreutils-full # Some useful tools
     brightnessctl # Brightness control
     nautilus # File manager, TODO: remove this when installing GNOME.
     kdePackages.kate # Text editor, TODO: replace this with something else. probably.
@@ -86,5 +86,8 @@
     gimp # Image editor
     thunderbird # Email client
     gh # GitHub CLI
+    python312Packages.rich # Rich for Python 3.12
+    pamixer # CLI for managing PulseAudio
+    ags # EWW like widget system, TODO: Start using this. Remove Waybar.
   ];
 }
