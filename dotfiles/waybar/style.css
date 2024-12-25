@@ -1,15 +1,16 @@
 window#waybar {
     background-color: #1e1e2e;
     color: #cdd6f4;
-    /*transition-property: background-color;
-    transition-duration: .5s;*/
+    margin: 20px;
+    border-radius: 100px;
     font-family: "JetBrains Mono NF", monospace;
+    padding: 10px 0px;
 }
 
 .module {
     background-color: #29293e;
-    margin: 5px 5px;
-    border-radius: 10px;
+    margin: 5px 15px;
+    border-radius: 100px;
     padding: 0 10px;
 }
 
@@ -17,7 +18,7 @@ window#waybar {
     padding: 0 5px;
     background-color: #1e1e2e;
     color: #cdd6f4;
-    border-radius: 10px;
+    border-radius: 100px;
     margin: 5px 5px;
     transition-property: background-color, color;
     transition-duration: .5s;

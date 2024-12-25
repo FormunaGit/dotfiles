@@ -18,7 +18,6 @@
 let
   # Import the Waybar configuration
   waybarConfig = import ./dotfiles/waybar/config.nix;
-  extras = import ./dotfiles/extras.nix;
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -63,9 +62,6 @@ in
   programs.kitty = {
     enable = true;
     themeFile = "Catppuccin-Mocha";
-    font = {
-      name = "JetBrains Mono NL";
-    };
   };
 
   # Enable Hyprland (and get it actually running)
@@ -80,24 +76,75 @@ in
   # Import Waybar configuration from waybarConfig variable (Part 2/2)
   programs.waybar = waybarConfig.programs.waybar;
 
-  # Import apps from extras.nix
-  imports = [ extras ];
+  # Import Quickshell
+  imports = [ (builtins.getFlake "github:quickshell-mirror/quickshell").homeManagerModules.default ];
 
+  #######################
+  ### SERVICE SECTION ###
+  #######################
+  # This section is for #
+  # decrlaratively inst #
+  # aling services.    #
+  #######################
+  services = {
+    cliphist = { # Wayland clipboard manager
+      enable = true;
+      allowImages = true;
+    };
+    playerctld.enable = true; # Media player daemon
+    mako = { # Notification daemon
+      enable = true;
+      extraConfig = toString (builtins.readFile ./dotfiles/mako/config);
+    };
+    trayscale = { # Unofficial GUI for Tailscale
+      enable = true;
+      hideWindow = true;
+    };
+  };
+
+  #######################
+  ### PROGRAM SECTION ###
+  #######################
+  # This section is for #
+  # decrlaratively inst #
+  # aling programs.    #
+  #######################
+  programs = {
+    fastfetch.enable = true; # Faster remake of neofetch
+    wofi.enable = true; # Neat launcher
+    neovim = { # TUI editor, fork of Vim
+      enable = true;
+      defaultEditor = true;
+      withPython3 = true;
+    };
+    git.enable = true; # Land of the doomed
+    lazygit.enable = true; # Git TUI
+    
+
+    # VSCod(ium)
+    vscode = {
+      enable = true;
+      package = pkgs.vscodium;
+      extensions = with pkgs.vscode-extensions; [
+        catppuccin.catppuccin-vsc # Catppuccin theme
+        catppuccin.catppuccin-vsc-icons # Catppuccin icons
+        jnoortheen.nix-ide # Nix language support (better than bbenoist.nix)
+        ms-python.python # Python language support
+        jeff-hykin.better-nix-syntax # Better Nix syntax
+      ];
+    };
+  };
 
 
   # Enable the default Home Manager configuration.
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  ##### home.packages is in extras.nix
-
+  home.packages = with pkgs; [
+    # Add some packages here that can't be installed declaratively. If it also has support for dotfiles, use home.file.
+  ];
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
-    ".config/ags" = {
-      source = ./dotfiles/ags;
-      recursive = true;
-    };
-   };
+  home.file = {};
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

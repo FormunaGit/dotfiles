@@ -9,6 +9,9 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+  
+  # Enable Flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader and OBS VCam
   boot.loader.systemd-boot.enable = true;
@@ -226,6 +229,53 @@
   environment.systemPackages = with pkgs; [
     qemu
     quickemu
+    wl-clipboard # For Wayland clipboard support
+    motrix # Download manager
+    coreutils-full # Some useful tools
+    brightnessctl # Brightness control
+    nautilus # File manager, TODO: remove this when installing GNOME.
+    kdePackages.kate # Text editor, TODO: replace this with something else. probably.
+    lutris # Game launcher
+    vscodium # Code editor, when JB software can't be used.
+    python312 # Python 3.12. duh.
+    temurin-jre-bin # Temurin JRE 21
+    wineWowPackages.stable # Wine (64/32 bit)
+    nerd-fonts.jetbrains-mono # The best font for coding + Nerd Fonts icons!
+    nwg-drawer # App launcher. TODO: Setup a nice Wofi theme and remove this.
+    nwg-look # GTK theme changer.
+    pavucontrol # PulseAudio Volume Control
+    obs-studio # Open Broadcaster Software
+    kdenlive # Video editor
+    r2modman # Mod manager for Unity games
+    waypaper # Wallpaper manager (powered by SWWW)
+    swww # Wallpaper daemon
+    libnotify # Tool for sending notifications to desktop
+    prismlauncher # Minecraft custom launcher
+    neo-cowsay # "Cowsay reborn", yeah whatever that means.
+    dotacat # Faster lolcat
+    grimblast # Screenshot tool for Hyprland
+    legcord # Discord custom client
+    winetricks # Script for making Wine installs easier
+    # Was going to add Protontricks here, but there's a spot in programs.steam.
+    nodejs # Who brought JavaScript to the server, and why?
+    wgcf # Convert Cloudflare's Warp(+) VPN to WireGuard
+    networkmanagerapplet # Network manager applet
+    jetbrains.webstorm # Jetbrains IDE for the web.
+    jetbrains.pycharm-professional # Jetbrains IDE for Python, but professional.
+    lmms # Music editor similar to FL Studio but open source.
+    blender # 3D modelling software
+    mission-center # GNOME resource visualizer (that's a lot of words to say GUI fastfetch), TODO: remove this when installing GNOME.
+    inotify-tools # Thingamabob that detects file changes
+    nixd # Nix LSP, used for autocompletion
+    system-config-printer # GUI printer manager
+    gimp # Image editor
+    thunderbird # Email client
+    gh # GitHub CLI
+    python312Packages.rich # Rich for Python 3.12
+    pamixer # CLI for managing PulseAudio
+    git
+    vim
+    wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
