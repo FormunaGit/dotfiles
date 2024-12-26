@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="612c4419-1c78-42c3-bade-566e766f9f33" name="Changes" comment="a whole lotta nothin">
+    <list default="true" id="612c4419-1c78-42c3-bade-566e766f9f33" name="Changes" comment="why am i getting this error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dotfiles/nixos/flake.nix" beforeDir="false" afterPath="$PROJECT_DIR$/dotfiles/nixos/flake.nix" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/home.nix" beforeDir="false" afterPath="$PROJECT_DIR$/home.nix" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +140,7 @@
       <workItem from="1735056765942" duration="2756000" />
       <workItem from="1735061622642" duration="9659000" />
       <workItem from="1735083245812" duration="1567000" />
-      <workItem from="1735223227020" duration="1783000" />
+      <workItem from="1735223227020" duration="4282000" />
     </task>
     <task id="LOCAL-00001" summary="a whole lotta nothin">
       <option name="closed" value="true" />
@@ -160,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735224126893</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="why am i getting this error">
+      <option name="closed" value="true" />
+      <created>1735225131868</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1735225131868</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,7 +177,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="a whole lotta nothin" />
-    <option name="LAST_COMMIT_MESSAGE" value="a whole lotta nothin" />
+    <MESSAGE value="why am i getting this error" />
+    <option name="LAST_COMMIT_MESSAGE" value="why am i getting this error" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/home_manager$sysman.coverage" NAME="sysman Coverage Results" MODIFIED="1734967065504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />

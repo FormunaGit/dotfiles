@@ -124,9 +124,7 @@ in
 
     programs.ags = {
       enable = true;
-
-      # symlink to ~/.config/ags
-      configDir = ../ags;
+      configDir = ./dotfiles/ags;
 
       # additional packages to add to gjs's runtime
       extraPackages = with pkgs; [
