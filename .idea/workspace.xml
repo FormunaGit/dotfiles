@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="612c4419-1c78-42c3-bade-566e766f9f33" name="Changes" comment="a whole lotta nothin">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dotfiles/nixos/flake.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dotfiles/nixos/configuration.nix" beforeDir="false" afterPath="$PROJECT_DIR$/dotfiles/nixos/configuration.nix" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dotfiles/nixos/flake.nix" beforeDir="false" afterPath="$PROJECT_DIR$/dotfiles/nixos/flake.nix" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dotfiles/waybar/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/dotfiles/waybar/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flake.nix" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/home.nix" beforeDir="false" afterPath="$PROJECT_DIR$/home.nix" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/ags-reload-on-change.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/ags-reload-on-change.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +25,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "FormunaGit"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/FormunaGit/dotfiles.git",
+    "accountId": "685adecf-6a22-4296-b40a-8004c9078fea"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -139,7 +142,7 @@
       <workItem from="1735056765942" duration="2756000" />
       <workItem from="1735061622642" duration="9659000" />
       <workItem from="1735083245812" duration="1567000" />
-      <workItem from="1735223227020" duration="691000" />
+      <workItem from="1735223227020" duration="1783000" />
     </task>
     <task id="LOCAL-00001" summary="a whole lotta nothin">
       <option name="closed" value="true" />
@@ -149,7 +152,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733681765161</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="a whole lotta nothin">
+      <option name="closed" value="true" />
+      <created>1735224126893</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1735224126893</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

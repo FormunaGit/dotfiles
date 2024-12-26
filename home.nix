@@ -107,6 +107,10 @@ in
   # decrlaratively inst #
   # aling programs.    #
   #######################
+
+  # Imports for AGS
+  imports = [ inputs.ags.homeManagerModules.default ];
+
   programs = {
     fastfetch.enable = true; # Faster remake of neofetch
     wofi.enable = true; # Neat launcher
@@ -117,6 +121,19 @@ in
     };
     git.enable = true; # Land of the doomed
     lazygit.enable = true; # Git TUI
+
+    programs.ags = {
+      enable = true;
+
+      # symlink to ~/.config/ags
+      configDir = ../ags;
+
+      # additional packages to add to gjs's runtime
+      extraPackages = with pkgs; [
+        inputs.ags.packages.${pkgs.system}.battery
+        fzf
+      ];
+    };
 
 
     # VSCod(ium)
