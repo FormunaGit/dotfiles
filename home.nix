@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 ######################################################
 ### IMPORTANT THINGS TO KNOW WHEN EDITING DOTFILES ###
 ######################################################
@@ -76,8 +76,6 @@ in
   # Import Waybar configuration from waybarConfig variable (Part 2/2)
   programs.waybar = waybarConfig.programs.waybar;
 
-  # Import Quickshell
-  imports = [ (builtins.getFlake "github:quickshell-mirror/quickshell").homeManagerModules.default ];
 
   #######################
   ### SERVICE SECTION ###
@@ -119,7 +117,7 @@ in
     };
     git.enable = true; # Land of the doomed
     lazygit.enable = true; # Git TUI
-    
+
 
     # VSCod(ium)
     vscode = {
@@ -145,7 +143,6 @@ in
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {};
-
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell

@@ -4,7 +4,7 @@ window#waybar {
     margin: 20px;
     border-radius: 100px;
     font-family: "JetBrains Mono NF", monospace;
-    padding: 10px 0px;
+    padding: 10px 0;
 }
 
 .module {

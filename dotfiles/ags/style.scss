@@ -1,0 +1,9 @@
+window.Bar {
+    background: #1e1e2e;
+    color: #cdd6f4;
+
+    >box {
+        border-radius: 10px;
+        margin: 10px;
+    }
+}
