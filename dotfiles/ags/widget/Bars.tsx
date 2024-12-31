@@ -3,7 +3,7 @@ import { bind } from "astal"
 // @ts-ignore
 import Hyprland from "gi://AstalHyprland"
 import { Tray } from "./tray"
-import { Divider } from "./Smolwidgets"
+import { Divider, BatteryLevel, ClearNotifs } from "./Smolwidgets"
 
 function Workspaces() {
     const hypr = Hyprland.get_default()
@@ -37,7 +37,7 @@ function FocusedClient() {
     </box>
 }
 
-export default function TopBar(gdkmonitor: Gdk.Monitor) {
+export function TopBar(gdkmonitor: Gdk.Monitor) {
     const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
     return <window className="Top Bar" gdkmonitor={gdkmonitor} exclusivity={Astal.Exclusivity.EXCLUSIVE} anchor={TOP | LEFT | RIGHT} application={App}>
         <box hexpand>
@@ -63,15 +63,11 @@ export function BottomBar(gdkmonitor: Gdk.Monitor) {
     return <window className="Bottom Bar" gdkmonitor={gdkmonitor} exclusivity={Astal.Exclusivity.EXCLUSIVE} anchor={BOTTOM | LEFT | RIGHT} application={App}>
         <box hexpand>
             <box halign={Gtk.Align.START}>
-                <Workspaces/>
+                <BatteryLevel/>
             </box>
             <Divider/>
-            <FocusedClient/>
-            <Divider/>
             <box halign={Gtk.Align.END}>
-                <box className="Tray">
-                    <Tray/>
-                </box>
+                <ClearNotifs/>
             </box>
         </box>
     </window>

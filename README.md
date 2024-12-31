@@ -14,3 +14,12 @@ For non-NixOS users, it's *technically possible* to install the dotfiles manuall
 ## How does this look like?
 ![this is a very cool dotfiles thing also what are you doing here?](./pictures/img.png)
 <span style="font-size: x-small; color: gray;">CMatrix not included -------------------------------------------^</span>
+
+## Credits
+These are the people/projects that made this possible:
+- [LazyGit](https://github.com/jesseduffield/lazygit) - The Git client that made Git much, much easier.
+- [Catppuccin](https://github.com/catppuccin) - The beautiful pastel theme I use on everything.
+- [NixOS](https://nixos.org/) - The Linux distribution that I use.
+- [N3RDIUM](https://github.com/N3RD1UM) - The person who I copy off of.
+
+Thank you!

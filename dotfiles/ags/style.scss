@@ -1,9 +1,60 @@
 window.Bar {
     background: #1e1e2e;
     color: #cdd6f4;
+    font-family: "JetBrains Mono NF", monospace;
+    font-weight: normal;
+    font-size: 15px;
 
-    >box {
-        border-radius: 10px;
-        margin: 10px;
+    box {
+        padding: 2px 1px;
+    }
+
+    .Focused {
+        border-radius: 100px;
+        background: #181825;
+        border-color: #181825;
+        padding: 1px 5px;
+    }
+
+    .SysTray {
+        border-radius: 100px;
+        background: #181825;
+        border-color: #181825;
+        padding: 1px 5px;
+    }
+    .TrayItem {
+        background: #181825;
+        border-color: #181825;
+        margin: 1px 2px;
+        &:hover {
+            background: #585b70;
+            border-color: #585b70;
+        }
+    }
+
+    button:not(.TrayItem) {
+        border-radius: 20px;
+        background: #181825;
+        margin: 2px;
+        border-color: #181825;
+
+        &.focused {
+            background: #89b4fa;
+            color: #1e1e2e;
+            border-color: #89b4fa;
+        }
+        &:hover {
+            background: #89b4fa;
+            color: #1e1e2e;
+            border-color: #89b4fa;
+        }
+    }
+
+    // Custom stat items
+    .Battery {
+        border-radius: 100px;
+        background: #181825;
+        border-color: #181825;
+        padding: 1px 5px;
     }
 }

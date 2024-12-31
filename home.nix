@@ -122,14 +122,20 @@ in
     git.enable = true; # Land of the doomed
     lazygit.enable = true; # Git TUI
 
-    programs.ags = {
+    ags = {
       enable = true;
       configDir = ./dotfiles/ags;
 
       # additional packages to add to gjs's runtime
-      extraPackages = with pkgs; [
+      extraPackages = [
+        inputs.ags.packages.${pkgs.system}.astal3
+        inputs.ags.packages.${pkgs.system}.apps
         inputs.ags.packages.${pkgs.system}.battery
-        fzf
+        inputs.ags.packages.${pkgs.system}.network
+        inputs.ags.packages.${pkgs.system}.hyprland
+        inputs.ags.packages.${pkgs.system}.mpris
+        inputs.ags.packages.${pkgs.system}.wireplumber
+        inputs.ags.packages.${pkgs.system}.tray
       ];
     };
 

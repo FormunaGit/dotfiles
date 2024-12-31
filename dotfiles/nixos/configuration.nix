@@ -27,11 +27,19 @@
   # Add Swapfile
   swapDevices = [ {
     device = "/var/lib/swapfile";
-    size = 8*1024;
+    size = 4*1024;
   } ];
 
   # Install Lix
   nix.package = pkgs.lix;
+
+  # NTFS Support
+  boot.supportedFilesystems = [ "ntfs" ];
+  fileSystems."/mnt/windows-ssd" =
+  { device = "/dev/nvme0n1p3";
+    fsType = "ntfs-3g";
+    options = [ "rw" "uid=1000"];
+  }; 
 
   networking.hostName = "unimag"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -40,23 +48,6 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Configure Sudo
-  security.sudo = {
-    enable = true;
-    extraRules = [{
-      commands = [
-        {
-          command = "/home/formuna/home-manager/scripts/quicksudos/clean.sh";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/home/formuna/home-manager/scripts/quicksudos/upgrade.sh";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-      groups = [ "wheel" ];
-    }];
-  };
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -109,19 +100,12 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # NTFS Support
-  boot.supportedFilesystems = [ "ntfs" ];
-  fileSystems."/mnt/windows-ssd" =
-  { device = "/dev/nvme0n1p3";
-    fsType = "ntfs-3g";
-    options = [ "rw" "uid=1000"];
-  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.formuna = {
     isNormalUser = true;
     description = "Formuna";
-    extraGroups = [ "networkmanager" "wheel" "adbusers" "scanner" "lp"];
+    extraGroups = [ "networkmanager" "wheel" "adbusers" "scanner" "lp" "docker"];
     packages = [];
   };
   # Install firefox.
@@ -154,7 +138,8 @@
 
   # Enable WireGuard
   networking.firewall = {
-    allowedUDPPorts = [ 51820 ];
+    allowedUDPPorts = [ 51820 3000 ];
+    allowedTCPPorts = [ 3000 ];
   };
   networking.wireguard.enable = true;
   services.resolved.enable = true;
@@ -209,10 +194,10 @@
   };
 
   # Enable Virt-Manager
-  programs.virt-manager.enable = true;
-  users.groups.libvirtd.members = [ "formuna" ];
-  virtualisation.libvirtd.enable = true;
-  virtualisation.spiceUSBRedirection.enable = true;
+  #programs.virt-manager.enable = true;
+  #users.groups.libvirtd.members = [ "formuna" ];
+  #virtualisation.libvirtd.enable = true;
+  #virtualisation.spiceUSBRedirection.enable = true;
 
   # Declaratively enable DCONF
   programs.dconf = {
@@ -224,21 +209,21 @@
     enable = true;
   };
 
+  # Install Weylus
+  #programs.weylus = {
+  #  enable = true;
+  #  users = [ "formuna" ];
+  #  openFirewall = true;
+  #};
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    qemu
-    quickemu
     wl-clipboard # For Wayland clipboard support
-    motrix # Download manager
-    coreutils-full # Some useful tools
     brightnessctl # Brightness control
-    nautilus # File manager, TODO: remove this when installing GNOME.
     kdePackages.kate # Text editor, TODO: replace this with something else. probably.
     lutris # Game launcher
     vscodium # Code editor, when JB software can't be used.
-    python312 # Python 3.12. duh.
-    temurin-jre-bin # Temurin JRE 21
     wineWowPackages.stable # Wine (64/32 bit)
     nerd-fonts.jetbrains-mono # The best font for coding + Nerd Fonts icons!
     nwg-drawer # App launcher. TODO: Setup a nice Wofi theme and remove this.
@@ -256,8 +241,6 @@
     grimblast # Screenshot tool for Hyprland
     legcord # Discord custom client
     winetricks # Script for making Wine installs easier
-    # Was going to add Protontricks here, but there's a spot in programs.steam.
-    nodejs # Who brought JavaScript to the server, and why?
     wgcf # Convert Cloudflare's Warp(+) VPN to WireGuard
     networkmanagerapplet # Network manager applet
     jetbrains.webstorm # Jetbrains IDE for the web.
@@ -270,10 +253,10 @@
     system-config-printer # GUI printer manager
     gimp # Image editor
     thunderbird # Email client
-    gh # GitHub CLI
-    python312Packages.rich # Rich for Python 3.12
     pamixer # CLI for managing PulseAudio
     inputs.ags.packages.x86_64-linux.default
+    dart-sass
+    krita
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -290,8 +273,8 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  # networking.firewall.allowedTCPPorts = [ 3000 ];
+  # networking.firewall.allowedUDPPorts = [ 3000 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 

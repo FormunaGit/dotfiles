@@ -1,48 +1,44 @@
 {
-  description = "A simple NixOS flake with home-manager and ags";
+  description = "Formuna's desktop NixOS configuration :D";
 
   inputs = {
     # NixOS official package source, using the nixos-unstable branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    # Home Manager input (is the master branch equivalent to nixos-unstable?)
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # AGS input
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     ags = {
       url = "github:Aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    astal = {
+      url = "github:Aylur/astal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ags, ... }: {
-    # NixOS System Configuration
+  outputs = { self, nixpkgs, home-manager, chaotic, ... }@inputs:
+  let
+    system = "x86_64-linux";
+  in {
+    # Please replace unimag with your hostname
     nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
       specialArgs = { inherit inputs; };
       modules = [
-        ./configuration.nix # The classic configuration.nix file
+        ./configuration.nix # The classic configuration.nix file (TODO: rework this to be here)
+        chaotic.nixosModules.default
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.formuna = import ../../home.nix;
+          home-manager.backupFileExtension = "backup";
+          home-manager.extraSpecialArgs = { inherit inputs; };
         }
       ];
-    };
-
-    # Home Manager Standalone Configuration
-    homeConfigurations."formuna" = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs { system = "x86_64-linux"; };
-
-      # Pass inputs as specialArgs
-      extraSpecialArgs = { inherit inputs; };
-
-      # Import home.nix
-      modules = [ ../../home.nix ];
     };
   };
 }
