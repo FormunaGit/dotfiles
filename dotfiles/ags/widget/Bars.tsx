@@ -2,7 +2,8 @@ import { App, Astal, Gtk, Gdk } from "astal/gtk3"
 import { bind } from "astal"
 // @ts-ignore
 import Hyprland from "gi://AstalHyprland"
-import { Tray } from "./tray"
+import { Tray } from "./Tray"
+import Time from "./Time"
 import { Divider, BatteryLevel, ClearNotifs } from "./Smolwidgets"
 
 function Workspaces() {
@@ -65,6 +66,10 @@ export function BottomBar(gdkmonitor: Gdk.Monitor) {
             <box halign={Gtk.Align.START}>
                 <BatteryLevel/>
             </box>
+            <Divider/>
+
+            <Time/>
+
             <Divider/>
             <box halign={Gtk.Align.END}>
                 <ClearNotifs/>

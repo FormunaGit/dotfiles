@@ -10,7 +10,7 @@
       ./hardware-configuration.nix
     ];
   
-  # Enable Flakes
+  # Enable Flakes + Add Cachix cache server
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader and OBS VCam
@@ -216,6 +216,8 @@
   #  openFirewall = true;
   #};
 
+
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -257,6 +259,30 @@
     inputs.ags.packages.x86_64-linux.default
     dart-sass
     krita
+    riseup-vpn
+    jackett
+    qbittorrent-enhanced
+    (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
+      pkgs.buildFHSEnv (base // {
+      name = "fhs";
+      targetPkgs = pkgs:
+        # pkgs.buildFHSUserEnv provides only a minimal FHS environment,
+        # lacking many basic packages needed by most software.
+        # Therefore, we need to add them manually.
+        #
+        # pkgs.appimageTools provides basic packages required by most software.
+        (base.targetPkgs pkgs) ++ (with pkgs; [
+          pkg-config
+          ncurses
+          webkitgtk_4_0
+          libsoup_2_4
+        ]
+      );
+      profile = "export FHS=1";
+      runScript = "bash";
+      extraOutputsToInstall = ["dev"];
+    }))
+    jetbrains.rust-rover
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="612c4419-1c78-42c3-bade-566e766f9f33" name="Changes" comment="kodenwofweufiaosufjjidu" />
+    <list default="true" id="612c4419-1c78-42c3-bade-566e766f9f33" name="Changes" comment="kodenwofweufiaosufjjidu">
+      <change beforePath="$PROJECT_DIR$/dotfiles/nixos/configuration.nix" beforeDir="false" afterPath="$PROJECT_DIR$/dotfiles/nixos/configuration.nix" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,58 +41,59 @@
   <component name="ProjectId" id="2pgJxcBRallYEH2T0Z9FJnxWES4" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="1" id="Remove" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "NIXITCH_NIXPKGS_CONFIG": "/etc/nix/nixpkgs-config.nix",
-    "NIXITCH_NIX_CONF_DIR": "",
-    "NIXITCH_NIX_OTHER_STORES": "",
-    "NIXITCH_NIX_PATH": "/home/formuna/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos:nixos-config=/etc/nixos/configuration.nix:/nix/var/nix/profiles/per-user/root/channels",
-    "NIXITCH_NIX_PROFILES": "/run/current-system/sw /nix/var/nix/profiles/default /etc/profiles/per-user/formuna /home/formuna/.local/state/nix/profile /nix/profile /home/formuna/.nix-profile /var/lib/flatpak/exports /home/formuna/.local/share/flatpak/exports",
-    "NIXITCH_NIX_REMOTE": "",
-    "NIXITCH_NIX_USER_PROFILE_DIR": "/nix/var/nix/profiles/per-user/formuna",
-    "Python.sysman.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Shell Script.install.sh.executor": "Run",
-    "com.codeium.enabled": "true",
-    "com.codeium.snoozedEndTime": "0",
-    "git-widget-placeholder": "087c05ff",
-    "last_opened_file_path": "/home/formuna/.config/home-manager/scripts",
-    "list.type.of.created.stylesheet": "SCSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "configurable.group.tools",
-    "ts.external.directory.path": "/nix/store/vchrj8nds3ir0q382z7k0q123hdcmq6x-pycharm-professional-2024.3.1/pycharm-professional/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;NIXITCH_NIXPKGS_CONFIG&quot;: &quot;/etc/nix/nixpkgs-config.nix&quot;,
+    &quot;NIXITCH_NIX_CONF_DIR&quot;: &quot;&quot;,
+    &quot;NIXITCH_NIX_OTHER_STORES&quot;: &quot;&quot;,
+    &quot;NIXITCH_NIX_PATH&quot;: &quot;/home/formuna/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos:nixos-config=/etc/nixos/configuration.nix:/nix/var/nix/profiles/per-user/root/channels&quot;,
+    &quot;NIXITCH_NIX_PROFILES&quot;: &quot;/run/current-system/sw /nix/var/nix/profiles/default /etc/profiles/per-user/formuna /home/formuna/.local/state/nix/profile /nix/profile /home/formuna/.nix-profile /var/lib/flatpak/exports /home/formuna/.local/share/flatpak/exports&quot;,
+    &quot;NIXITCH_NIX_REMOTE&quot;: &quot;&quot;,
+    &quot;NIXITCH_NIX_USER_PROFILE_DIR&quot;: &quot;/nix/var/nix/profiles/per-user/formuna&quot;,
+    &quot;Python.sysman.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Shell Script.install.sh.executor&quot;: &quot;Run&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;com.codeium.snoozedEndTime&quot;: &quot;0&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/formuna/.config/home-manager/scripts&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;SCSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/nix/store/vchrj8nds3ir0q382z7k0q123hdcmq6x-pycharm-professional-2024.3.1/pycharm-professional/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "GitStage.ChangesTree.GroupingKeys": [
-      "directory",
-      "module",
-      "repository"
+  &quot;keyToStringList&quot;: {
+    &quot;GitStage.ChangesTree.GroupingKeys&quot;: [
+      &quot;directory&quot;,
+      &quot;module&quot;,
+      &quot;repository&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/scripts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/dotfiles/ags/widget" />
+      <recent name="$PROJECT_DIR$/dotfiles/ags" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/dotfiles" />
       <recent name="$PROJECT_DIR$/scripts" />
-      <recent name="$PROJECT_DIR$/pictures" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -153,7 +156,12 @@
       <workItem from="1735318257950" duration="4391000" />
       <workItem from="1735327039913" duration="219000" />
       <workItem from="1735588980698" duration="378000" />
-      <workItem from="1735670648463" duration="2193000" />
+      <workItem from="1735670648463" duration="3058000" />
+      <workItem from="1735744362199" duration="2389000" />
+      <workItem from="1735751112517" duration="3934000" />
+      <workItem from="1735764232431" duration="137000" />
+      <workItem from="1735764662983" duration="939000" />
+      <workItem from="1735769839892" duration="680000" />
     </task>
     <task id="LOCAL-00001" summary="a whole lotta nothin">
       <option name="closed" value="true" />
