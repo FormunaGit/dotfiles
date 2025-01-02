@@ -299,6 +299,7 @@
     xdg-desktop-portal-hyprland
     gitkraken
     rustup
+    jetbrains-toolbox
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
