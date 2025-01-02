@@ -298,6 +298,7 @@
     #jetbrains.rust-rover
     xdg-desktop-portal-hyprland
     gitkraken
+    rustup
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
