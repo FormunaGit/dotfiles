@@ -216,7 +216,20 @@
   #  openFirewall = true;
   #};
 
-
+  # XDG Settings
+  xdg = {
+    autostart.enable = true;
+    portal = {
+      enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal
+      ];
+    };
+  };
+  environment.sessionVariables = {
+    NIXOS_XDG_OPEN_USE_PORTAL = "1";
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -282,7 +295,9 @@
       runScript = "bash";
       extraOutputsToInstall = ["dev"];
     }))
-    jetbrains.rust-rover
+    #jetbrains.rust-rover
+    xdg-desktop-portal-hyprland
+    gitkraken
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
