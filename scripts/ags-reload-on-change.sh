@@ -5,6 +5,6 @@ CONFIG_DIR="$HOME/.config/home-manager/dotfiles/ags/"
 # Watch for changes in AGS's configuration directory
 while inotifywait -e modify,create,delete -r "$CONFIG_DIR"; do
   echo "AGS configuration changed. Restarting AGS..."
-  ags quit
+  kill "$(pidof gjs)"
   ags run /home/formuna/.config/home-manager/dotfiles/ags/ &
 done

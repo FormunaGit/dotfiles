@@ -210,11 +210,11 @@
   };
 
   # Install Weylus
-  #programs.weylus = {
-  #  enable = true;
-  #  users = [ "formuna" ];
-  #  openFirewall = true;
-  #};
+  programs.weylus = {
+    enable = true;
+    users = [ "formuna" ];
+    openFirewall = true;
+  };
 
   # XDG Settings
   xdg = {
@@ -300,6 +300,9 @@
     gitkraken
     rustup
     jetbrains-toolbox
+    gcc
+    playerctl
+    godot_4
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -1,6 +1,19 @@
+@use "sass:string";
+
+@function gtkalpha($c, $a) {
+    @return string.unquote("alpha(#{$c},#{$a})");
+}
+
+$radius: 15px;
+$bg-color: #11111b;
+$bg-color-soft: #1e1e2e;
+$fg-color: #cdd6f4;
+$accent: #89b4fa;
+$error: red;
+
 window.Bar {
-    background: #1e1e2e;
-    color: #cdd6f4;
+    background: $bg-color-soft;
+    color: $fg-color;
     font-family: "JetBrains Mono NF", monospace;
     font-weight: normal;
     font-size: 15px;
@@ -9,52 +22,189 @@ window.Bar {
         padding: 2px 1px;
     }
 
+    .Media {
+        border-radius: $radius;
+        background: $bg-color;
+        margin: 2px;
+        border-color: $bg-color;
+    }
+
     .Focused {
-        border-radius: 100px;
-        background: #181825;
-        border-color: #181825;
+        border-radius: $radius;
+        background: $bg-color;
+        border-color: $bg-color;
         padding: 1px 5px;
     }
 
     .SysTray {
-        border-radius: 100px;
-        background: #181825;
-        border-color: #181825;
+        border-radius: $radius;
+        background: $bg-color;
+        border-color: $bg-color;
         padding: 1px 5px;
     }
     .TrayItem {
-        background: #181825;
-        border-color: #181825;
+        background: $bg-color;
+        border-radius: $radius;
+        border-color: $bg-color;
         margin: 1px 2px;
         &:hover {
-            background: #585b70;
-            border-color: #585b70;
+            background: $accent;
+            border-color: $accent;
         }
     }
 
     button:not(.TrayItem) {
-        border-radius: 20px;
-        background: #181825;
+
         margin: 2px;
-        border-color: #181825;
 
         &.focused {
-            background: #89b4fa;
+            background: $accent;
             color: #1e1e2e;
-            border-color: #89b4fa;
+            border-color: $accent;
         }
         &:hover {
-            background: #89b4fa;
+            background: $accent;
             color: #1e1e2e;
-            border-color: #89b4fa;
+            border-color: $accent;
         }
     }
 
-    // Custom stat items
-    .Battery {
-        border-radius: 100px;
-        background: #181825;
-        border-color: #181825;
-        padding: 1px 5px;
+    .RoundWidget {
+        border-radius: $radius;
+        background: $bg-color;
+        border-color: $bg-color;
+        padding: 1px 2px;
+        button {
+            margin: 2px;
+            background: $bg-color;
+            border-color: $bg-color;
+            &.focused {
+                background: $accent;
+                color: #1e1e2e;
+                border-color: $accent;
+            }
+            &:hover {
+                background: $accent;
+                color: #1e1e2e;
+                border-color: $accent;
+            }
+        }
+    }
+}
+
+// Notifications SCSS
+
+window.NotificationPopups {
+    all: unset;
+}
+
+eventbox.Notification {
+
+    &:first-child>box {
+        margin-top: 1rem;
+    }
+
+    &:last-child>box {
+        margin-bottom: 1rem;
+    }
+
+    // eventboxes can not take margins so we style its inner box instead
+    >box {
+        min-width: 400px;
+        border-radius: $radius;
+        background-color: $bg-color;
+        margin: .5rem 1rem .5rem 1rem;
+        box-shadow: 2px 3px 8px 0 gtkalpha(black, .4);
+        border: 1pt solid gtkalpha($fg-color, .03);
+    }
+
+    &.critical>box {
+        border: 1pt solid gtkalpha($error, .4);
+
+        .header {
+
+            .app-name {
+                color: gtkalpha($error, .8);
+
+            }
+
+            .app-icon {
+                color: gtkalpha($error, .6);
+            }
+        }
+    }
+
+    .header {
+        padding: .5rem;
+        color: gtkalpha($fg-color, 0.5);
+
+        .app-icon {
+            margin: 0 .4rem;
+        }
+
+        .app-name {
+            margin-right: .3rem;
+            font-weight: bold;
+
+            &:first-child {
+                margin-left: .4rem;
+            }
+        }
+
+        .time {
+            margin: 0 .4rem;
+        }
+
+        button {
+            padding: .2rem;
+            min-width: 0;
+            min-height: 0;
+        }
+    }
+
+    separator {
+        margin: 0 .4rem;
+        background-color: gtkalpha($fg-color, .1);
+    }
+
+    .content {
+        margin: 1rem;
+        margin-top: .5rem;
+
+        .summary {
+            font-size: 1.2em;
+            color: $fg-color;
+        }
+
+        .body {
+            color: gtkalpha($fg-color, 0.8);
+        }
+
+        .image {
+            border: 1px solid gtkalpha($fg-color, .02);
+            margin-right: .5rem;
+            border-radius: 9px;
+            min-width: 100px;
+            min-height: 100px;
+            background-size: cover;
+            background-position: center;
+        }
+    }
+
+    .actions {
+        margin: 1rem;
+        margin-top: 0;
+
+        button {
+            margin: 0 .3rem;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
 }

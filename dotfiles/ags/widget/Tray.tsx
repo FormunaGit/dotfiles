@@ -1,4 +1,5 @@
 import { bind, Variable } from "astal";
+// @ts-ignore
 import AstalTray from "gi://AstalTray"
 
 export const trayVisible = Variable(true);
@@ -8,10 +9,10 @@ export const Tray = () => {
     bind(tray, "items").as(items => {
         trayVisible.set(items.length != 0);
     })
-    return <box className="SysTray">
+    return <box className="RoundWidget">
         {bind(tray, "items").as(items => items.map(item => (
             <menubutton
-                className="TrayItem"
+                className="RoundWidget"
                 tooltipMarkup={bind(item, "tooltipMarkup")}
                 usePopover={false}
                 actionGroup={bind(item, "action-group").as(ag => ["dbusmenu", ag])}

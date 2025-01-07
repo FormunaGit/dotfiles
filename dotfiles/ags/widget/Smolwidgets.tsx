@@ -3,6 +3,7 @@
 import Battery from "gi://AstalBattery"
 import { bind, execAsync } from "astal"
 import Gdk from "gi://Gdk?version=3.0";
+import Mpris from "gi://AstalMpris"
 
 export function Divider() {
     return <box hexpand></box>;
@@ -22,7 +23,7 @@ function BatteryLevelIcon() {
 export function BatteryLevel() {
     const bat = Battery.get_default()
 
-    return <box className="Battery" visible={bind(bat, "isPresent")} tooltipText="Whatcha doin here?">
+    return <box className="RoundWidget" visible={bind(bat, "isPresent")} tooltipText="Whatcha doin here?">
         <label label="󱊣 " />
         <label label={bind(bat, "percentage").as(p =>
             `${Math.floor(p * 100)} %`
@@ -31,7 +32,25 @@ export function BatteryLevel() {
 
 export function ClearNotifs() {
     return <button
-        className="ClearNotifications"
+        className="RoundWidget"
         onClick={(_, event) =>{ if (event.button === Gdk.BUTTON_PRIMARY){ execAsync(`makoctl dismiss -a`) }}}
-    >Clear Notifications</button>
+    >CN</button>
+}
+
+export function Media() {
+    const mpris = Mpris.get_default()
+
+    return <box className="RoundWidget">
+        {bind(mpris, "players").as(ps => ps[0] ? (
+            <box>
+                <label
+                    label={bind(ps[0], "title").as(() =>
+                        `${ps[0].title} - ${ps[0].artist}`
+                    )}
+                />
+            </box>
+        ) : (
+            "Nothing Playing"
+        ))}
+    </box>
 }
