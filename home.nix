@@ -153,6 +153,15 @@ in
         jeff-hykin.better-nix-syntax # Better Nix syntax
       ];
     };
+
+    # OBS + Plugins
+    obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [
+        obs-3d-effect
+        obs-vkcapture
+      ];
+    };
   };
 
 

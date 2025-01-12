@@ -105,7 +105,7 @@
   users.users.formuna = {
     isNormalUser = true;
     description = "Formuna";
-    extraGroups = [ "networkmanager" "wheel" "adbusers" "scanner" "lp" "docker"];
+    extraGroups = [ "networkmanager" "wheel" "adbusers" "scanner" "lp" "docker" "uinput"];
     packages = [];
   };
   # Install firefox.
@@ -194,10 +194,10 @@
   };
 
   # Enable Virt-Manager
-  #programs.virt-manager.enable = true;
-  #users.groups.libvirtd.members = [ "formuna" ];
-  #virtualisation.libvirtd.enable = true;
-  #virtualisation.spiceUSBRedirection.enable = true;
+  programs.virt-manager.enable = true;
+  users.groups.libvirtd.members = [ "formuna" ];
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 
   # Declaratively enable DCONF
   programs.dconf = {
@@ -209,12 +209,7 @@
     enable = true;
   };
 
-  # Install Weylus
-  programs.weylus = {
-    enable = true;
-    users = [ "formuna" ];
-    openFirewall = true;
-  };
+  
 
   # XDG Settings
   xdg = {
@@ -229,6 +224,13 @@
   };
   environment.sessionVariables = {
     NIXOS_XDG_OPEN_USE_PORTAL = "1";
+  };
+
+  # Weylus.
+  programs.weylus = {
+    enable = true;
+    openFirewall = true;
+    users = [ "formuna" ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -254,13 +256,12 @@
     neo-cowsay # "Cowsay reborn", yeah whatever that means.
     dotacat # Faster lolcat
     grimblast # Screenshot tool for Hyprland
-    legcord # Discord custom client
+    goofcord # Discord custom client
     winetricks # Script for making Wine installs easier
     wgcf # Convert Cloudflare's Warp(+) VPN to WireGuard
     networkmanagerapplet # Network manager applet
     jetbrains.webstorm # Jetbrains IDE for the web.
     jetbrains.pycharm-professional # Jetbrains IDE for Python, but professional.
-    lmms # Music editor similar to FL Studio but open source.
     blender # 3D modelling software
     mission-center # GNOME resource visualizer (that's a lot of words to say GUI fastfetch), TODO: remove this when installing GNOME.
     inotify-tools # Thingamabob that detects file changes
@@ -273,7 +274,6 @@
     dart-sass
     krita
     riseup-vpn
-    jackett
     qbittorrent-enhanced
     (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
       pkgs.buildFHSEnv (base // {
@@ -303,6 +303,9 @@
     gcc
     playerctl
     godot_4
+    wget
+    cmake
+    qemu
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
