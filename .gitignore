@@ -1,3 +1,4 @@
 # AGS @girs folder. I have no idea what this has, but since the default .gitignore has it, I'll keep it. [@FormunaGit]
 dotfiles/ags/@girs/
-
+# Secrets.nix file. This file contains secrets and should not be shared. [@FormunaGit]
+secrets.nix

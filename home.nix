@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 ######################################################
 ### IMPORTANT THINGS TO KNOW WHEN EDITING DOTFILES ###
 ######################################################
@@ -9,17 +9,16 @@
 # install apps here, in the user-specific HM config  #
 # to not clutter up the system, and to not require   #
 # root access to install Spotify, or some other gen- #
-# eric app that doesn't need root access.            #
+# eric app that doesn't need root access. Thanks >:3 #
 ######## INSTALL THINGS IN A DECLARATIVE WAY! ########
 ######## USE MYNIXOS.COM TO FIND HM OPTIONS! #########
 ######################################################
 
-
 let
   # Import the Waybar configuration
   waybarConfig = import ./dotfiles/waybar/config.nix;
-in
-{
+  secrets = import ./secrets.nix;
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "formuna";
@@ -40,9 +39,7 @@ in
     enableCompletion = true;
     syntaxHighlighting.enable = true;
 
-    shellAliases = {
-      sysman = "~/.config/home-manager/scripts/sysman.py";
-    };
+    shellAliases = { sysman = "~/.config/home-manager/scripts/sysman.py"; };
 
     plugins = [
       {
@@ -67,15 +64,12 @@ in
   # Enable Hyprland (and get it actually running)
   wayland.windowManager.hyprland = {
     enable = true;
-    plugins = [
-      pkgs.hyprlandPlugins.hyprbars
-    ];
+    plugins = [ pkgs.hyprlandPlugins.hyprbars ];
     extraConfig = toString (builtins.readFile ./dotfiles/hypr/hyprland.conf);
   };
 
   # Import Waybar configuration from waybarConfig variable (Part 2/2)
   programs.waybar = waybarConfig.programs.waybar;
-
 
   #######################
   ### SERVICE SECTION ###
@@ -125,7 +119,6 @@ in
     ags = {
       enable = true;
       configDir = ./dotfiles/ags;
-
       # additional packages to add to gjs's runtime
       extraPackages = [
         inputs.ags.packages.${pkgs.system}.astal3
@@ -140,40 +133,45 @@ in
       ];
     };
 
-
-    # VSCod(ium)
-    vscode = {
+    # Zed Editor (GOODBYE VSCODE, GOODBYE JETBRAINS, HELLO ZED)
+    zed-editor = {
       enable = true;
-      package = pkgs.vscodium;
-      extensions = with pkgs.vscode-extensions; [
-        catppuccin.catppuccin-vsc # Catppuccin theme
-        catppuccin.catppuccin-vsc-icons # Catppuccin icons
-        jnoortheen.nix-ide # Nix language support (better than bbenoist.nix)
-        ms-python.python # Python language support
-        jeff-hykin.better-nix-syntax # Better Nix syntax
-      ];
+      extensions = [ "nix" "catppuccin" "scss" ];
+      userSettings = {
+        languages = {
+          Nix = {
+            language_servers = [ "nil" "!nixd" ];
+            formatter = { external = { command = "nixfmt"; }; };
+          };
+        };
+        assistant = {
+          enabled = true;
+          version = "2";
+        };
+        theme = {
+          mode = "system";
+          light = "Catppuccin Frappe";
+          dark = "Catppuccin Mocha";
+        };
+      };
     };
 
     # OBS + Plugins
     obs-studio = {
       enable = true;
-      plugins = with pkgs.obs-studio-plugins; [
-        obs-3d-effect
-        obs-vkcapture
-      ];
+      plugins = with pkgs.obs-studio-plugins; [ obs-3d-effect obs-vkcapture ];
     };
   };
-
 
   # Enable the default Home Manager configuration.
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
+  home.packages = [
     # Add some packages here that can't be installed declaratively. If it also has support for dotfiles, use home.file.
   ];
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {};
+  home.file = { };
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell

@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-  
+
   # Enable Flakes + Add Cachix cache server
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -39,7 +39,7 @@
   { device = "/dev/nvme0n1p3";
     fsType = "ntfs-3g";
     options = [ "rw" "uid=1000"];
-  }; 
+  };
 
   networking.hostName = "unimag"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -119,15 +119,15 @@
 
   # Install Hyprland
   programs.hyprland = {
-    enable = true; 
+    enable = true;
     withUWSM = true;
     xwayland.enable = true;
-  }; 
+  };
 
   # Enable Bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-  
+
   # Enable Steam
   programs.steam = {
     enable = true;
@@ -143,14 +143,14 @@
   };
   networking.wireguard.enable = true;
   services.resolved.enable = true;
-  
+
   # Enable Flatpak
   services.flatpak.enable = true;
-  
+
   # Enable Waydroid and ADB
   virtualisation.waydroid.enable = true;
   programs.adb.enable = true;
-  
+
   # Enable ZSH (Configuration in home manager)
   programs.zsh = {
     enable = true;
@@ -162,8 +162,8 @@
       theme = "robbyrussell";
     };
   };
-  users.defaultUserShell = pkgs.zsh; 
-  
+  users.defaultUserShell = pkgs.zsh;
+
   # Enable Tailscale
   services.tailscale = {
     enable = true;
@@ -173,7 +173,7 @@
   # Codeium Fix (yes I use AI, get over it.)
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = [];
-  
+
   # Enable Auto-CPUFREQ
   services.power-profiles-daemon.enable = false;
   services.auto-cpufreq.enable = true;
@@ -209,7 +209,7 @@
     enable = true;
   };
 
-  
+
 
   # XDG Settings
   xdg = {
@@ -306,6 +306,9 @@
     wget
     cmake
     qemu
+    nil
+    nixfmt
+    davinci-resolve
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
