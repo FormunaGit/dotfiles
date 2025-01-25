@@ -17,7 +17,6 @@
 let
   # Import the Waybar configuration
   waybarConfig = import ./dotfiles/waybar/config.nix;
-  secrets = import ./secrets.nix;
 in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -113,8 +112,13 @@ in {
       defaultEditor = true;
       withPython3 = true;
     };
-    git.enable = true; # Land of the doomed
-    lazygit.enable = true; # Git TUI
+    git = { # Land of the doomed
+      enable = true;
+      userName = "FormunaGit";
+      userEmail = "formuna@tuta.io";
+      lfs.enable = true;
+    };
+    gh = { enable = true; };
 
     ags = {
       enable = true;
@@ -136,7 +140,8 @@ in {
     # Zed Editor (GOODBYE VSCODE, GOODBYE JETBRAINS, HELLO ZED)
     zed-editor = {
       enable = true;
-      extensions = [ "nix" "catppuccin" "scss" ];
+      extensions =
+        [ "nix" "catppuccin" "scss" "code-stats" "discord-presence" ];
       userSettings = {
         languages = {
           Nix = {
@@ -147,11 +152,15 @@ in {
         assistant = {
           enabled = true;
           version = "2";
+          default_model = {
+            provider = "google";
+            model = "gemini-1.5-flash";
+          };
         };
         theme = {
           mode = "system";
-          light = "Catppuccin Frappe";
           dark = "Catppuccin Mocha";
+          light = "Catppuccin Mocha";
         };
       };
     };
@@ -166,9 +175,7 @@ in {
   # Enable the default Home Manager configuration.
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    # Add some packages here that can't be installed declaratively. If it also has support for dotfiles, use home.file.
-  ];
+  home.packages = [ ];
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = { };
@@ -189,7 +196,7 @@ in {
   #  /etc/profiles/per-user/formuna/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    GOOGLE_AI_API_KEY = "nuhuh";
   };
 
   # Let Home Manager install and manage itself.

@@ -5,40 +5,55 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Enable Flakes + Add Cachix cache server
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  #nix.settings = {
+  #  experimental-features = [ "nix-command" "flakes" ];
+  #  # Now we add the Nix-Community Cachix cache server.
+  #  trusted-users = [ "formuna" ];
+  #  substituters =
+  #    [ "https://cache.nixos.org" "https://nix-community.cachix.org" ];
+  #  trusted-public-keys = [
+  #    "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+  #  ];
+  #};
 
   # Bootloader and OBS VCam
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    v4l2loopback
-  ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
   boot.kernelModules = [ "v4l2loopback" ];
   boot.extraModprobeConfig = ''
     options v4l2loopback devices=1 video_nr=1 card_label="OBS Cam" exclusive_caps=1
   '';
 
   # Add Swapfile
-  swapDevices = [ {
+  swapDevices = [{
     device = "/var/lib/swapfile";
-    size = 4*1024;
-  } ];
+    size = 4 * 1024;
+  }];
 
   # Install Lix
   nix.package = pkgs.lix;
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      davinci-resolve = prev.davinci-resolve.overrideAttrs (old: {
+        buildInputs = (old.buildInputs or []) -- [ prev.libsecret ];
+      });
+    })
+  ];
+
+
   # NTFS Support
   boot.supportedFilesystems = [ "ntfs" ];
-  fileSystems."/mnt/windows-ssd" =
-  { device = "/dev/nvme0n1p3";
+  fileSystems."/mnt/windows-ssd" = {
+    device = "/dev/nvme0n1p3";
     fsType = "ntfs-3g";
-    options = [ "rw" "uid=1000"];
+    options = [ "rw" "uid=1000" ];
   };
 
   networking.hostName = "unimag"; # Define your hostname.
@@ -47,7 +62,6 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -82,7 +96,7 @@
   hardware.sane.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -100,13 +114,13 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.formuna = {
     isNormalUser = true;
     description = "Formuna";
-    extraGroups = [ "networkmanager" "wheel" "adbusers" "scanner" "lp" "docker" "uinput"];
-    packages = [];
+    extraGroups =
+      [ "networkmanager" "wheel" "adbusers" "scanner" "lp" "docker" "uinput" ];
+    packages = [ ];
   };
   # Install firefox.
   programs.firefox.enable = true;
@@ -131,8 +145,10 @@
   # Enable Steam
   programs.steam = {
     enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    remotePlay.openFirewall =
+      true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall =
+      true; # Open ports in the firewall for Source Dedicated Server
     protontricks.enable = true;
   };
 
@@ -158,7 +174,7 @@
 
     ohMyZsh = {
       enable = true;
-      plugins = ["git" "sudo"];
+      plugins = [ "git" "sudo" ];
       theme = "robbyrussell";
     };
   };
@@ -172,7 +188,6 @@
 
   # Codeium Fix (yes I use AI, get over it.)
   programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = [];
 
   # Enable Auto-CPUFREQ
   services.power-profiles-daemon.enable = false;
@@ -200,37 +215,50 @@
   virtualisation.spiceUSBRedirection.enable = true;
 
   # Declaratively enable DCONF
-  programs.dconf = {
-    enable = true;
-  };
+  programs.dconf = { enable = true; };
 
   # Declaratively enable Node-RED
-  services.node-red = {
-    enable = true;
-  };
-
-
+  services.node-red = { enable = true; };
 
   # XDG Settings
   xdg = {
     autostart.enable = true;
     portal = {
       enable = true;
-      extraPortals = [
-        pkgs.xdg-desktop-portal-hyprland
-        pkgs.xdg-desktop-portal
-      ];
+      extraPortals =
+        [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal ];
     };
   };
-  environment.sessionVariables = {
-    NIXOS_XDG_OPEN_USE_PORTAL = "1";
-  };
+  environment.sessionVariables = { NIXOS_XDG_OPEN_USE_PORTAL = "1"; };
 
   # Weylus.
   programs.weylus = {
     enable = true;
     openFirewall = true;
     users = [ "formuna" ];
+  };
+
+  # Stop the power button from being used to shut off the computer.
+  services.logind.extraConfig = ''
+    HandlePowerKey=ignore
+  '';
+
+  # Install a Polkit authentication agent
+  systemd = {
+    user.services.polkit-gnome-authentication-agent-1 = {
+      description = "polkit-gnome-authentication-agent-1";
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart =
+          "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
   };
 
   # List packages installed in system profile. To search, run:
@@ -275,8 +303,8 @@
     krita
     riseup-vpn
     qbittorrent-enhanced
-    (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
-      pkgs.buildFHSEnv (base // {
+    (let base = pkgs.appimageTools.defaultFhsEnvArgs;
+    in pkgs.buildFHSEnv (base // {
       name = "fhs";
       targetPkgs = pkgs:
         # pkgs.buildFHSUserEnv provides only a minimal FHS environment,
@@ -284,16 +312,11 @@
         # Therefore, we need to add them manually.
         #
         # pkgs.appimageTools provides basic packages required by most software.
-        (base.targetPkgs pkgs) ++ (with pkgs; [
-          pkg-config
-          ncurses
-          webkitgtk_4_0
-          libsoup_2_4
-        ]
-      );
+        (base.targetPkgs pkgs)
+        ++ (with pkgs; [ pkg-config ncurses webkitgtk_4_0 libsoup_2_4 ]);
       profile = "export FHS=1";
       runScript = "bash";
-      extraOutputsToInstall = ["dev"];
+      extraOutputsToInstall = [ "dev" ];
     }))
     #jetbrains.rust-rover
     xdg-desktop-portal-hyprland
@@ -307,8 +330,9 @@
     cmake
     qemu
     nil
-    nixfmt
-    davinci-resolve
+    nixfmt-classic
+    openssl
+    github-desktop
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -1,6 +1,14 @@
 {
   description = "Formuna's desktop NixOS configuration :D";
 
+  #nixConfig = {
+  #  substituters =
+  #    [ "https://cache.nixos.org" "https://nix-community.cachix.org" ];
+  #  trusted-public-keys = [
+  #    "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+  #  ];
+  #};
+
   inputs = {
     # NixOS official package source, using the nixos-unstable branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -17,28 +25,34 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  };
-
-  outputs = { self, nixpkgs, home-manager, chaotic, ... }@inputs:
-  let
-    system = "x86_64-linux";
-  in {
-    # Please replace unimag with your hostname
-    nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./configuration.nix # The classic configuration.nix file (TODO: rework this to be here)
-        chaotic.nixosModules.default
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.formuna = import ../../home.nix;
-          home-manager.backupFileExtension = "backup";
-          home-manager.extraSpecialArgs = { inherit inputs; };
-        }
-      ];
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.darwin.follows = "";
     };
   };
+
+  outputs = { self, nixpkgs, home-manager, chaotic, agenix, ... }@inputs:
+    let system = "x86_64-linux";
+    in {
+      # Please replace unimag with your hostname
+      nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./configuration.nix # The classic configuration.nix file (TODO: rework this to be here)
+          chaotic.nixosModules.default
+          home-manager.nixosModules.home-manager
+          agenix.nixosModules.default
+          {
+            nix.settings.trusted-users = [ "formuna" ];
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.formuna = import ../../home.nix;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
+        ];
+      };
+    };
 }
