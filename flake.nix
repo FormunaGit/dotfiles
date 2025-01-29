@@ -30,9 +30,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.darwin.follows = "";
     };
+    stylix.url = "github:danth/stylix";
   };
 
-  outputs = { self, nixpkgs, home-manager, chaotic, agenix, ... }@inputs:
+  outputs =
+    { self, nixpkgs, stylix, home-manager, chaotic, agenix, ... }@inputs:
     let system = "x86_64-linux";
     in {
       # Please replace unimag with your hostname
@@ -52,6 +54,8 @@
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
           }
+          stylix.nixosModules.stylix
+          ./System/configuration.nix
         ];
       };
     };

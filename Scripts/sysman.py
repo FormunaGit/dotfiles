@@ -13,7 +13,7 @@ class SS:
         "i use nixos btw", "RISE AND SHINE, MR FREEMAN. RISE AND SHINE.",
         "Have you remembered to rebuild your system yet?",
         'PYTHON IS NOT A BABY LANGUAGE PYTHON IS NOT A BABY LANGUAGE PYTHON IS NOT A BABY LANGUAGE PYTHON IS NOT A BABY LANGUAGE',
-        'Powered by JetBrains!', 'Moo moo?',
+        'Powered by Zed!', 'Moo moo?',
         'ULTRAKILL IS THE BEST GAME!', 'What if instead of Discord it was called Freakycord?',
         'Powered by piracy!', 'Declarative imports, yum!'
     ]

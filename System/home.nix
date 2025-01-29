@@ -16,7 +16,7 @@
 
 let
   # Import the Waybar configuration
-  waybarConfig = import ./dotfiles/waybar/config.nix;
+  waybarConfig = import ../Dotfiles/waybar/config.nix;
 in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -48,7 +48,7 @@ in {
       }
       {
         name = "powerlevel10k-config";
-        src = ./dotfiles/p10k;
+        src = ../Dotfiles/p10k;
         file = "p10k.zsh";
       }
     ];
@@ -64,7 +64,7 @@ in {
   wayland.windowManager.hyprland = {
     enable = true;
     plugins = [ pkgs.hyprlandPlugins.hyprbars ];
-    extraConfig = toString (builtins.readFile ./dotfiles/hypr/hyprland.conf);
+    extraConfig = toString (builtins.readFile ../Dotfiles/hypr/hyprland.conf);
   };
 
   # Import Waybar configuration from waybarConfig variable (Part 2/2)
@@ -85,7 +85,7 @@ in {
     playerctld.enable = true; # Media player daemon
     mako = { # Notification daemon
       enable = true;
-      extraConfig = toString (builtins.readFile ./dotfiles/mako/config);
+      extraConfig = toString (builtins.readFile ../Dotfiles/mako/config);
     };
     trayscale = { # Unofficial GUI for Tailscale
       enable = true;
@@ -122,7 +122,7 @@ in {
 
     ags = {
       enable = true;
-      configDir = ./dotfiles/ags;
+      configDir = ../Shell;
       # additional packages to add to gjs's runtime
       extraPackages = [
         inputs.ags.packages.${pkgs.system}.astal3
@@ -141,7 +141,7 @@ in {
     zed-editor = {
       enable = true;
       extensions =
-        [ "nix" "catppuccin" "scss" "code-stats" "discord-presence" "toml" ];
+        [ "nix" "catppuccin" "scss" "discord-presence" "toml" "wakatime" ];
       userSettings = {
         languages = {
           Nix = {
@@ -170,6 +170,9 @@ in {
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [ obs-3d-effect obs-vkcapture ];
     };
+
+    # MangoHud
+    mangohud = { enable = true; };
   };
 
   # Enable the default Home Manager configuration.
@@ -195,9 +198,7 @@ in {
   #
   #  /etc/profiles/per-user/formuna/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    GOOGLE_AI_API_KEY = "nuhuh";
-  };
+  home.sessionVariables = { GOOGLE_AI_API_KEY = "nuhuh"; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

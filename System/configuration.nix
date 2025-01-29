@@ -249,10 +249,19 @@
     enableUdevRules = true;
   };
 
-  # Enable the Cloudflare Warp VPN app
-  services.cloudflare-warp = {
+  # Enable OpenRAZER
+  hardware.openrazer = {
     enable = true;
-    openFirewall = true;
+    keyStatistics = true;
+    users = [ "formuna" ];
+    syncEffectsEnabled = true;
+  };
+
+  # Stylix
+  stylix = {
+    enable = true;
+    image = ../Wallpapers/escape-velocity.jpg;
+    polarity = "dark";
   };
 
   # List packages installed in system profile. To search, run:
@@ -327,6 +336,7 @@
     nixfmt-classic
     openssl
     github-desktop
+    polychromatic
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
