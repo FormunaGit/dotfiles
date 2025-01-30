@@ -152,10 +152,6 @@ in {
         assistant = {
           enabled = true;
           version = "2";
-          default_model = {
-            provider = "google";
-            model = "gemini-1.5-flash";
-          };
         };
         theme = {
           mode = "system";
@@ -174,6 +170,9 @@ in {
     # MangoHud
     mangohud = { enable = true; };
   };
+
+  # Enable Stylix
+  stylix.enable = true;
 
   # Enable the default Home Manager configuration.
   # The home.packages option allows you to install Nix packages into your
@@ -198,7 +197,7 @@ in {
   #
   #  /etc/profiles/per-user/formuna/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = { GOOGLE_AI_API_KEY = "nuhuh"; };
+  home.sessionVariables = { };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

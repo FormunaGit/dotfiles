@@ -2,9 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
-
-{
+{ config, pkgs, inputs, ... }: {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
@@ -260,8 +258,7 @@
   # Stylix
   stylix = {
     enable = true;
-    image = ../Wallpapers/escape-velocity.jpg;
-    polarity = "dark";
+    #image = ../Wallpapers/escape-velocity.jpg;
   };
 
   # List packages installed in system profile. To search, run:
