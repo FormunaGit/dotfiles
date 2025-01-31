@@ -32,28 +32,6 @@ in {
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
-  # Enable (and configure) ZSH]
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-
-    shellAliases = { sysman = "~/.config/home-manager/scripts/sysman.py"; };
-
-    plugins = [
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
-      {
-        name = "powerlevel10k-config";
-        src = ../Dotfiles/p10k;
-        file = "p10k.zsh";
-      }
-    ];
-  };
-
   # Enable Kitty
   programs.kitty = {
     enable = true;
@@ -63,7 +41,7 @@ in {
   # Enable Hyprland (and get it actually running)
   wayland.windowManager.hyprland = {
     enable = true;
-    plugins = [ pkgs.hyprlandPlugins.hyprbars ];
+    plugins = [ ];
     extraConfig = toString (builtins.readFile ../Dotfiles/hypr/hyprland.conf);
   };
 
@@ -105,6 +83,33 @@ in {
   imports = [ inputs.ags.homeManagerModules.default ];
 
   programs = {
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      syntaxHighlighting.enable = true;
+
+      shellAliases = { sysman = "~/.config/home-manager/scripts/sysman.py"; };
+
+      plugins = [
+        #{
+        #  name = "powerlevel10k";
+        #  src = pkgs.zsh-powerlevel10k;
+        #  file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        #}
+        #{
+        #  name = "powerlevel10k-config";
+        #  src = ../Dotfiles/p10k;
+        #  file = "p10k.zsh";
+        #}
+      ];
+    };
+
+    oh-my-posh = {
+      enable = true;
+      enableZshIntegration = true;
+      useTheme = "atomicBit";
+    };
+
     fastfetch.enable = true; # Faster remake of neofetch
     wofi.enable = true; # Neat launcher
     neovim = { # TUI editor, fork of Vim
@@ -112,12 +117,14 @@ in {
       defaultEditor = true;
       withPython3 = true;
     };
+
     git = { # Land of the doomed
       enable = true;
       userName = "FormunaGit";
       userEmail = "formuna@tuta.io";
       lfs.enable = true;
     };
+
     gh = { enable = true; };
 
     ags = {
@@ -170,9 +177,6 @@ in {
     # MangoHud
     mangohud = { enable = true; };
   };
-
-  # Enable Stylix
-  stylix.enable = true;
 
   # Enable the default Home Manager configuration.
   # The home.packages option allows you to install Nix packages into your

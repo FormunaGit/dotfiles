@@ -25,9 +25,6 @@
     size = 6 * 1024;
   }];
 
-  # Install Lix (temporary disabled)
-  nix.package = pkgs.lix;
-
   # NTFS Support
   boot.supportedFilesystems = [ "ntfs" ];
   fileSystems."/mnt/windows-ssd" = {
@@ -258,7 +255,26 @@
   # Stylix
   stylix = {
     enable = true;
-    #image = ../Wallpapers/escape-velocity.jpg;
+    image = ../Wallpapers/escape_velocity_small.png;
+    polarity = "dark";
+    fonts = {
+      serif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Serif";
+      };
+      sansSerif = {
+        package = pkgs.quicksand;
+        name = "Quicksand";
+      };
+      monospace = {
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrains Mono Nerd Font";
+      };
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+    };
   };
 
   # List packages installed in system profile. To search, run:
