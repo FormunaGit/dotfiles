@@ -17,6 +17,7 @@
 let
   # Import the Waybar configuration
   waybarConfig = import ../Dotfiles/waybar/config.nix;
+  plasmaConfig = import ./SystemModules/plasma.nix;
 in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -47,6 +48,9 @@ in {
 
   # Import Waybar configuration from waybarConfig variable (Part 2/2)
   programs.waybar = waybarConfig.programs.waybar;
+
+  # Import Plasma configuration from plasmaConfig variable (Part 2/2)
+  programs.plasma = plasmaConfig.programs.plasma;
 
   #######################
   ### SERVICE SECTION ###
