@@ -1,4 +1,4 @@
-{ ... }: {
+{
   programs.plasma = {
     enable = true;
     workspace = {

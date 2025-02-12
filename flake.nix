@@ -26,11 +26,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix.url = "github:danth/stylix/release-24.11";
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
+    #plasma-manager = {
+    #  url = "github:nix-community/plasma-manager";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #  inputs.home-manager.follows = "home-manager";
+    #};
   };
 
   outputs = { self, nixpkgs, home-manager, chaotic, stylix, ... }@inputs:
@@ -52,8 +52,8 @@
             home-manager.users.formuna = import ./System/home.nix;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.sharedModules =
-              [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
+            #home-manager.sharedModules =
+            #  [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
           }
         ];
       };

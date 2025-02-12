@@ -2,9 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, inputs, ... }: 
+{
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./nix-alien.nix
   ];
 
   # Enable Flakes
@@ -275,6 +277,26 @@
         name = "Noto Color Emoji";
       };
     };
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata Modern Classic";
+    };
+  };
+
+  # Enable Intel Graphics
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = [ pkgs.intel-compute-runtime ];
+  };
+
+  # Enable Docker
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
   };
 
   # List packages installed in system profile. To search, run:
@@ -363,7 +385,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ 3000 ];
