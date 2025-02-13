@@ -5,7 +5,6 @@
 { config, pkgs, inputs, ... }: {
   imports = [
     ./hardware-configuration.nix # Include the results of the hardware scan.
-    ./nix-alien.nix # Enable Nix-Alien
     # Import modules
     (import ./Modules/Gaming.nix { inherit config pkgs; })
   ];

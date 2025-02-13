@@ -19,6 +19,10 @@ let
   waybarConfig = import ../Dotfiles/waybar/config.nix;
   #plasmaConfig = import ../SystemModules/plasma.nix;
 in {
+  imports = [
+    inputs.ags.homeManagerModules.default # AGS module
+    (import ./HomeModules/Codium.nix { inherit pkgs; })
+  ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "formuna";
@@ -82,9 +86,6 @@ in {
   # decrlaratively inst #
   # aling programs.    #
   #######################
-
-  # Imports for AGS
-  imports = [ inputs.ags.homeManagerModules.default ];
 
   programs = {
     zsh = {
