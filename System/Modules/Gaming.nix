@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   programs.steam = { # The closed source #1 game launcher.
     enable = true; # Enable Steam
     remotePlay.openFirewall =

@@ -6,7 +6,7 @@
   imports = [
     ./hardware-configuration.nix # Include the results of the hardware scan.
     # Import modules
-    (import ./Modules/Gaming.nix { inherit config pkgs; })
+    (import ./Modules/Gaming.nix { inherit pkgs; })
   ];
 
   # Enable Flakes
@@ -248,6 +248,7 @@
   stylix = {
     enable = true;
     image = ../Wallpapers/escape_velocity_small.png;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     polarity = "dark";
     fonts = {
       serif = {
@@ -362,6 +363,7 @@
     openssl
     github-desktop
     polychromatic
+    git-crypt
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

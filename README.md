@@ -1,25 +1,13 @@
-# My Linux Dotfiles
-These are my dotfiles that I use on the daily. I like using dotfiles.
+# Formuna's Dotfiles!
+Hey there, came to copy my dots? I'd rather you copy from [N3RDIUM's](https://github.com/N3RDIUM/Zenith) since 90% of mine are from him.
 
-## How do I manage my dotfiles?
-Personally, I use Home Manager, which uses the Nix language to declaratively manage my dotfiles.
+## How do I install this?
+These dotfiles are easily installable as a system flake, so the process to install it on a NixOS system is pretty easy:
 
-For the "uploading to Git" side of things, I use [LazyGit](https://github.com/jesseduffield/lazygit), a really nice Git client that uses the terminal to manage your Git repositories. I also use the [GitHub CLI](https://github.com/cli/cli) tool to actually add this repository as a remote.
+1. Run `git clone https://github.com/FormunaGit/dotfiles`
+2. Delete the /etc/nixos folder with `sudo rm -rf /etc/nixos` (**WARNING: this will remove any configs you have in configuration.nix**)
+3. Symlink the `dotfiles` folder to /etc/nixos with `sudo ln -s ./dotfiles/ /etc/nixos/`
 
-## How do I install these dotfiles?
-As said before, the dotfiles are managed in Home Manager/Nix. If you use NixOS, just install Home Manager, put this dotfiles folder in `~/.config/home-manager/`, and run `home-manager switch`.
-
-For non-NixOS users, it's *technically possible* to install the dotfiles manually, but I don't recommend it. Instead, just install Nix and Home Manager and follow the NixOS instructions above. This not only makes sure you don't get into dependency hell, but also you don't trash your home folder with random files, making cleaning up your computer easier.
-
-## How does this look like?
-![this is a very cool dotfiles thing also what are you doing here?](./pictures/img.png)
-<span style="font-size: x-small; color: gray;">CMatrix not included -------------------------------------------^</span>
-
-## Credits
-These are the people/projects that made this possible:
-- [LazyGit](https://github.com/jesseduffield/lazygit) - The Git client that made Git much, much easier.
-- [Catppuccin](https://github.com/catppuccin) - The beautiful pastel theme I use on everything.
-- [NixOS](https://nixos.org/) - The Linux distribution that I use.
-- [N3RDIUM](https://github.com/N3RD1UM) - The person who I copy off of.
-
-Thank you!
+## What's it look like?
+As of `February 13, 2025` (1 day before Pi day!), it looks like this:
+![haii :3](./Pictures/img.png)

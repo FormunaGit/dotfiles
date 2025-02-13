@@ -34,12 +34,14 @@
   };
 
   outputs = { self, nixpkgs, home-manager, chaotic, stylix, ... }@inputs:
-    let system = "x86_64-linux";
+    let
+      system = "x86_64-linux";
+      secrets =
+        builtins.fromJSON (builtins.readFile "${self}/Secrets/secrets.json");
     in {
-      # Please replace unimag with your hostname
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs secrets; };
         modules = [
           ./System/configuration.nix # The classic configuration.nix file
           inputs.stylix.nixosModules.stylix
