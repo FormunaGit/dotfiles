@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, config, ... }:
 ######################################################
 ### IMPORTANT THINGS TO KNOW WHEN EDITING DOTFILES ###
 ######################################################
@@ -183,6 +183,20 @@ in {
     mangohud = { enable = true; };
   };
 
+  sops = {
+    age.keyFile =
+      "/home/formuna/.config/sops/age/keys.txt"; # must have no password!
+
+    defaultSopsFile = ../secrets.json;
+    defaultSymlinkPath = "/run/user/1000/secrets";
+    defaultSecretsMountPoint = "/run/user/1000/secrets.d";
+
+    secrets.openai_api_key = {
+      # sopsFile = ./secrets.yml.enc; # optionally define per-secret files
+      path = "${config.sops.defaultSymlinkPath}/openai_api_key";
+    };
+  };
+
   # Enable the default Home Manager configuration.
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -206,7 +220,9 @@ in {
   #
   #  /etc/profiles/per-user/formuna/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = { };
+  home.sessionVariables = {
+    TEST_VAR_FORMUNA = config.sops.secrets.someKeyToNeverShare.path;
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
