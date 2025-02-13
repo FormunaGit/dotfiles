@@ -2,11 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }: 
-{
-  imports = [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    ./nix-alien.nix
+{ config, pkgs, inputs, ... }: {
+  imports = [
+    ./hardware-configuration.nix # Include the results of the hardware scan.
+    ./nix-alien.nix # Enable Nix-Alien
+    # Import modules
+    (import ./Modules/Gaming.nix { inherit config pkgs; })
   ];
 
   # Enable Flakes
@@ -120,16 +121,6 @@
   # Enable Bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-
-  # Enable Steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall =
-      true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall =
-      true; # Open ports in the firewall for Source Dedicated Server
-    protontricks.enable = true;
-  };
 
   # Enable WireGuard
   networking.firewall = {
@@ -305,9 +296,9 @@
     wl-clipboard # For Wayland clipboard support
     brightnessctl # Brightness control
     kdePackages.kate # Text editor, TODO: replace this with something else. probably.
-    lutris # Game launcher
+
     vscodium # Code editor, when JB software can't be used.
-    wineWowPackages.stable # Wine (64/32 bit)
+
     nerd-fonts.jetbrains-mono # The best font for coding + Nerd Fonts icons!
     nwg-drawer # App launcher. TODO: Setup a nice Wofi theme and remove this.
     nwg-look # GTK theme changer.
@@ -318,12 +309,12 @@
     waypaper # Wallpaper manager (powered by SWWW)
     swww # Wallpaper daemon
     libnotify # Tool for sending notifications to desktop
-    prismlauncher # Minecraft custom launcher
+
     neo-cowsay # "Cowsay reborn", yeah whatever that means.
     dotacat # Faster lolcat
     grimblast # Screenshot tool for Hyprland
     goofcord # Discord custom client
-    winetricks # Script for making Wine installs easier
+
     wgcf # Convert Cloudflare's Warp(+) VPN to WireGuard
     networkmanagerapplet # Network manager applet
     jetbrains.webstorm # Jetbrains IDE for the web.
