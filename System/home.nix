@@ -95,6 +95,11 @@ in {
 
       shellAliases = { sysman = "~/.config/home-manager/scripts/sysman.py"; };
 
+      initExtra = ''
+        # other config...
+        export TESTFORMUNA=$(cat ${config.sops.secrets.someKeyToNeverShare.path})
+      '';
+
       plugins = [
         #{
         #  name = "powerlevel10k";
@@ -191,9 +196,9 @@ in {
     defaultSymlinkPath = "/run/user/1000/secrets";
     defaultSecretsMountPoint = "/run/user/1000/secrets.d";
 
-    secrets.openai_api_key = {
+    secrets.someKeyToNeverShare = {
       # sopsFile = ./secrets.yml.enc; # optionally define per-secret files
-      path = "${config.sops.defaultSymlinkPath}/openai_api_key";
+      path = "${config.sops.defaultSymlinkPath}/someKeyToNeverShare";
     };
   };
 
@@ -220,9 +225,7 @@ in {
   #
   #  /etc/profiles/per-user/formuna/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    TEST_VAR_FORMUNA = config.sops.secrets.someKeyToNeverShare.path;
-  };
+  home.sessionVariables = { };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
