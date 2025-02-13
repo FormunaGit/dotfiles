@@ -363,7 +363,8 @@
     openssl
     github-desktop
     polychromatic
-    git-crypt
+    age
+    sops
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

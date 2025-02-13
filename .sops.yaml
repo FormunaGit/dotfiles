@@ -1,0 +1,7 @@
+keys:
+  - &host_unimag age1d8ddc58vwsxr58hspzuy6ztl6pm9wqdw3za0hl939nuxafw8l5dqysespd
+creation_rules:
+  - path_regex: secrets.json$
+    key_groups:
+      - age:
+          - *host_unimag
