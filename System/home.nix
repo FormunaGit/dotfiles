@@ -21,7 +21,9 @@ let
 in {
   imports = [
     inputs.ags.homeManagerModules.default # AGS module
-    (import ./HomeModules/Codium.nix { inherit pkgs; })
+    (import ./Modules/Development-Home.nix {
+      inherit config;
+    }) # Dev tools module, for HM
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -37,10 +39,19 @@ in {
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
-  # Enable Kitty
-  programs.kitty = {
-    enable = true;
-    themeFile = "Catppuccin-Mocha";
+  # Sops(-nix)
+  sops = {
+    age.keyFile = "/home/formuna/.config/sops/age/keys.txt";
+
+    defaultSopsFile = ../secrets.json;
+    defaultSymlinkPath = "/run/user/1000/secrets";
+    defaultSecretsMountPoint = "/run/user/1000/secrets.d";
+
+    secrets = {
+      someKeyToNeverShare.path =
+        "${config.sops.defaultSymlinkPath}/someKeyToNeverShare";
+      geminiApiKey.path = "${config.sops.defaultSymlinkPath}/geminiApiKey";
+    };
   };
 
   # Enable Hyprland (and get it actually running)
@@ -61,7 +72,7 @@ in {
   #######################
   # This section is for #
   # decrlaratively inst #
-  # aling services.    #
+  # alling services.    #
   #######################
   services = {
     cliphist = { # Wayland clipboard manager
@@ -88,31 +99,6 @@ in {
   #######################
 
   programs = {
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      syntaxHighlighting.enable = true;
-
-      shellAliases = { sysman = "~/.config/home-manager/scripts/sysman.py"; };
-
-      initExtra = ''
-        # other config...
-        export TESTFORMUNA=$(cat ${config.sops.secrets.someKeyToNeverShare.path})
-      '';
-
-      plugins = [
-        #{
-        #  name = "powerlevel10k";
-        #  src = pkgs.zsh-powerlevel10k;
-        #  file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-        #}
-        #{
-        #  name = "powerlevel10k-config";
-        #  src = ../Dotfiles/p10k;
-        #  file = "p10k.zsh";
-        #}
-      ];
-    };
 
     oh-my-posh = {
       enable = true;
@@ -154,30 +140,6 @@ in {
       ];
     };
 
-    # Zed Editor (GOODBYE VSCODE, GOODBYE JETBRAINS, HELLO ZED)
-    zed-editor = {
-      enable = true;
-      extensions =
-        [ "nix" "catppuccin" "scss" "discord-presence" "toml" "wakatime" ];
-      userSettings = {
-        languages = {
-          Nix = {
-            language_servers = [ "nil" "!nixd" ];
-            formatter = { external = { command = "nixfmt"; }; };
-          };
-        };
-        assistant = {
-          enabled = true;
-          version = "2";
-        };
-        theme = {
-          mode = "system";
-          dark = "Catppuccin Mocha";
-          light = "Catppuccin Mocha";
-        };
-      };
-    };
-
     # OBS + Plugins
     obs-studio = {
       enable = true;
@@ -186,20 +148,6 @@ in {
 
     # MangoHud
     mangohud = { enable = true; };
-  };
-
-  sops = {
-    age.keyFile =
-      "/home/formuna/.config/sops/age/keys.txt"; # must have no password!
-
-    defaultSopsFile = ../secrets.json;
-    defaultSymlinkPath = "/run/user/1000/secrets";
-    defaultSecretsMountPoint = "/run/user/1000/secrets.d";
-
-    secrets.someKeyToNeverShare = {
-      # sopsFile = ./secrets.yml.enc; # optionally define per-secret files
-      path = "${config.sops.defaultSymlinkPath}/someKeyToNeverShare";
-    };
   };
 
   # Enable the default Home Manager configuration.
@@ -225,7 +173,10 @@ in {
   #
   #  /etc/profiles/per-user/formuna/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = { };
+  home.sessionVariables = {
+    TESTFORMUNATWO =
+      builtins.readFile config.sops.secrets.someKeyToNeverShare.path;
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

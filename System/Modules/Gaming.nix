@@ -14,5 +14,6 @@
     wineWowPackages.stable # Windows app compatibility layer with beta 64-bit support.
     prismlauncher # Custom Minecraft launcher.
     winetricks # Script for managing Wine configs.
+    overlayed # Open-source Discord overlay.
   ];
 }

@@ -6,7 +6,8 @@
   imports = [
     ./hardware-configuration.nix # Include the results of the hardware scan.
     # Import modules
-    (import ./Modules/Gaming.nix { inherit pkgs; })
+    (import ./Modules/Gaming.nix { inherit pkgs; }) # Gaming module
+    (import ./Modules/Stylix.nix { inherit pkgs; }) # Stylix
   ];
 
   # Enable Flakes
@@ -155,9 +156,6 @@
     useRoutingFeatures = "client";
   };
 
-  # Codeium Fix (yes I use AI, get over it.)
-  programs.nix-ld.enable = true;
-
   # Enable Auto-CPUFREQ
   services.power-profiles-daemon.enable = false;
   services.auto-cpufreq.enable = true;
@@ -244,50 +242,11 @@
     syncEffectsEnabled = true;
   };
 
-  # Stylix
-  stylix = {
-    enable = true;
-    image = ../Wallpapers/escape_velocity_small.png;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    polarity = "dark";
-    fonts = {
-      serif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Serif";
-      };
-      sansSerif = {
-        package = pkgs.quicksand;
-        name = "Quicksand";
-      };
-      monospace = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrains Mono Nerd Font";
-      };
-      emoji = {
-        package = pkgs.noto-fonts-emoji;
-        name = "Noto Color Emoji";
-      };
-    };
-    cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata Modern Classic";
-    };
-  };
-
   # Enable Intel Graphics
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
     extraPackages = [ pkgs.intel-compute-runtime ];
-  };
-
-  # Enable Docker
-  virtualisation.docker = {
-    enable = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
   };
 
   # List packages installed in system profile. To search, run:
@@ -296,10 +255,6 @@
     wl-clipboard # For Wayland clipboard support
     brightnessctl # Brightness control
     kdePackages.kate # Text editor, TODO: replace this with something else. probably.
-
-    vscodium # Code editor, when JB software can't be used.
-
-    nerd-fonts.jetbrains-mono # The best font for coding + Nerd Fonts icons!
     nwg-drawer # App launcher. TODO: Setup a nice Wofi theme and remove this.
     nwg-look # GTK theme changer.
     pavucontrol # PulseAudio Volume Control
@@ -322,7 +277,6 @@
     blender # 3D modelling software
     mission-center # GNOME resource visualizer (that's a lot of words to say GUI fastfetch), TODO: remove this when installing GNOME.
     inotify-tools # Thingamabob that detects file changes
-    nixd # Nix LSP, used for autocompletion
     system-config-printer # GUI printer manager
     gimp # Image editor
     thunderbird # Email client
@@ -332,36 +286,11 @@
     krita
     riseup-vpn
     qbittorrent-enhanced
-    (let base = pkgs.appimageTools.defaultFhsEnvArgs;
-    in pkgs.buildFHSEnv (base // {
-      name = "fhs";
-      targetPkgs = pkgs:
-        # pkgs.buildFHSUserEnv provides only a minimal FHS environment,
-        # lacking many basic packages needed by most software.
-        # Therefore, we need to add them manually.
-        #
-        # pkgs.appimageTools provides basic packages required by most software.
-        (base.targetPkgs pkgs)
-        ++ (with pkgs; [ pkg-config ncurses webkitgtk_4_0 libsoup_2_4 ]);
-      profile = "export FHS=1";
-      runScript = "bash";
-      extraOutputsToInstall = [ "dev" ];
-    }))
-    #jetbrains.rust-rover
     xdg-desktop-portal-hyprland
-    gitkraken
-    rustup
-    jetbrains-toolbox
-    gcc
     playerctl
-    godot_4
     wget
     cmake
     qemu
-    nil
-    nixfmt-classic
-    openssl
-    github-desktop
     polychromatic
     age
     sops
@@ -373,12 +302,7 @@
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  # }
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ 3000 ];
