@@ -173,10 +173,7 @@ in {
   #
   #  /etc/profiles/per-user/formuna/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    TESTFORMUNATWO =
-      builtins.readFile config.sops.secrets.someKeyToNeverShare.path;
-  };
+  home.sessionVariables = { };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

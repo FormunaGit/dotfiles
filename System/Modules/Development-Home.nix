@@ -34,7 +34,7 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
 
-    shellAliases = { sysman = "~/.config/home-manager/scripts/sysman.py"; };
+    shellAliases = { sysman = "../../Scripts/sysmam.py"; };
 
     #initExtra = ''
     #  # other config...

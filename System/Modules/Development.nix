@@ -9,8 +9,10 @@
     nil # --V
     nixd # Two Nix LSPs.
     nixfmt-classic # Nix file formatter
-
+    android-studio # The Android studio.
   ];
+
+  nixpkgs.config.android_sdk.accept_license = true; # Accept ASDK's license.
 
   # Enable Docker
   virtualisation.docker = {

@@ -8,6 +8,9 @@
     # Import modules
     (import ./Modules/Gaming.nix { inherit pkgs; }) # Gaming module
     (import ./Modules/Stylix.nix { inherit pkgs; }) # Stylix
+    (import ./Modules/Development.nix {
+      inherit pkgs;
+    }) # Development tools module
   ];
 
   # Enable Flakes
@@ -98,8 +101,16 @@
   users.users.formuna = {
     isNormalUser = true;
     description = "Formuna";
-    extraGroups =
-      [ "networkmanager" "wheel" "adbusers" "scanner" "lp" "docker" "uinput" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "adbusers"
+      "scanner"
+      "lp"
+      "docker"
+      "uinput"
+      "kvm"
+    ];
     packages = [ ];
   };
   # Install firefox.
@@ -294,6 +305,10 @@
     polychromatic
     age
     sops
+    stremio
+    gopeed
+    bottles
+    jetbrains.pycharm-professional
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

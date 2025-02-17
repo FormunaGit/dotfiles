@@ -15,5 +15,9 @@
     prismlauncher # Custom Minecraft launcher.
     winetricks # Script for managing Wine configs.
     overlayed # Open-source Discord overlay.
+
+    # Emulators!
+    dolphin-emu # Wii/GameCube Emulator, launch games with Lutris
+    ryujinx-greemdev # The community does what Nintendoesn't.
   ];
 }

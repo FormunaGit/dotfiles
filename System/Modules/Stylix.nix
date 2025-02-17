@@ -2,7 +2,8 @@
   # Stylix
   stylix = {
     enable = true;
-    image = ../Wallpapers/escape_velocity_small.png;
+    autoEnable = true;
+    image = ../../Wallpapers/escape_velocity_small.png;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     polarity = "dark";
     fonts = {

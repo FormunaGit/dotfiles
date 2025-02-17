@@ -18,22 +18,26 @@ function Workspaces() {
   const hypr = Hyprland.get_default();
 
   return (
+    // @ts-ignore
     <box className="Workspaces">
-      {bind(hypr, "workspaces").as((wss) =>
+      {bind(hypr, "workspaces").as((wss: any) =>
         wss
           .filter((ws: { id: number }) => !(ws.id >= -99 && ws.id <= -2)) // filter out special workspaces
           .sort((a: { id: number }, b: { id: number }) => a.id - b.id)
           .map((ws: { focus: () => unknown; id: any }) => (
+            // @ts-ignore
             <button
-              className={bind(hypr, "focusedWorkspace").as((fw) =>
+              className={bind(hypr, "focusedWorkspace").as((fw: any) =>
                 ws === fw ? "focused" : "",
               )}
               onClicked={() => ws.focus()}
             >
               {ws.id}
+              {/* @ts-ignore */}
             </button>
           )),
       )}
+      {/* @ts-ignore */}
     </box>
   );
 }
@@ -43,11 +47,14 @@ function FocusedClient() {
   const focused = bind(hypr, "focusedClient");
 
   return (
+    // @ts-ignore
     <box className="Focused" visible={focused.as(Boolean)}>
       {focused.as(
-        (client) =>
-          client && <label label={bind(client, "title").as(String)} />,
+        (
+          client: any, // @ts-ignore
+        ) => client && <label label={bind(client, "title").as(String)} />,
       )}
+      {/* @ts-ignore */}
     </box>
   );
 }
@@ -56,7 +63,7 @@ export function TopBar(gdkmonitor: Gdk.Monitor) {
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
   return (
     <window
-      className="Top Bar"
+      className="TopBar"
       gdkmonitor={gdkmonitor}
       exclusivity={Astal.Exclusivity.EXCLUSIVE}
       anchor={TOP | LEFT | RIGHT}
