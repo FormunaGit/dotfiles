@@ -114,15 +114,6 @@ in {
       withPython3 = true;
     };
 
-    git = { # Land of the doomed
-      enable = true;
-      userName = "FormunaGit";
-      userEmail = "formuna@tuta.io";
-      lfs.enable = true;
-    };
-
-    gh = { enable = true; };
-
     ags = {
       enable = true;
       configDir = ../Shell;

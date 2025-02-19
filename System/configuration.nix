@@ -7,14 +7,15 @@
     ./hardware-configuration.nix # Include the results of the hardware scan.
     # Import modules
     (import ./Modules/Gaming.nix { inherit pkgs; }) # Gaming module
-    (import ./Modules/Stylix.nix { inherit pkgs; }) # Stylix
+    (import ./Modules/Stylix.nix { inherit pkgs; }) # Stylix module
     (import ./Modules/Development.nix {
       inherit pkgs;
     }) # Development tools module
+    (import ./Modules/Connection.nix { inherit config; }) # Connections module
   ];
 
   # Enable Flakes
-  #nix.settings = { experimental-features = [ "nix-command" "flakes" ]; };
+  nix.settings = { experimental-features = [ "nix-command" "flakes" ]; };
 
   # Bootloader and OBS VCam
   boot.loader.systemd-boot.enable = true;
@@ -22,13 +23,13 @@
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
   boot.kernelModules = [ "v4l2loopback" ];
   boot.extraModprobeConfig = ''
-    options v4l2loopback devices=1 video_nr=1 card_label="OBS Cam" exclusive_caps=1
+    options v4l2loopback devices=1 video_nr=1 card_label="OBS Virtual Camera" exclusive_caps=1
   '';
 
   # Add Swapfile
   swapDevices = [{
     device = "/var/lib/swapfile";
-    size = 6 * 1024;
+    size = 4 * 1024;
   }];
 
   # NTFS Support
@@ -40,14 +41,10 @@
   };
 
   networking.hostName = "unimag"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Moncton";
@@ -69,15 +66,6 @@
     variant = "";
   };
 
-  # Enable CUPS to print documents + add autodiscovery + scanner support
-  services.printing.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-  hardware.sane.enable = true;
-
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -86,18 +74,9 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Defines the "formuna" account. (thats me :D)
   users.users.formuna = {
     isNormalUser = true;
     description = "Formuna";
@@ -111,7 +90,6 @@
       "uinput"
       "kvm"
     ];
-    packages = [ ];
   };
   # Install firefox.
   programs.firefox.enable = true;
@@ -129,10 +107,6 @@
     xwayland.enable = true;
   };
 
-  # Enable Bluetooth
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
-
   # Enable WireGuard
   networking.firewall = {
     allowedUDPPorts = [ 51820 3000 ];
@@ -143,10 +117,6 @@
 
   # Enable Flatpak
   services.flatpak.enable = true;
-
-  # Enable Waydroid and ADB
-  virtualisation.waydroid.enable = true;
-  programs.adb.enable = true;
 
   # Enable ZSH (Configuration in home manager)
   programs.zsh = {
@@ -259,58 +229,6 @@
     enable32Bit = true;
     extraPackages = [ pkgs.intel-compute-runtime ];
   };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    wl-clipboard # For Wayland clipboard support
-    brightnessctl # Brightness control
-    kdePackages.kate # Text editor, TODO: replace this with something else. probably.
-    nwg-drawer # App launcher. TODO: Setup a nice Wofi theme and remove this.
-    nwg-look # GTK theme changer.
-    pavucontrol # PulseAudio Volume Control
-    obs-studio # Open Broadcaster Software
-    kdenlive # Video editor
-    r2modman # Mod manager for Unity games
-    waypaper # Wallpaper manager (powered by SWWW)
-    swww # Wallpaper daemon
-    libnotify # Tool for sending notifications to desktop
-
-    neo-cowsay # "Cowsay reborn", yeah whatever that means.
-    dotacat # Faster lolcat
-    grimblast # Screenshot tool for Hyprland
-    goofcord # Discord custom client
-
-    wgcf # Convert Cloudflare's Warp(+) VPN to WireGuard
-    networkmanagerapplet # Network manager applet
-    jetbrains.webstorm # Jetbrains IDE for the web.
-    jetbrains.pycharm-professional # Jetbrains IDE for Python, but professional.
-    blender # 3D modelling software
-    mission-center # GNOME resource visualizer (that's a lot of words to say GUI fastfetch), TODO: remove this when installing GNOME.
-    inotify-tools # Thingamabob that detects file changes
-    system-config-printer # GUI printer manager
-    gimp # Image editor
-    thunderbird # Email client
-    pamixer # CLI for managing PulseAudio
-    inputs.ags.packages.x86_64-linux.default
-    dart-sass
-    krita
-    riseup-vpn
-    qbittorrent-enhanced
-    xdg-desktop-portal-hyprland
-    playerctl
-    wget
-    cmake
-    qemu
-    polychromatic
-    age
-    sops
-    stremio
-    gopeed
-    bottles
-    jetbrains.pycharm-professional
-  ];
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -331,6 +249,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 
 }
