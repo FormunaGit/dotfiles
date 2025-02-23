@@ -11,19 +11,19 @@
           formatter = { external = { command = "nixfmt"; }; };
         };
       };
-      #assistant = {
-      #  enabled = true;
-      #  version = "2";
-      #  default_model = {
-      #    provider = "google";
-      #    model = "gemini-1.5-flash-latest";
-      #  };
-      #};
-      #theme = {
-      #  mode = "system";
-      #  dark = "Catppuccin Mocha";
-      #  light = "Catppuccin Mocha";
-      #};
+      assistant = {
+        enabled = true;
+        version = "2";
+        default_model = {
+          provider = "openai";
+          model = "4o-mini";
+        };
+      };
+      theme = {
+        mode = "system";
+        dark = "Catppuccin Mocha";
+        light = "Catppuccin Mocha";
+      };
     };
   };
 
@@ -34,13 +34,14 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
 
-    shellAliases = { sysman = "../../Scripts/sysmam.py"; };
+    shellAliases = { sysman = "python3 /etc/nixos/Scripts/sysman.py"; };
 
-    #initExtra = ''
-    #  # other config...
-    #  export TESTFORMUNA=$(cat ${config.sops.secrets.someKeyToNeverShare.path})
-    #  export GOOGLE_AI_API_KEY=$(cat ${config.sops.secrets.geminiApiKey.path})
-    #'';
+    initExtra = ''
+      # other config...
+      export TESTFORMUNA=$(cat ${config.sops.secrets.someKeyToNeverShare.path})
+      export GOOGLE_AI_API_KEY=$(cat ${config.sops.secrets.geminiApiKey.path})
+      export OPENAI_API_KEY=$(cat ${config.sops.secrets.chatGPTApiKey.path})
+    '';
 
     plugins = [
       #{

@@ -51,6 +51,7 @@ in {
       someKeyToNeverShare.path =
         "${config.sops.defaultSymlinkPath}/someKeyToNeverShare";
       geminiApiKey.path = "${config.sops.defaultSymlinkPath}/geminiApiKey";
+      chatGPTApiKey.path = "${config.sops.defaultSymlinkPath}/chatGPTApiKey";
     };
   };
 
@@ -138,7 +139,7 @@ in {
     };
 
     # MangoHud
-    mangohud = { enable = true; };
+    mangohud.enable = true;
   };
 
   # Enable the default Home Manager configuration.

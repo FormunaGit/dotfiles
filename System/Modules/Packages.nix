@@ -5,7 +5,7 @@
 # Contains every system #
 # package.              #
 #########################
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   environment.systemPackages = with pkgs; [
     wl-clipboard # For Wayland clipboard support
     brightnessctl # Brightness control
@@ -55,5 +55,7 @@
     git
     gh
     jetbrains.pycharm-professional
+    ydotool
+    nodejs
   ];
 }
