@@ -35,7 +35,7 @@
     system-config-printer # GUI printer manager
     gimp # Image editor
     thunderbird # Email client
-    pamixer # CLI for managing PulseAudio
+    #pamixer # CLI for managing PulseAudio
     inputs.ags.packages.x86_64-linux.default
     dart-sass
     krita
@@ -57,5 +57,6 @@
     jetbrains.pycharm-professional
     ydotool
     nodejs
+    wireguard-tools
   ];
 }

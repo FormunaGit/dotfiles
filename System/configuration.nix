@@ -119,6 +119,13 @@
   # Enable Flatpak
   services.flatpak.enable = true;
 
+  # Add Emacs-Overlay
+  #nixpkgs.overlays = [
+  #  (import (builtins.fetchTarball {
+  #    url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+  #  }))
+  #];
+
   # Enable ZSH (Configuration in home manager)
   programs.zsh = {
     enable = true;

@@ -1,31 +1,31 @@
 { config, ... }: {
   # Gooey section
-  programs.zed-editor = { # The zeditor.
-    enable = true;
-    extensions =
-      [ "nix" "catppuccin" "scss" "discord-presence" "toml" "wakatime" ];
-    userSettings = {
-      languages = {
-        Nix = {
-          language_servers = [ "nil" "!nixd" ];
-          formatter = { external = { command = "nixfmt"; }; };
-        };
-      };
-      assistant = {
-        enabled = true;
-        version = "2";
-        default_model = {
-          provider = "openai";
-          model = "4o-mini";
-        };
-      };
-      theme = {
-        mode = "system";
-        dark = "Catppuccin Mocha";
-        light = "Catppuccin Mocha";
-      };
-    };
-  };
+  #programs.zed-editor = { # The zeditor.
+  #  enable = true;
+  #  extensions =
+  #    [ "nix" "catppuccin" "scss" "discord-presence" "toml" "wakatime" ];
+  #  userSettings = {
+  #    languages = {
+  #      Nix = {
+  #        language_servers = [ "nil" "!nixd" ];
+  #        formatter = { external = { command = "nixfmt"; }; };
+  #      };
+  #    };
+  ##    assistant = {
+  #      enabled = true;
+  #      version = "2";
+  #      default_model = {
+  #        provider = "openai";
+  #        model = "4o-mini";
+  #      };
+  #    };
+  #    theme = {
+  #      mode = "system";
+  #      dark = "Catppuccin Mocha";
+  #      light = "Catppuccin Mocha";
+  #    };
+  #  };
+  #};
 
   # Terminal section
   programs.kitty.enable = true; # Installs Kitty. Theme is managed by Stylix

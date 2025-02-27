@@ -89,6 +89,11 @@ in {
       enable = true;
       hideWindow = true;
     };
+
+    emacs = {
+      enable = true;
+      package = pkgs.emacs30-gtk3;
+    };
   };
 
   #######################
@@ -100,7 +105,6 @@ in {
   #######################
 
   programs = {
-
     oh-my-posh = {
       enable = true;
       enableZshIntegration = true;
@@ -140,6 +144,12 @@ in {
 
     # MangoHud
     mangohud.enable = true;
+
+    emacs = {
+      enable = true;
+      package = pkgs.emacs30-gtk3;
+      extraConfig = (builtins.readFile ../Dotfiles/emacs/init.el); 
+    };
   };
 
   # Enable the default Home Manager configuration.
