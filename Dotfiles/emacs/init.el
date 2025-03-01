@@ -1,4 +1,4 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ███████ ███    ███  █████   ██████ ███████ ██ ;; 
 ;; ██      ████  ████ ██   ██ ██      ██      ██ ;;
 ;; █████   ██ ████ ██ ███████ ██      ███████ ██ ;;
@@ -145,3 +145,14 @@
   :commands (magit-status magit-get-current-branch)
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+;; Install Orgmode
+(use-package org)
+
+;; Install lsp-mode for LSP
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))

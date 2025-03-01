@@ -24,6 +24,7 @@ in {
     (import ./Modules/Development-Home.nix {
       inherit config;
     }) # Dev tools module, for HM
+    (import ./Modules/Emacs.nix { inherit config; }) # EMACS! EMACS! EMACS!
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -89,11 +90,6 @@ in {
       enable = true;
       hideWindow = true;
     };
-
-    emacs = {
-      enable = true;
-      package = pkgs.emacs30-gtk3;
-    };
   };
 
   #######################
@@ -145,11 +141,11 @@ in {
     # MangoHud
     mangohud.enable = true;
 
-    emacs = {
-      enable = true;
-      package = pkgs.emacs30-gtk3;
-      extraConfig = (builtins.readFile ../Dotfiles/emacs/init.el); 
-    };
+    # emacs = {
+    #   enable = true;
+    #   package = pkgs.emacs30-gtk3;
+    #   #extraConfig = (builtins.readFile ../Dotfiles/emacs/init.el); 
+    # };
   };
 
   # Enable the default Home Manager configuration.

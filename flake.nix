@@ -27,7 +27,8 @@
     };
     stylix.url = "github:danth/stylix/release-24.11";
     sops-nix.url = "github:Mic92/sops-nix";
-  };
+    emacs-overlay.url = "github:nix-community/emacs-overlay/master";
+};
 
   outputs =
     { self, nixpkgs, home-manager, chaotic, stylix, sops-nix, ... }@inputs:
