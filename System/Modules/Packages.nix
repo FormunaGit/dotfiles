@@ -24,7 +24,7 @@
     dotacat # Faster lolcat
     grimblast # Screenshot tool for Hyprland
     goofcord # Discord custom client
-
+    activate-linux
     wgcf # Convert Cloudflare's Warp(+) VPN to WireGuard
     networkmanagerapplet # Network manager applet
     jetbrains.webstorm # Jetbrains IDE for the web.
@@ -58,5 +58,17 @@
     ydotool
     nodejs
     wireguard-tools
-  ];
+    # Emacs stuff
+    fd
+    vips
+    poppler
+    ffmpegthumbnailer
+    mediainfo
+    unzip
+    protonvpn-gui
+    ripgrep
+
+    # Install DaVinci Resolve with the NixPKGS FF-ESR cache
+    
+];
 }

@@ -8,9 +8,11 @@
 # -ices such as rout #
 # -ers.              #
 ######################
-{ config, ... }: {
+{ config, lib, ... }: {
   # Wi-Fi
-  networking.networkmanager.enable = true; # Enables the wpa_suppliant wrapper.
+  networking.networkmanager = {
+    enable = true;
+  };
 
   # Bluetooth
   hardware.bluetooth.enable = true;

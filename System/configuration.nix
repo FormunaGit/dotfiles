@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, inputs, lib, ... }: {
   imports = [
     ./hardware-configuration.nix # Include the results of the hardware scan.
     # Import modules
@@ -11,12 +11,15 @@
     (import ./Modules/Development.nix {
       inherit pkgs;
     }) # Development tools module
-    (import ./Modules/Connection.nix { inherit config; }) # Connections module
+    (import ./Modules/Connection.nix { inherit config lib; }) # Connections module
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # Packages module
+    (import ./Modules/Forbidden-DaVinci.nix { inherit pkgs; }) # davinci resolve...
   ];
 
   # Enable Flakes
   nix.settings = { experimental-features = [ "nix-command" "flakes" ]; };
+
+  nixpkgs.overlays = [ (import inputs.emacs-overlay) ];
 
   # Bootloader and OBS VCam
   boot.loader.systemd-boot.enable = true;
@@ -27,18 +30,31 @@
     options v4l2loopback devices=1 video_nr=1 card_label="OBS Virtual Camera" exclusive_caps=1
   '';
 
+  # Use CachyOS kernel and enable Sched-Ext (courtesy of Chaotic Nyx)
+  boot.kernelPackages = pkgs.linuxPackages_cachyos;
+
   # Add Swapfile
   swapDevices = [{
     device = "/var/lib/swapfile";
     size = 4 * 1024;
   }];
 
-  # NTFS Support
-  boot.supportedFilesystems = [ "ntfs" ];
-  fileSystems."/mnt/windows-ssd" = {
-    device = "/dev/nvme0n1p3";
-    fsType = "ntfs-3g";
-    options = [ "rw" "uid=1000" ];
+  # NTFS Support (disabled for now)
+  # boot.supportedFilesystems = [ "ntfs" ];
+  # fileSystems."/mnt/windows-ssd" = {
+  #   device = "/dev/nvme0n1p3";
+  #   fsType = "ntfs-3g";
+  #   options = [ "rw" "uid=1000" ];
+  # };
+
+  # Also mount my external SS(H)D..?
+  fileSystems."/run/media/formuna/ExtDrive" = {
+    device = "/dev/sda1";
+    fsType = "exfat";
+    options = [
+      "users"
+      "exec" # Required for steam
+    ]; # ^ Also place "nofail" if required, right now I'm okay with having to plug it in each time.
   };
 
   networking.hostName = "unimag"; # Define your hostname.
@@ -238,8 +254,21 @@
     extraPackages = [ pkgs.intel-compute-runtime ];
   };
 
-  # Enable Emacs Overlay
-  nixpkgs.overlays = [ (import inputs.emacs-overlay) ];
+  # Enable Emacs
+  services.emacs = { # Enable the server
+   enable = true;
+   package = pkgs.emacs30-gtk3; # I like GTK.
+ };
+
+ environment.systemPackages = [
+   (pkgs.emacsWithPackagesFromUsePackage {
+     package = pkgs.emacs30-gtk3;
+     config = ../Dotfiles/emacs/init.el;
+     extraEmacsPackages = epkgs: [
+	epkgs.use-package
+     ];
+   })
+ ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

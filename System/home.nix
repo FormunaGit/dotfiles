@@ -24,7 +24,7 @@ in {
     (import ./Modules/Development-Home.nix {
       inherit config;
     }) # Dev tools module, for HM
-    (import ./Modules/Emacs.nix { inherit config; }) # EMACS! EMACS! EMACS!
+    (import ./Modules/Emacs.nix { inherit pkgs; }) # Emacs module
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.

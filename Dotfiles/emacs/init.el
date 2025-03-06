@@ -96,6 +96,9 @@
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
 
+;; Customize Doom Modeline
+(setq doom-modeline-hud nil)
+
 ;; Enable line numbers
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
@@ -156,3 +159,20 @@
   (setq lsp-keymap-prefix "C-c l")
   :config
   (lsp-enable-which-key-integration t))
+
+;; Install Elpy for Python
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
+
+;; Use Dirvish for better Dired
+(use-package dirvish)
+
+;; Enable JTSX
+(use-package jtsx)
+
+;; Install Dired Sidebar
+(use-package dired-sidebar
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar))
