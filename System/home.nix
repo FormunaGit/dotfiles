@@ -49,8 +49,6 @@ in {
     defaultSecretsMountPoint = "/run/user/1000/secrets.d";
 
     secrets = {
-      someKeyToNeverShare.path =
-        "${config.sops.defaultSymlinkPath}/someKeyToNeverShare";
       geminiApiKey.path = "${config.sops.defaultSymlinkPath}/geminiApiKey";
       chatGPTApiKey.path = "${config.sops.defaultSymlinkPath}/chatGPTApiKey";
     };
