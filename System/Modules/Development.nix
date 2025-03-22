@@ -6,8 +6,7 @@
     gcc # GNU's C compiler.
     godot_4 # Best game engine!
     gitkraken # I know it's closed source. And I'll keep using it till I find a better one.
-    nil # --V
-    nixd # Two Nix LSPs.
+    nixd # Useful Nix LSP.
     nixfmt-classic # Nix file formatter
     android-studio # The Android studio.
 

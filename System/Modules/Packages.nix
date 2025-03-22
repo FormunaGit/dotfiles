@@ -14,12 +14,11 @@
     nwg-look # GTK theme changer.
     pavucontrol # PulseAudio Volume Control
     obs-studio # Open Broadcaster Software
-    kdenlive # Video editor
+    kdePackages.kdenlive # Video editor
     r2modman # Mod manager for Unity games
     waypaper # Wallpaper manager (powered by SWWW)
     swww # Wallpaper daemon
     libnotify # Tool for sending notifications to desktop
-
     neo-cowsay # "Cowsay reborn", yeah whatever that means.
     dotacat # Faster lolcat
     grimblast # Screenshot tool for Hyprland
@@ -67,8 +66,8 @@
     unzip
     protonvpn-gui
     ripgrep
-
-    # Install DaVinci Resolve with the NixPKGS FF-ESR cache
-    
+    nss
+    ntfsprogs
+    python312Packages.watchdog
 ];
 }

@@ -13,7 +13,6 @@
     }) # Development tools module
     (import ./Modules/Connection.nix { inherit config lib; }) # Connections module
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # Packages module
-    (import ./Modules/Hardware.nix) # Hardware/drivers module
   ];
 
   # Enable Flakes
@@ -61,11 +60,11 @@
   #    "exec" # Required for steam
   #  ]; # ^ Also place "nofail" if required, right now I'm okay with having to plug it in each time.
 
-  #fileSystems."/run/media/formuna/NTFares" =
-  #  { device = "/dev/sda1";
-  #    fsType = "ntfs-3g"; 
-  #    options = [ "rw" "uid=1000"];
-  #  };
+  fileSystems."/run/media/formuna/NTFares" =
+    { device = "/dev/sda1";
+      fsType = "ntfs-3g"; 
+      options = [ "rw" "uid=1000"];
+    };
 
   
 

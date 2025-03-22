@@ -49,7 +49,7 @@
 
 ;; UI Config
 (scroll-bar-mode -1)
-;(tool-bar-mode -1)
+(tool-bar-mode -1)
 ;(tooltip-mode -1)
 (set-fringe-mode 10)
 ;(menu-bar-mode -1)
@@ -58,6 +58,7 @@
 (load-theme 'catppuccin :no-confirm)
 
 ;; Install command-log-mode
+
 (use-package command-log-mode)
 
 ;; Use Ivy completion system
@@ -117,9 +118,7 @@
 (use-package all-the-icons)
 
 ;; Enable Evil!!
-(unless (package-installed-p 'evil)
-  (package-install 'evil))
-(require 'evil)
+(use-package evil)
 (evil-mode 1)
 
 ;; RSS/Elfeed section
@@ -166,13 +165,49 @@
   :init
   (elpy-enable))
 
-;; Use Dirvish for better Dired
+;; Use Dirvish for better Dired and get  ICONS!! 
 (use-package dirvish)
+(setq dirvish-attributes
+      (append
+       ;; The order of these attributes is insignificant, they are always
+       ;; displayed in the same position.
+       '(vc-state subtree-state nerd-icons collapse)
+       ;; Other attributes are displayed in the order they appear in this list.
+       '(git-msg file-modes file-time file-size)))
 
 ;; Enable JTSX
 (use-package jtsx)
 
-;; Install Dired Sidebar
+;; Install Dired Sidebar and autoenable it
 (use-package dired-sidebar
   :ensure t
   :commands (dired-sidebar-toggle-sidebar))
+(use-package nix-drv-mode
+  :ensure nix-mode
+  :mode "\\.drv\\'")
+(use-package nix-shell
+  :ensure nix-mode
+  :commands (nix-shell-unpack nix-shell-configure nix-shell-build))
+(use-package nix-repl
+  :ensure nix-mode
+  :commands (nix-repl))
+
+;; Install JSON support
+(use-package json-mode)
+
+;; Enable indentation-based code-folding with YAFOLDING!
+(use-package yafolding)
+(defvar yafolding-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)
+    (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
+    (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
+    map))
+
+;; Install Rust-Mode for Rust support :D
+(use-package rust-mode)
+(add-hook 'rust-mode-hook	                   ;; Force TAB to be spaces.
+	  (lambda () (setq indent-tabs-mode nil)))
+(add-hook 'rust-mode-hook
+          (lambda () (prettify-symbols-mode)))     ;; Auto-prettifies Rust code
+(setq rust-format-on-save t)                       ;; on save + formats it

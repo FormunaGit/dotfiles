@@ -28,14 +28,13 @@
     stylix.url = "github:danth/stylix/release-24.11";
     sops-nix.url = "github:Mic92/sops-nix";
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
-};
+  };
 
   outputs =
     { self, nixpkgs, home-manager, chaotic, stylix, sops-nix, ... }@inputs:
-    let system = "x86_64-linux";
-    in {
+    {
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
-        inherit system;
+        system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           ./System/configuration.nix # The classic configuration.nix file
@@ -53,6 +52,13 @@
             home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
           }
         ];
+      };
+      nixosConfigurations.beaubox = nixpkgs.lib.nixosSystem {
+	system = "aarch64-linux";
+	modules = [
+	  ./ExtraHosts/BeauBox/configuration.nix
+	  sops-nix.nixModules.sops
+	];
       };
     };
 }

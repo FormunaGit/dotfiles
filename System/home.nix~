@@ -135,7 +135,7 @@ in {
     # OBS + Plugins
     obs-studio = {
       enable = true;
-      #plugins = with pkgs.obs-studio-plugins; [ obs-3d-effect obs-vkcapture wlrobs ];
+      plugins = with pkgs.obs-studio-plugins; [ obs-3d-effect obs-vkcapture wlrobs ];
     };
 
     # MangoHud

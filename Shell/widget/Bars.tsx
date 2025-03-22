@@ -51,40 +51,37 @@ function FocusedClient() {
     <box className="Focused" visible={focused.as(Boolean)}>
       {focused.as(
         (
-          client: any, // @ts-ignore
+        client: any,
         ) => client && <label label={bind(client, "title").as(String)} />,
       )}
-      {/* @ts-ignore */}
     </box>
   );
-}
+} 
 
-export function TopBar(gdkmonitor: Gdk.Monitor) {
-  const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
-  return (
-    <window
-      className="TopBar"
-      gdkmonitor={gdkmonitor}
-      exclusivity={Astal.Exclusivity.EXCLUSIVE}
-      anchor={TOP | LEFT | RIGHT}
-      application={App}
-    >
+export function BottomDock(gdkmonitor: Gdk.Monitor) {
+  const { BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor;
+  return ( // @ts-ignore
+    <window className="TopBar" gdkmonitor={gdkmonitor} exclusivity={Astal.Exclusivity.EXCLUSIVE} anchor={BOTTOM | LEFT | RIGHT} application={App}>
+    <box className="MainBar">
       <box hexpand>
-        <box halign={Gtk.Align.START}>
-          <ClearNotifs />
+      <box halign={Gtk.Align.START}> 
+                 <ClearNotifs />
           <Workspaces />
         </box>
-        <Divider />
-
+	<Divider/>
+	<box halign={Gtk.Align.CENTER}>
+	     <FocusedClient/>
+	</box>
+	<Divider/>
         <box halign={Gtk.Align.END}>
           <box className="Tray">
-            <AudioSlider />
             <Time />
             <BatteryLevel />
-            <Tray />
+            <Tray /> 
           </box>
         </box>
       </box>
-    </window>
+      </box>
+</window>
   );
 }

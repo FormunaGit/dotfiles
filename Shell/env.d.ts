@@ -19,3 +19,13 @@ declare module "*.css" {
     const content: string
     export default content
 }
+
+declare namespace JSX {
+  interface IntrinsicElements {
+    box: any;
+    window: any;
+    Divider: any;
+    label: any;
+    // Add other Astal components here
+  }
+}

@@ -4,17 +4,17 @@
     @return string.unquote("alpha(#{$c},#{$a})");
 }
 
-$radius: 15px;
-$bg-color: #11111b;
-$bg-color-soft: #1e1e2e;
+$radius: 50px;
+$bg-color: #1e1e2e;
+$bg-color-soft: transparent;
 $fg-color: #cdd6f4;
 $accent: #89b4fa;
-$error: red;
+$error: #f38ba8;
 
 window.TopBar {
     background: $bg-color-soft;
     color: $fg-color;
-    font-family: "JetBrains Mono NF", monospace;
+    font-family: "Quicksand", monospace;
     font-weight: normal;
     font-size: 15px;
 
@@ -32,7 +32,6 @@ window.TopBar {
     .Focused {
         border-radius: $radius;
         background: $bg-color;
-        border-color: $bg-color;
         padding: 1px 5px;
     }
 
@@ -55,6 +54,7 @@ window.TopBar {
 
     button:not(.TrayItem) {
         margin: 2px;
+	border-radius: $radius;
 
         &.focused {
             background: $accent;
@@ -90,6 +90,13 @@ window.TopBar {
             }
         }
     }
+}
+
+// Main Bar SCSS
+.MainBar {
+    background-color: rgba(30, 30, 46, 0.4);
+    margin: 0 30px;
+    border-radius: 50px 50px 0 0px;
 }
 
 // Notifications SCSS
