@@ -40,7 +40,6 @@
     krita
     riseup-vpn
     qbittorrent-enhanced
-    xdg-desktop-portal-hyprland
     playerctl
     wget
     cmake

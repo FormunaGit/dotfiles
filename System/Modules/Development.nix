@@ -9,25 +9,6 @@
     nixd # Useful Nix LSP.
     nixfmt-classic # Nix file formatter
     android-studio # The Android studio.
-
-    ## EMACS PACKAGES! ##
-   emacsPackages.command-log-mode
-   emacsPackages.evil
-   emacsPackages.ivy
-   emacsPackages.counsel
-   emacsPackages.doom-modeline
-   emacsPackages.rainbow-delimiters
-   emacsPackages.all-the-icons
-   (pkgs.emacsWithPackagesFromUsePackage {
-      package = pkgs.emacs30-gtk3;  # replace with pkgs.emacsPgtk, or another version if desired.
-      config = ../../Dotfiles/emacs/init.el;
-      # config = path/to/your/config.org; # Org-Babel configs also supported
-
-      # Optionally provide extra packages not in the configuration file.
-      extraEmacsPackages = epkgs: [
-        epkgs.use-package
-      ];
-   })
 ];
 
   nixpkgs.config.android_sdk.accept_license = true; # Accept ASDK's license.

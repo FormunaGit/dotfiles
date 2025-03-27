@@ -2,7 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, lib, ... }: {
+{ config, pkgs, inputs, lib, ... }: let
+  pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in {
   imports = [
     ./hardware-configuration.nix # Include the results of the hardware scan.
     # Import modules
@@ -18,8 +20,6 @@
 
   # Enable Flakes
   nix.settings = { experimental-features = [ "nix-command" "flakes" ]; };
-
-  nixpkgs.overlays = [ (import inputs.emacs-overlay) ];
 
   # Bootloader and OBS VCam
   boot.loader.systemd-boot.enable = true;
@@ -48,18 +48,18 @@
   # };
 
   # Also mount my external SS(H)D..?
-  #fileSystems."/run/media/formuna/ExtDrive" = {
-  #  device = "/dev/sda1";
-  #  fsType = "ntfs-3g";
-  #  options = [
-  #    #"rw"
-  #    "users"
-  #    "uid=1000"
-  #    "gid=1000"
-  #    "dmask=007"
-  #    "fmask=117"
-  #    "exec" # Required for steam
-  #  ]; # ^ Also place "nofail" if required, right now I'm okay with having to plug it in each time.
+  fileSystems."/run/media/formuna/ExtDrive" = {
+    device = "/dev/sda1";
+    fsType = "exfat";
+    options = [
+      "users"
+      "uid=1000"
+      "gid=1000"
+      "dmask=007"
+      "fmask=117"
+      "exec" # Required for steam
+    ]; # ^ Also place "nofail" if required, right now I'm okay with having to plug it in each time.
+  };
 
   #fileSystems."/run/media/formuna/NTFares" =
   #  { device = "/dev/sda1";
@@ -134,6 +134,16 @@
     enable = true;
     withUWSM = true;
     xwayland.enable = true;
+    # Configure Hyprland to use the flake packages
+    package = pkgs-unstable.hyprland;
+    portalPackage = pkgs-unstable.xdg-desktop-portal-hyprland;
+  };
+
+  # Fix weird bug where Blender/games are slow
+  hardware.graphics = {
+    package = pkgs-unstable.mesa;
+    enable32Bit = true; # Enable 32-bit
+    package32 = pkgs-unstable.pkgsi686Linux.mesa;
   };
 
   # Enable WireGuard
@@ -209,8 +219,10 @@
     autostart.enable = true;
     portal = {
       enable = true;
-      extraPortals =
-        [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal ];
+      extraPortals = [
+        #pkgs.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal
+      ];
     };
   };
   environment.sessionVariables = { NIXOS_XDG_OPEN_USE_PORTAL = "1"; };
@@ -246,10 +258,10 @@
   };
 
   # Enable Input Remapper
-  #services.input-remapper = {
-  #  enable = true;
-  #  enableUdevRules = true;
-  #};
+  services.input-remapper = {
+    enable = true;
+    enableUdevRules = true;
+  };
 
   # Enable OpenRAZER
   hardware.openrazer = {
@@ -265,16 +277,6 @@
    enable = true;
    package = pkgs.emacs30-gtk3; # I like GTK.
  };
-
- environment.systemPackages = [
-   (pkgs.emacsWithPackagesFromUsePackage {
-     package = pkgs.emacs30-gtk3;
-     config = ../Dotfiles/emacs/init.el;
-     extraEmacsPackages = epkgs: [
-	epkgs.use-package
-     ];
-   })
- ];
 
   # Enable Waydroid
   virtualisation.waydroid.enable = true;

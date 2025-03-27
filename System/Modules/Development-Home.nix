@@ -38,7 +38,6 @@
 
     initExtra = ''
       # other config...
-      export TESTFORMUNA=$(cat ${config.sops.secrets.someKeyToNeverShare.path})
       export GOOGLE_AI_API_KEY=$(cat ${config.sops.secrets.geminiApiKey.path})
       export OPENAI_API_KEY=$(cat ${config.sops.secrets.chatGPTApiKey.path})
     '';

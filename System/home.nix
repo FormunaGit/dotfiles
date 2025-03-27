@@ -21,24 +21,16 @@ let
 in {
   imports = [
     inputs.ags.homeManagerModules.default # AGS module
-    (import ./Modules/Development-Home.nix {
-      inherit config;
-    }) # Dev tools module, for HM
+    (import ./Modules/Development-Home.nix { inherit config; }) # Dev tools module, for HM
     (import ./Modules/Emacs.nix { inherit pkgs; }) # Emacs module
   ];
-  # Home Manager needs a bit of information about yon and the paths it should
-  # manage.
-  home.username = "formuna";
-  home.homeDirectory = "/home/formuna";
-
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "24.11"; # Please read the comment before changing.
+  # Minor block of code to declare info about me. I got bored.
+  home = {
+    stateVersion = "24.11"; # Version of HM.
+    username = "formuna";
+    homeDirectory = "/home/formuna";
+    preferXdgDirectories = true;
+  };
 
   # Sops(-nix)
   sops = {
@@ -54,11 +46,25 @@ in {
     };
   };
 
-  # Enable Hyprland (and get it actually running)
+  # Enable Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
-    plugins = [ ];
+    plugins = with pkgs.hyprlandPlugins; [
+      hypr-dynamic-cursors # Cool cursor animations
+      hyprspace # Workspace overview plugin
+    ];
     extraConfig = toString (builtins.readFile ../Dotfiles/hypr/hyprland.conf);
+  };
+
+  # Customize the cursor
+  home.pointerCursor = {
+    size = 64;    
+    # Hyprland's awesome solution for cursors
+    hyprcursor = { enable = true; size = 64; };
+    # The GTK mouse. Not sure if I need this
+    gtk.enable = true;
+    # And the X11 mouse.
+    x11.enable = true;
   };
 
   # Import Waybar configuration from waybarConfig variable (Part 2/2)
@@ -80,10 +86,6 @@ in {
       allowImages = true;
     };
     playerctld.enable = true; # Media player daemon
-    mako = { # Notification daemon
-      enable = true;
-      extraConfig = toString (builtins.readFile ../Dotfiles/mako/config);
-    };
     trayscale = { # Unofficial GUI for Tailscale
       enable = true;
       hideWindow = true;
@@ -133,18 +135,13 @@ in {
     # OBS + Plugins
     obs-studio = {
       enable = true;
-      #plugins = with pkgs.obs-studio-plugins; [ obs-3d-effect obs-vkcapture wlrobs ];
+      plugins = with pkgs.obs-studio-plugins; [ obs-3d-effect obs-vkcapture wlrobs ];
     };
 
     # MangoHud
     mangohud.enable = true;
-
-    # emacs = {
-    #   enable = true;
-    #   package = pkgs.emacs30-gtk3;
-    #   #extraConfig = (builtins.readFile ../Dotfiles/emacs/init.el); 
-    # };
   };
+  
 
   # Enable the default Home Manager configuration.
   # The home.packages option allows you to install Nix packages into your
