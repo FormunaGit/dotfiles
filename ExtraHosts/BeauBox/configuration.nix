@@ -2,9 +2,9 @@
 
 let
   user = "formuna";
-  password = (builtins.readFile config.sops.secrets.beauboxSecrets.userPassword.path);
-  SSID = (builtins.readFile config.sops.secrets.beauboxSecrets.SSID.path);
-  SSIDpassword = (builtins.readFile config.sops.secrets.beauboxSecrets.SSIDPass.path);
+  password = (builtins.readFile config.sops.secrets.bbuserPassword.path);
+  SSID = (builtins.readFile config.sops.secrets.bbSSID.path);
+  SSIDpassword = (builtins.readFile config.sops.secrets.bbSSIDPass.path);
   interface = "wlan0";
   hostname = "beaubox";
 in {
