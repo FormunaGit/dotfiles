@@ -68,7 +68,7 @@
 	      system = "aarch64-linux";
 	      modules = [
 	        ./ExtraHosts/BeauBox/configuration.nix
-	        sops-nix.nixModules.sops
+	        sops-nix.nixosModules.sops
 	      ];
       };
     };
