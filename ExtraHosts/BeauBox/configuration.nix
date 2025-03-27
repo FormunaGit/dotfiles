@@ -9,7 +9,7 @@ let
   hostname = "beaubox";
 in {
   # Sops-nix related stuff
-  imports = [ <sops-nix/modules/sops> ];
+  #imports = [ <sops-nix/modules/sops> ];
   sops.defaultSopsFile = ../../secrets.json;
   sops.age.keyFile = "/home/formuna/.config/sops/age/keys.txt";
   boot = {
