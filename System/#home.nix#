@@ -19,7 +19,12 @@
     (import ./Modules/Development-Home.nix { inherit config; }) # Dev tools module, for HM
   ];
   # Minor block of code to declare info about me.
-  home.stateVersion = "24.11"; # Version of HM.
+  home = {
+    stateVersion = "24.11"; # Version of HM.
+    username = "formuna";
+    homeDirectory = "/home/formuna";
+    preferXdgDirectories = true;
+  };
 
   # Sops(-nix)
   sops = {
@@ -43,8 +48,6 @@
       hyprspace # Workspace overview plugin
     ];
     extraConfig = toString (builtins.readFile ../Dotfiles/hypr/hyprland.conf);
-    package = null;       # Fix for
-    portalPackage = null; # RStudio
   };
 
   #######################
@@ -75,12 +78,6 @@
   #######################
 
   programs = {
-    # oh-my-posh = {
-    #   enable = true;
-    #   enableZshIntegration = true;
-    #   useTheme = "atomicBit";
-    # };
-
     fastfetch.enable = true; # Faster remake of neofetch
     wofi.enable = true; # Neat launcher
     neovim = { # TUI editor, fork of Vim

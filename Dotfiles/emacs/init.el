@@ -50,15 +50,11 @@
 ;; UI Config
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
-;(tooltip-mode -1)
 (set-fringe-mode 10)
-;(menu-bar-mode -1)
 (setq visible-bell t)
 (straight-use-package 'catppuccin-theme)
 (load-theme 'catppuccin :no-confirm)
-
 ;; Install command-log-mode
-
 (use-package command-log-mode)
 
 ;; Use Ivy completion system
@@ -211,3 +207,31 @@
 (add-hook 'rust-mode-hook
           (lambda () (prettify-symbols-mode)))     ;; Auto-prettifies Rust code
 (setq rust-format-on-save t)                       ;; on save + formats it
+
+;; Install custom splash buffer with Enlight
+(use-package enlight
+  :custom
+  (enlight-content
+   (concat
+    (propertize "MENU" 'face 'highlight)
+    "\n"
+    (enlight-menu
+     '(("Org Mode"
+	("Org-Agenda (current day)" (org-agenda nil "a")))
+       ("Downloads"
+	("Downloads folder" (dired "~/Downloads") "d"))
+       ("Other"
+	("Projects folder" (dired "~/Projects") "p")
+	("NixOS Config folder" (dired "~/nixos") "n")))))))
+(setopt initial-buffer-choice #'enlight)
+
+
+;; Add cool tabs at the top of each frame
+(use-package centaur-tabs
+  :demand
+  :config
+  (centaur-tabs-mode t)
+  (centaur-tabs-style "slant")
+  :bind
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward))

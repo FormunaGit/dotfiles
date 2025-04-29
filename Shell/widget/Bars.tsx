@@ -58,29 +58,22 @@ function FocusedClient() {
   );
 } 
 
-export function BottomDock(gdkmonitor: Gdk.Monitor) {
-  const { BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor;
+export default function BottomDock(gdkmonitor: Gdk.Monitor) {
+const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
   return ( // @ts-ignore
-    <window className="TopBar" gdkmonitor={gdkmonitor} exclusivity={Astal.Exclusivity.EXCLUSIVE} anchor={BOTTOM | LEFT | RIGHT} application={App}>
-    <box className="MainBar">
-      <box hexpand>
-      <box halign={Gtk.Align.START}> 
-                 <ClearNotifs />
+  <window className="TopBar" gdkmonitor={gdkmonitor} exclusivity={Astal.Exclusivity.EXCLUSIVE} anchor={ TOP | LEFT | RIGHT } application={App}>
+    <box hexpand className="MainBar">
+      	<box> 
           <Workspaces />
         </box>
 	<Divider/>
-	<box halign={Gtk.Align.CENTER}>
-	     <FocusedClient/>
-	</box>
-	<Divider/>
-        <box halign={Gtk.Align.END}>
+        <box>
           <box className="Tray">
             <Time />
             <BatteryLevel />
             <Tray /> 
           </box>
         </box>
-      </box>
       </box>
 </window>
   );

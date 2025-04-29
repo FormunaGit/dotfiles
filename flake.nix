@@ -17,7 +17,7 @@
   inputs = {
     # NixOS official package source, using the nixos-unstable branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    #chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     ags = {
       url = "github:Aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,34 +42,25 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, chaotic, stylix, sops-nix, ... }@inputs:
+    { self, nixpkgs, home-manager, stylix, sops-nix, ... }@inputs:
     {
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          ./System/configuration.nix # The classic configuration.nix file
-          sops-nix.nixosModules.sops
-          inputs.stylix.nixosModules.stylix
-          chaotic.nixosModules.default
-          home-manager.nixosModules.home-manager
+          ./NewSystem/configuration.nix # The new configuration.nix file
+          sops-nix.nixosModules.sops              # Sops-nix: Secrets Manager
+          inputs.stylix.nixosModules.stylix           # Stylix: Theme Manager
+          home-manager.nixosModules.home-manager # Home Manager: Home Manager
           {
             nix.settings.trusted-users = [ "formuna" ];
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.formuna = import ./System/home.nix;
+            home-manager.users.formuna = import ./NewSystem/Home.nix;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
           }
         ];
       };
-      nixosConfigurations.beaubox = nixpkgs.lib.nixosSystem {
-	      system = "aarch64-linux";
-	      modules = [
-	        ./ExtraHosts/BeauBox/configuration.nix
-	        sops-nix.nixosModules.sops
-	      ];
-      };
-    };
 }

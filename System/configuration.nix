@@ -1,27 +1,26 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, inputs, lib, ... }: let
-  pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+{ config, pkgs, inputs, lib, ... }:
+let
+  pkgs-unstable =
+    inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [
-    ./hardware-configuration.nix # Include the results of the hardware scan.
-    # Import modules
+    ./hardware-configuration.nix # Preconfigured hardware module.
     (import ./Modules/Gaming.nix { inherit pkgs; }) # Gaming module
-    (import ./Modules/Stylix.nix { inherit pkgs; }) # Stylix module
+    (import ./Modules/Stylix.nix { inherit pkgs config; }) # Stylix module
     (import ./Modules/Development.nix {
       inherit pkgs;
     }) # Development tools module
-    (import ./Modules/Connection.nix { inherit config lib; }) # Connections module
+    (import ./Modules/Connection.nix {
+      inherit config lib;
+    }) # Connections module
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # Packages module
     (import ./Modules/Hardware.nix) # Hardware/drivers module
   ];
 
-  # Enable Flakes
+  # Enable Flakes and the unified Nix command.
   nix.settings = { experimental-features = [ "nix-command" "flakes" ]; };
 
-  # Bootloader and OBS VCam
+  # Bootloader and OBS VCam settings
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
@@ -30,8 +29,7 @@ in {
     options v4l2loopback devices=1 video_nr=1 card_label="OBS Virtual Camera" exclusive_caps=1
   '';
 
-  # Use CachyOS kernel and enable Sched-Ext (courtesy of Chaotic Nyx)
-  boot.kernelPackages = pkgs.linuxPackages_cachyos;
+  programs.nix-ld.enable = true;
 
   # Add Swapfile
   swapDevices = [{
@@ -39,7 +37,7 @@ in {
     size = 4 * 1024;
   }];
 
-  # NTFS Support (disabled for now)
+  # NTFS Support (disabled for now to limit Windows usage >:I)
   # boot.supportedFilesystems = [ "ntfs" ];
   # fileSystems."/mnt/windows-ssd" = {
   #   device = "/dev/nvme0n1p3";
@@ -48,55 +46,36 @@ in {
   # };
 
   # Also mount my external SS(H)D..?
-  fileSystems."/run/media/formuna/ExtDrive" = {
+  fileSystems."/run/media/formuna/Gamerson" = {
     device = "/dev/sda1";
-    fsType = "exfat";
+    fsType = "btrfs";
     options = [
       "users"
-      "uid=1000"
-      "gid=1000"
-      "dmask=007"
-      "fmask=117"
+      "rw"
       "exec" # Required for steam
     ]; # ^ Also place "nofail" if required, right now I'm okay with having to plug it in each time.
   };
 
-  #fileSystems."/run/media/formuna/NTFares" =
-  #  { device = "/dev/sda1";
-  #    fsType = "ntfs-3g"; 
-  #    options = [ "rw" "uid=1000"];
-  #  };
-
-  
-
+  # Defines hostname.
   networking.hostName = "unimag"; # Define your hostname.
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Set your time zone.
+  # Sets timezone.
   time.timeZone = "America/Moncton";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_CA.UTF-8";
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
+  # Enables the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true; # Disabled in favor of GDM
+  # Enable the KDE Plasma Desktop Environment and SDDM.
+  services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+  services.xserver.xkb.layout = "us";
 
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -109,6 +88,7 @@ in {
   users.users.formuna = {
     isNormalUser = true;
     description = "Formuna";
+    shell = pkgs.fish;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -121,9 +101,9 @@ in {
     ];
   };
   # Install firefox.
-  programs.firefox.enable = true;
+  programs.firefox.enable = true; # Todo: replace this with Floorp soon :3
 
-  # Allow unfree packages
+  # Allow unfree packages because...
   nixpkgs.config.allowUnfree = true;
 
   # Enable Polkit
@@ -141,6 +121,7 @@ in {
 
   # Fix weird bug where Blender/games are slow
   hardware.graphics = {
+    enable = true;
     package = pkgs-unstable.mesa;
     enable32Bit = true; # Enable 32-bit
     package32 = pkgs-unstable.pkgsi686Linux.mesa;
@@ -157,17 +138,13 @@ in {
   # Enable Flatpak
   services.flatpak.enable = true;
 
-  # Add Emacs-Overlay
-  #nixpkgs.overlays = [
-  #  (import (builtins.fetchTarball {
-  #    url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-  #  }))
-  #];
-
   # Enable ZSH (Configuration in home manager)
   programs.zsh = {
     enable = true;
     autosuggestions.enable = true;
+    enableCompletion = true;
+    enableLsColors = true;
+    syntaxHighlighting.enable = true;
 
     ohMyZsh = {
       enable = true;
@@ -211,21 +188,15 @@ in {
   # Declaratively enable DCONF
   programs.dconf = { enable = true; };
 
-  # Declaratively enable Node-RED
-  services.node-red = { enable = true; };
-
   # XDG Settings
   xdg = {
     autostart.enable = true;
     portal = {
       enable = true;
-      extraPortals = [
-        #pkgs.xdg-desktop-portal-hyprland
-        pkgs.xdg-desktop-portal
-      ];
+      extraPortals = [ pkgs.xdg-desktop-portal pkgs.xdg-desktop-portal-gtk pkgs-unstable.xdg-desktop-portal-hyprland ];
     };
   };
-  environment.sessionVariables = { NIXOS_XDG_OPEN_USE_PORTAL = "1"; };
+  #environment.sessionVariables = { NIXOS_XDG_OPEN_USE_PORTAL = "1"; };
 
   # Weylus.
   programs.weylus = {
@@ -271,17 +242,18 @@ in {
     syncEffectsEnabled = true;
   };
 
-
   # Enable Emacs
   services.emacs = { # Enable the server
-   enable = true;
-   package = pkgs.emacs30-gtk3; # I like GTK.
- };
+    enable = true;
+    package = pkgs.emacs30-gtk3; # I like GTK.
+  };
 
   # Enable Waydroid
   virtualisation.waydroid.enable = true;
 
-
+  # Enable Fish
+  programs.fish.enable = true;
+  
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -302,6 +274,5 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
-
+  system.stateVersion = "25.05"; # Did you read the comment?
 }

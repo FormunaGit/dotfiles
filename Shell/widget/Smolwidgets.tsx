@@ -21,6 +21,7 @@ export function Time({ format = "%I:%M %p - %a, %b %d" }) {
     />
   );
 }
+
 export function Divider(): any {
   return <box hexpand></box>;
 }

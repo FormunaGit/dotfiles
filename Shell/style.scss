@@ -2,11 +2,11 @@
 
 @function gtkalpha($c, $a) {
     @return string.unquote("alpha(#{$c},#{$a})");
-}
+};
 
-$radius: 50px;
+$radius: 0;
 $bg-color: #1e1e2e;
-$bg-color-soft: transparent;
+$bg-color-soft: $bg-color;
 $fg-color: #cdd6f4;
 $accent: #89b4fa;
 $error: #f38ba8;
@@ -19,7 +19,7 @@ window.TopBar {
     font-size: 15px;
 
     box {
-        padding: 0.5px 0;
+        padding: 0px 0;
     }
 
     .Media {
@@ -32,20 +32,19 @@ window.TopBar {
     .Focused {
         border-radius: $radius;
         background: $bg-color;
-        padding: 1px 5px;
     }
 
     .SysTray {
         border-radius: $radius;
         background: $bg-color;
         border-color: $bg-color;
-        padding: 1px 5px;
+        padding: 0px 0px;
     }
     .TrayItem {
         background: $bg-color;
         border-radius: $radius;
         border-color: $bg-color;
-        margin: 1px 2px;
+        margin: 0px 0px;
         &:hover {
             background: $accent;
             border-color: $accent;
@@ -53,7 +52,7 @@ window.TopBar {
     }
 
     button:not(.TrayItem) {
-        margin: 2px;
+        margin: 0px;
 	border-radius: $radius;
 
         &.focused {
@@ -72,8 +71,8 @@ window.TopBar {
         border-radius: $radius;
         background: $bg-color;
         border-color: $bg-color;
-        padding: 1px 4px;
-        margin: 0 2px;
+        padding: 0px 0px;
+        margin: 0 0px;
         button {
             margin: 2px;
             background: $bg-color;
@@ -95,7 +94,6 @@ window.TopBar {
 // Main Bar SCSS
 .MainBar {
     background-color: rgba(30, 30, 46, 0.4);
-    margin: 0 30px;
     border-radius: 50px 50px 0 0px;
 }
 
@@ -107,19 +105,15 @@ window.NotificationPopups {
 
 eventbox.Notification {
     &:first-child > box {
-        margin-top: 1rem;
     }
 
     &:last-child > box {
-        margin-bottom: 1rem;
     }
 
-    // eventboxes can not take margins so we style its inner box instead
     > box {
         min-width: 400px;
         border-radius: $radius;
         background-color: $bg-color;
-        margin: 0.5rem 1rem 0.5rem 1rem;
         box-shadow: 2px 3px 8px 0 gtkalpha(black, 0.4);
         border: 1pt solid gtkalpha($fg-color, 0.03);
     }
@@ -143,20 +137,16 @@ eventbox.Notification {
         color: gtkalpha($fg-color, 0.5);
 
         .app-icon {
-            margin: 0 0.4rem;
         }
 
         .app-name {
-            margin-right: 0.3rem;
             font-weight: bold;
 
             &:first-child {
-                margin-left: 0.4rem;
             }
         }
 
         .time {
-            margin: 0 0.4rem;
         }
 
         button {
@@ -167,13 +157,10 @@ eventbox.Notification {
     }
 
     separator {
-        margin: 0 0.4rem;
         background-color: gtkalpha($fg-color, 0.1);
     }
 
     .content {
-        margin: 1rem;
-        margin-top: 0.5rem;
 
         .summary {
             font-size: 1.2em;
@@ -186,7 +173,6 @@ eventbox.Notification {
 
         .image {
             border: 1px solid gtkalpha($fg-color, 0.02);
-            margin-right: 0.5rem;
             border-radius: 9px;
             min-width: 100px;
             min-height: 100px;
@@ -196,18 +182,13 @@ eventbox.Notification {
     }
 
     .actions {
-        margin: 1rem;
-        margin-top: 0;
 
         button {
-            margin: 0 0.3rem;
 
             &:first-child {
-                margin-left: 0;
             }
 
             &:last-child {
-                margin-right: 0;
             }
         }
     }
