@@ -35,6 +35,9 @@
     fastfetch             # Faster Neofetch
     wofi                  # App launcher
     mangohud              # Resource overlay for games
+    firefox               # TODO: Replace with Floorp.
+    neovim                # Terminal Editor
+    
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #

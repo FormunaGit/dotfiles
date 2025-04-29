@@ -7,6 +7,7 @@ in {
   imports = [
     ./hardware-configuration.nix # System's preconfigured hardware module.
     (import ./Packages.nix { inherit pkgs inputs; })    # System Packages.
+    (import ./Stylix.nix { inherit pkgs config; })               # Stylix.
   ];
 
   # Enable Flakes and the unified Nix command.
@@ -133,7 +134,7 @@ in {
     enable = true;      # No idea why this isn't enabled by default...
     enable32Bit = true; # 32-Bit drivers.
     package = hyprpkgs.mesa;                 # 64-bit ⟵┬{Mesa drivers from HyprCachix}
-    package32 = hyprpkgs.pkgs1686Linux.mesa; # 32-bit ⟵╯
+    package32 = hyprpkgs.pkgsi686Linux.mesa; # 32-bit ⟵╯
     extraPackages = with pkgs; [ intel-media-driver ];                 # 64b ⟵╮
     extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver ]; # 32b ⟵┤
   };                                                         # {Intel Drivers}╯
