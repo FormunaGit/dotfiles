@@ -71,7 +71,8 @@ in {
   i18n.defaultLocale = "en_CA.UTF-8";
 
   # Install ReGreet as an alternative to SDDM.
-  programs.regreet.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # Enable sound with Pipewire (plus some backwards compatibility)
   security.rtkit.enable = true;
@@ -140,6 +141,7 @@ in {
   };                                                         # {Intel Drivers}╯
 
   # Power-related features (Auto-CPUFREQ+Thermald)
+  services.power-profiles-daemon.enable = false;
   services.auto-cpufreq = {
     enable = true;
     settings = {
@@ -184,13 +186,6 @@ in {
   # Input remapper for remapping inputs.
   services.input-remapper = { enable = true; enableUdevRules = true; };
 
-  # Enable Emacs
-  services.emacs = {
-    enable = true;
-    package = pkgs.emacs30-gtk3; # I prefer GTK.
-    defaultEditor = true;        # Make Emacs the default editor.
-  };
-
   # Enable fish
   programs.fish.enable = true;
 
@@ -205,4 +200,7 @@ in {
     protontricks.enable = true;                   # Valve-flavored Winetricks.
     extraCompatPackages = [ pkgs.proton-ge-bin ]; # ProtonGE.
   };
+
+  # Flatpak!
+  services.flatpak.enable = true;
 }

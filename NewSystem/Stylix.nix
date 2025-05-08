@@ -9,7 +9,7 @@ in{
   stylix = {
     enable = true;
     autoEnable = true;
-    image = ../../Wallpapers/escape_velocity_small.png;
+    image = ../Wallpapers/escape_velocity_small.png;
     base16Scheme = github-dark-base16;
     polarity = "dark";
     fonts = {

@@ -12,6 +12,7 @@
     dotacat               # Faster Lolcat
     watershot             # Screenshotting tool, replacement to Grimblast
     goofcord              # Discord 3rd-party client
+    legcord               # Discord 3rd-party client
     activate-linux        # :troll:
     networkmanagerapplet  # Tray item for controlling Wi-Fi.
     blender               # 3D modelling software
@@ -37,7 +38,7 @@
     mangohud              # Resource overlay for games
     firefox               # TODO: Replace with Floorp.
     neovim                # Terminal Editor
-    
+    moonlight-qt          # Sunshine client 
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -57,5 +58,15 @@
     nixfmt-classic            # Cool Nix file formatter.
     # Not sure if I need this
     inputs.ags.packages.x86_64-linux.default # AGS
+
+    # VSCod(ium)!!
+    (vscode-with-extensions.override {
+      vscode = vscodium;
+      vscodeExtensions = with vscode-extensions; [
+        catppuccin.catppuccin-vsc
+        ms-python.python
+        jnoortheen.nix-ide
+      ];
+    })
   ];
 }
