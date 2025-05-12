@@ -1,8 +1,6 @@
-import { Astal, Gtk, Gdk } from "astal/gtk3";
-import Notifd from "gi://AstalNotifd";
-import Notification from "./Notification";
-import { type Subscribable } from "astal/binding";
-import { Variable, bind, timeout } from "astal";
+// Todo: Fix this horrible code.
+// @ts-ignore
+import { Astal, Gtk, Gdk } from "astal/gtk3"; import Notifd from "gi://AstalNotifd"; import Notification from "./Notification"; import { type Subscribable } from "astal/binding"; import { Variable, bind, timeout } from "astal";
 
 // see comment below in constructor
 const TIMEOUT_DELAY = 5000;
@@ -34,7 +32,7 @@ class NotifiationMap implements Subscribable {
      */
     // notifd.ignoreTimeout = true
 
-    notifd.connect("notified", (_, id) => {
+    notifd.connect("notified", (_: any, id: any) => {
       this.set(
         id,
         Notification({
@@ -64,7 +62,7 @@ class NotifiationMap implements Subscribable {
 
     // notifications can be closed by the outside before
     // any user input, which have to be handled too
-    notifd.connect("resolved", (_, id) => {
+    notifd.connect("resolved", (_: any, id: number) => {
       this.delete(id);
     });
   }
@@ -97,7 +95,7 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
   const { TOP, RIGHT } = Astal.WindowAnchor;
   const notifs = new NotifiationMap();
 
-  return (
+  return ( // @ts-ignore
     <window
       className="NotificationPopups"
       gdkmonitor={gdkmonitor}

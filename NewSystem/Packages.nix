@@ -39,6 +39,7 @@
     firefox               # TODO: Replace with Floorp.
     neovim                # Terminal Editor
     moonlight-qt          # Sunshine client 
+    beeper                # Universal chat app. What more could I want?
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #

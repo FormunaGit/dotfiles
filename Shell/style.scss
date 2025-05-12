@@ -1,26 +1,20 @@
 @use "sass:string";
-
 @function gtkalpha($c, $a) {
     @return string.unquote("alpha(#{$c},#{$a})");
 };
 
-$radius: 0;
-$bg-color: #1e1e2e;
-$bg-color-soft: $bg-color;
-$fg-color: #cdd6f4;
-$accent: #89b4fa;
-$error: #f38ba8;
+$radius: 10px;
+$bg-color: #191724;    //$bg-color: #1e1e2e;
+$fg-color: #e0def4;    //$fg-color: #cdd6f4;
+$accent: #31748f;         //$accent: #89b4fa;
+$error: #eb6f92;          //$error: #f38ba8;
 
 window.TopBar {
-    background: $bg-color-soft;
+    background: $bg-color;
     color: $fg-color;
     font-family: "Quicksand", monospace;
     font-weight: normal;
     font-size: 15px;
-
-    box {
-        padding: 0px 0;
-    }
 
     .Media {
         border-radius: $radius;
@@ -29,40 +23,25 @@ window.TopBar {
         border-color: $bg-color;
     }
 
-    .Focused {
-        border-radius: $radius;
-        background: $bg-color;
-    }
-
     .SysTray {
         border-radius: $radius;
         background: $bg-color;
         border-color: $bg-color;
-        padding: 0px 0px;
-    }
-    .TrayItem {
-        background: $bg-color;
-        border-radius: $radius;
-        border-color: $bg-color;
-        margin: 0px 0px;
-        &:hover {
-            background: $accent;
-            border-color: $accent;
-        }
     }
 
-    button:not(.TrayItem) {
+    button {
         margin: 0px;
-	border-radius: $radius;
-
+	    border-radius: $radius;
+        background: $bg-color;
+        border-color: $bg-color;
         &.focused {
             background: $accent;
-            color: #1e1e2e;
+            color: $bg-color;
             border-color: $accent;
         }
         &:hover {
             background: $accent;
-            color: #1e1e2e;
+            color: $bg-color;
             border-color: $accent;
         }
     }
@@ -71,30 +50,23 @@ window.TopBar {
         border-radius: $radius;
         background: $bg-color;
         border-color: $bg-color;
-        padding: 0px 0px;
-        margin: 0 0px;
+        padding: 0; margin: 0;
         button {
             margin: 2px;
             background: $bg-color;
             border-color: $bg-color;
             &.focused {
                 background: $accent;
-                color: #1e1e2e;
+                color: $bg-color;
                 border-color: $accent;
             }
             &:hover {
                 background: $accent;
-                color: #1e1e2e;
+                color: $bg-color;
                 border-color: $accent;
             }
         }
     }
-}
-
-// Main Bar SCSS
-.MainBar {
-    background-color: rgba(30, 30, 46, 0.4);
-    border-radius: 50px 50px 0 0px;
 }
 
 // Notifications SCSS
@@ -104,12 +76,6 @@ window.NotificationPopups {
 }
 
 eventbox.Notification {
-    &:first-child > box {
-    }
-
-    &:last-child > box {
-    }
-
     > box {
         min-width: 400px;
         border-radius: $radius;
@@ -136,17 +102,8 @@ eventbox.Notification {
         padding: 0.5rem;
         color: gtkalpha($fg-color, 0.5);
 
-        .app-icon {
-        }
-
         .app-name {
             font-weight: bold;
-
-            &:first-child {
-            }
-        }
-
-        .time {
         }
 
         button {
@@ -180,16 +137,20 @@ eventbox.Notification {
             background-position: center;
         }
     }
+}
 
-    .actions {
-
-        button {
-
-            &:first-child {
-            }
-
-            &:last-child {
-            }
-        }
+// On-Screen Display
+window.OSD {
+    box.OSD {
+        border-radius: $radius;
+        background-color: $bg-color;
+        padding: 7px 8px;
+        margin: 7px;
     }
+
+    icon { font-size: 2rem; }
+
+    label { font-size: 1.2rem; }
+
+    levelbar { trough { margin: 1.6rem; } block { min-height: 1rem; } }
 }

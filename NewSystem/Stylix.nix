@@ -1,8 +1,8 @@
 { pkgs, config, ... }:
 let
-  github-dark-base16 = builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/tinted-theming/schemes/refs/heads/spec-0.11/base16/github-dark.yaml";
-    sha256 = "1sylsjd92f81nabg01mfbpv9bq79bkzxm3bjwkbds583wz6vpdi8";
+  rose-pine-base16 = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/edunfelt/base16-rose-pine-scheme/refs/heads/main/rose-pine.yaml";
+    sha256 = "1qwd70fiqd321jhbbc6y4313r37h4mjb8a208i5d6prmns0y25jd";
   };
 in{
   # Stylix
@@ -10,7 +10,7 @@ in{
     enable = true;
     autoEnable = true;
     image = ../Wallpapers/escape_velocity_small.png;
-    base16Scheme = github-dark-base16;
+    base16Scheme = rose-pine-base16;
     polarity = "dark";
     fonts = {
       serif = config.stylix.fonts.sansSerif;

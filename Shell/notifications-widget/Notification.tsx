@@ -1,6 +1,10 @@
+// @ts-ignore
 import { GLib } from "astal"
+// @ts-ignore
 import { Gtk, Astal } from "astal/gtk3"
+// @ts-ignore
 import { type EventBox } from "astal/gtk3/widget"
+// @ts-ignore
 import Notifd from "gi://AstalNotifd"
 
 const isIcon = (icon: string) =>
@@ -34,10 +38,8 @@ export default function Notification(props: Props) {
     const { notification: n, onHoverLost, setup } = props
     const { START, CENTER, END } = Gtk.Align
 
-    return <eventbox
-        className={`Notification ${urgency(n)}`}
-        setup={setup}
-        onHoverLost={onHoverLost}>
+    // @ts-ignore
+    return <eventbox className={`Notification ${urgency(n)}`} setup={setup}>
         <box vertical>
             <box className="header">
                 {(n.appIcon || n.desktopEntry) && <icon
@@ -45,18 +47,10 @@ export default function Notification(props: Props) {
                     visible={Boolean(n.appIcon || n.desktopEntry)}
                     icon={n.appIcon || n.desktopEntry}
                 />}
-                <label
-                    className="app-name"
-                    halign={START}
-                    truncate
-                    label={n.appName || "Unknown"}
-                />
-                <label
-                    className="time"
-                    hexpand
-                    halign={END}
-                    label={time(n.time)}
-                />
+                <label className="app-name" halign={START} truncate label={n.appName || "Unknown"}/> {/* Name of app */}
+                
+                <label className="time" hexpand halign={END} label={time(n.time)}/> {/* Timestamp of Notification */}
+                
                 <button onClicked={() => n.dismiss()}>
                     <icon icon="window-close-symbolic" />
                 </button>
@@ -94,7 +88,11 @@ export default function Notification(props: Props) {
                 </box>
             </box>
             {n.get_actions().length > 0 && <box className="actions">
-                {n.get_actions().map(({ label, id }) => (
+                {n.get_actions().map(({
+                    // @ts-ignore
+
+                    label, id
+                 }) => (
                     <button
                         hexpand
                         onClicked={() => n.invoke(id)}>

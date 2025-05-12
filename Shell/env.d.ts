@@ -26,6 +26,11 @@ declare namespace JSX {
     window: any;
     Divider: any;
     label: any;
+    eventbox: any;
+    icon: any;
+    button: any;
+    entry: any;
+    revealer: any;
     // Add other Astal components here
   }
-}
+} 

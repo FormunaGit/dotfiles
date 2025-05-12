@@ -36,7 +36,7 @@ in {
   }];
 
   # Mount external SSD.
-  fileSystems."/run/media/formuna/Gamerson" = {
+  fileSystems."/run/media/formuna/PreNiles" = {
     device = "/dev/sda1";
     fsType = "btrfs";
     options = [ "users" "rw" "exec" ];
