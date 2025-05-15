@@ -1,0 +1,101 @@
+* {
+    all: unset;
+    font-weight: bold;
+}
+ 
+$bg: #191724;
+$fg: #e0def4;
+$active: #31748f;
+$unactive: #6e6a86;
+$radius: 0;
+
+.bar {
+    padding: 0rem 0.5rem;
+    background-color: $bg;
+    color: $fg;
+    min-height: 10px;
+    font-family: "JetBrainsMono Nerd Font";
+}
+
+.middle-separator {
+    background-color: $unactive;
+    padding: 0 0.03rem;
+}
+
+.volume-slider trough {
+    min-width: 100px;
+    background-color: $unactive;
+    min-height: 0.3rem;
+    border-radius: $radius;
+
+    highlight {
+        background-color: $active;
+    }
+
+    slider {
+        background-color: $fg;
+        min-height: 20px;
+        min-width: 20px;
+        margin: -8px;
+        border-radius: $radius;
+    }
+}
+
+.workspace {
+    border-radius: $radius;
+    padding: 0 0.5rem;
+}
+
+.workspace:hover {
+    background-color: lighten($bg, 10%);
+}
+
+.workspace.active {
+    background-color: $active;
+    color: $fg;
+}
+
+.tray-item {
+    all: unset;
+}
+
+.clock {
+    font-size: 1.1rem;
+    margin-right: 0.5rem;
+}
+
+popover.menu {
+    contents {
+        background-color: $bg;
+        padding: 0.35rem;
+        border-radius: $radius;
+        modelbutton {
+            transition: 0.3s;
+            border-radius: $radius;
+            padding: 0.25rem 1rem;
+        }
+        modelbutton:hover {
+            background-color: mix($bg, $unactive, 80%);
+        }
+        separator {
+            background-color: mix($bg, $unactive, 90%);
+            min-height: 0.1rem;
+            margin: 0.5rem 0;
+        }
+
+        label:disabled {
+            color: $unactive;
+        }
+
+        arrow {
+            opacity: 0.3;
+          
+            &:hover { background: none; }
+          
+            &.left { -gtk-icon-source: -gtk-icontheme("go-previous-symbolic"); }
+          
+            &.right { -gtk-icon-source: -gtk-icontheme("go-next-symbolic"); }
+          }
+
+    }
+}
