@@ -44,20 +44,7 @@
     enable = true;
     plugins = with pkgs.obs-studio-plugins; [
       obs-3d-effect
-      obs-vkcapture
       wlrobs
     ];
   };
-
-  # Create custom Emacs.desktop file that loads in the config in an imperative way
-  xdg.desktopEntries = {
-    refreshedEmacs = {
-      name = "Refreshed Emacs";
-      genericName = "Code Editor";
-      exec = "emacs -q -l /etc/nixos/Dotfiles/emacs/init.el";
-      terminal = false;
-      categories = [ "Development" ];
-    };
-  };
-
 }

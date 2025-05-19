@@ -1,5 +1,6 @@
 from ignis.widgets import Widget
 from ignis.services.hyprland import HyprlandService, HyprlandWorkspace
+from .System import icon_list
 
 # Variable for controlling Hyprland
 hyprland = HyprlandService.get_default()
@@ -8,7 +9,9 @@ hyprland = HyprlandService.get_default()
 def keyboard_layout() -> Widget.EventBox:
     return Widget.EventBox(
         on_click=lambda self: hyprland.main_keyboard.switch_layout("next"),
-        child=[Widget.Label(label=hyprland.main_keyboard.bind("active_keymap"))],                                                                                                                 # noqa: E501
+        child=[
+            Widget.Label(label=hyprland.main_keyboard.bind("active_keymap"))
+        ],
     )
 
 
@@ -55,3 +58,17 @@ def client_title() -> Widget.Label:
         max_width_chars=40,
         label=hyprland.active_window.bind("title"),
     )
+
+
+def icon_client_title() -> Widget.Box:
+    return Widget.Box(
+        child=[
+            iconer(hyprland.active_window.bind("title")),
+            client_title(),
+        ]
+    )
+
+
+def iconer(name: str):
+    if ".py" in name:
+        return icon_list("python")

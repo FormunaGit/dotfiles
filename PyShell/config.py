@@ -21,8 +21,9 @@ app.apply_css(f"{Utils.get_current_dir()}/style.scss")
 def left(monitor_name: str) -> Widget.Box:
     return Widget.Box(
         child=[
-            icon_list("nixos"),
+            icon_list("nixos", True),
             client_title(),
+            # icon_client_title(),
             Widget.Separator(vertical=True, css_classes=["middle-separator"]),
         ],
         spacing=10,

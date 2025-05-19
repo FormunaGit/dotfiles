@@ -103,24 +103,40 @@ def power_menu() -> Widget.Button:
             IgnisMenuSeparator(),
             IgnisMenuItem(
                 label="Logout",
-                on_activate=lambda x: create_exec_task("hyprctl dispatch exit 0"),  # noqa: E501
+                on_activate=lambda x: create_exec_task(
+                    "hyprctl dispatch exit 0"
+                ),  # noqa: E501
             ),
         ),
     )
     return Widget.Button(
         child=Widget.Box(
-            child=[Widget.Icon(
-                image="system-shutdown-symbolic",
-                pixel_size=20
-            ), menu]
+            child=[Widget.Icon(image="system-shutdown-symbolic", pixel_size=20), menu]  # noqa: E501
         ),
         on_click=lambda x: menu.popup(),
     )
 
 
-def icon_list(icon: str) -> Widget.Label:
+def icon_list(icon: str, label: bool = False) -> Widget.Label:
     icons = {
         "nixos": " ",
         "hypr": " ",
+        "vscode": " ",
+        "terminal": " ",
+        "firefox": "󰈹 ",
+        "discord": " ",
+        "steam": " ",
+        "kdenlive": " ",
+        "pavucontrol": "󰓃 ",
+        # Programming Languages
+        "css": " ",
+        "js": " ",
+        "html": " ",
+        "json": "󰘦 ",
+        "python": " ",
+        "react": " ",
     }
-    return Widget.Label(label=icons[icon])
+    if label:
+        return Widget.Label(label=icons[icon])
+    elif not label:
+        return icons[icon]

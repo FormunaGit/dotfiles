@@ -33,7 +33,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix.url = "github:danth/stylix/release-24.11";
+    stylix.url = "github:danth/stylix/master";
     sops-nix.url = "github:Mic92/sops-nix";
 
     ignis.url = "github:linkfrg/ignis";

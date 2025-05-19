@@ -43,6 +43,10 @@
     neovim # Terminal Editor
     moonlight-qt # Sunshine client
     beeper # Universal chat app. What more could I want?
+    hyprshot # Screenshotting tool
+    swaynotificationcenter # Cool notification daemon
+    nh # A Nix helper.
+    mumble # Mumble Client
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -60,7 +64,7 @@
     gitkraken # Closed-source GUI for Git. TODO: Start using Magit.
     nixd # Cool Nix LSP.
     nixfmt-classic # Cool Nix file formatter.
-    vscodium-fhs # FOSS Code editor
+    vscodium # FOSS Code editor
     inputs.ignis.packages.${system}.ignis # Ignis
     black # Python file formatter
   ];

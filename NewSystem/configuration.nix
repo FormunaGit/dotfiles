@@ -8,6 +8,7 @@ in {
     ./hardware-configuration.nix # System's preconfigured hardware module.
     (import ./Packages.nix { inherit pkgs inputs; }) # System Packages.
     (import ./Stylix.nix { inherit pkgs config; }) # Stylix.
+    ./MicOverMumble.nix
   ];
 
   # Enable Flakes and the unified Nix command.
@@ -45,8 +46,11 @@ in {
   # Networking stuff + set the system hostname.
   networking = {
     hostName = "unimag"; # System Hostname
-    firewall.allowedUDPPorts =
-      [ 51820 ]; # Currently only WireGuard port is opened.
+    firewall.allowedUDPPorts = [
+      51820 # WireGuard port
+      64738 # Mumble server port
+    ];
+    firewall.allowedTCPPorts = [ 64738 ];
     networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
@@ -78,11 +82,21 @@ in {
   # Enable sound with Pipewire (plus some backwards compatibility)
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = true; # #########################
-    alsa.enable = true; # Enable backwards       #
-    alsa.support32Bit = true; # compatibility with the #
-    pulse.enable = true; # weaker audio systems.  #
-  }; # #########################
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
+  # Enable Mumble server for mic_over_mumble
+  services.murmur = {
+    enable = true;
+    bandwidth = 540000;
+    bonjour = true;
+    password = "thisMumbleServerIsntAccesibleThroughTheInternet!!";
+    autobanTime = 0;
+  };
 
   # Define the "formuna" user account. (that's me!)
   users = {

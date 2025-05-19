@@ -47,9 +47,7 @@ def speaker_volume() -> Widget.Box:
                 style="margin-right: 5px;",
             ),
             Widget.Label(
-                label=audio.speaker.bind(
-                    "volume", transform=lambda value: str(value)
-                )
+                label=audio.speaker.bind("volume", transform=lambda value: str(value))  # noqa: E501
             ),
             Widget.Label(label="%"),
         ]
