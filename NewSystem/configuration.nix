@@ -1,14 +1,11 @@
 { config, pkgs, inputs, ... }:
-let
-  hyprpkgs =
-    inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-  kernelpkgs = config.boot.kernelPackages;
+let kernelpkgs = config.boot.kernelPackages;
 in {
   imports = [
     ./hardware-configuration.nix # System's preconfigured hardware module.
     (import ./Packages.nix { inherit pkgs inputs; }) # System Packages.
-    (import ./Stylix.nix { inherit pkgs config; }) # Stylix.
-    ./MicOverMumble.nix
+    (import ./Stylix.nix) # Stylix.
+    #./MicOverMumble.nix
   ];
 
   # Enable Flakes and the unified Nix command.
@@ -33,7 +30,7 @@ in {
   # Add Swapfile | TODO: Lower this to 2GB some day.
   swapDevices = [{
     device = "/var/lib/swapfile";
-    size = 4 * 1024;
+    size = 6 * 1024;
   }];
 
   # Mount external SSD.
@@ -48,9 +45,9 @@ in {
     hostName = "unimag"; # System Hostname
     firewall.allowedUDPPorts = [
       51820 # WireGuard port
-      64738 # Mumble server port
+      #64738 # Mumble server port
     ];
-    firewall.allowedTCPPorts = [ 64738 ];
+    #firewall.allowedTCPPorts = [ 64738 ];
     networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
@@ -61,13 +58,13 @@ in {
   # And then Tailscale!
   services.tailscale = {
     enable = true;
-    useRoutingFeatures = "client"; # My PC isn't server.
+    useRoutingFeatures = "client"; # My PC isn't a server.
     openFirewall = true; # Opens port in firewall.
   };
 
   # Bluetooth stuff
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true; # A GUI for managing Bluetooth devices
+  #services.blueman.enable = true; # A GUI for managing Bluetooth devices
 
   # My timezone.
   time.timeZone = "America/Moncton";
@@ -76,8 +73,8 @@ in {
   i18n.defaultLocale = "en_CA.UTF-8";
 
   # Install ReGreet as an alternative to SDDM.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  #services.displayManager.sddm.enable = true;
+  #services.desktopManager.plasma6.enable = true;
 
   # Enable sound with Pipewire (plus some backwards compatibility)
   security.rtkit.enable = true;
@@ -90,13 +87,13 @@ in {
   };
 
   # Enable Mumble server for mic_over_mumble
-  services.murmur = {
-    enable = true;
-    bandwidth = 540000;
-    bonjour = true;
-    password = "thisMumbleServerIsntAccesibleThroughTheInternet!!";
-    autobanTime = 0;
-  };
+  #services.murmur = {
+  #  enable = true;
+  #  bandwidth = 540000;
+  #  bonjour = true;
+  #  password = "thisMumbleServerIsntAccesibleThroughTheInternet!!";
+  #  autobanTime = 0;
+  #};
 
   # Define the "formuna" user account. (that's me!)
   users = {
@@ -109,9 +106,11 @@ in {
         "wheel" # Sudo privs
         "adbusers" # Access to sudo-less ADB
         "scanner" # Control over scanners ⟵┬{Printer-related groups}
-        "lp" # Control over printers ⟵╯
+        "lp" # Control over printers      ⟵╯
         "uinput" # Not sure what this is for, but if it ain't broke...
         "kvm" # Control over KVM-powered VMs
+        "render"
+        "video"
       ];
     };
   };
@@ -126,54 +125,47 @@ in {
   security.polkit.enable = true;
 
   # Small system-wide Hyprland config.
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true; # "Improves systemd support" by using UWSM. Why not.
-    xwayland.enable = true; # Enables xWayland.           ###################
-    package = hyprpkgs.hyprland; # Use updated     #
-    portalPackage = hyprpkgs.xdg-desktop-portal-hyprland; # flake packages. #
-  }; # ##################
+  # programs.hyprland = {
+  #   enable = true;
+  #   withUWSM = true; # "Improves systemd support" by using UWSM. Why not.
+  #   xwayland.enable = true; # Enables xWayland.           ###################
+  #   package = hyprpkgs.hyprland; # Use updated     #
+  #   portalPackage = hyprpkgs.xdg-desktop-portal-hyprland; # flake packages. #
+  # }; # ##################
 
   # Also set some XDG settings.
-  xdg = {
-    autostart.enable = true;
-    portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal
-        xdg-desktop-portal-gtk
-        hyprpkgs.xdg-desktop-portal-hyprland
-      ];
-    };
-  };
+  # Not sure if this is needed.
+  # xdg = {
+  #   autostart.enable = true;
+  #   portal = {
+  #     enable = true;
+  #     extraPortals = with pkgs; [ xdg-desktop-portal xdg-desktop-portal-gtk ];
+  #   };
+  # };
 
+  # Not sure if this is needed.
   hardware.graphics = {
     enable = true; # No idea why this isn't enabled by default...
     enable32Bit = true; # 32-Bit drivers.
-    package = hyprpkgs.mesa; # 64-bit ⟵┬{Mesa drivers from HyprCachix}
-    package32 = hyprpkgs.pkgsi686Linux.mesa; # 32-bit ⟵╯
-    extraPackages = with pkgs; [ intel-media-driver ]; # 64b ⟵╮
-    extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver ]; # 32b ⟵┤
-  }; # {Intel Drivers}╯
+    extraPackages = with pkgs; [ intel-media-driver vpl-gpu-rt ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver ];
+  };
 
   # Power-related features (Auto-CPUFREQ+Thermald)
   services.power-profiles-daemon.enable = false;
   services.auto-cpufreq = {
     enable = true;
     settings = {
-      battery = {
+      battery = { # Save when on battery
         governor = "powersave";
         turbo = "never";
-      }; # Save when on battery
-      charger = {
+      };
+      charger = { # Go ALL OUT when charging
         governor = "performance";
         turbo = "auto";
-      }; # Go full when charging
+      };
     };
   };
-
-  # Not sure where I need this, but here's dConf.
-  programs.dconf.enable = true;
 
   # Weylus for using my phone as a stylus.
   programs.weylus = {
@@ -182,28 +174,12 @@ in {
     users = [ "formuna" ]; # Needed for accessing Weylus without root.
   };
 
-  # Stop the power button from being used to shut off the computer.
+  # Stop the power button from being used to shut off the computer,
+  # and make closing the lid not cause the both screens to shut off.
   services.logind.extraConfig = ''
     HandlePowerKey=ignore
+    HandleLidSwitch=ignore
   '';
-
-  # Polkit stuff
-  systemd = {
-    user.services.polkit-gnome-authentication-agent-1 = {
-      description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
-      serviceConfig = {
-        Type = "simple";
-        ExecStart =
-          "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-        Restart = "on-failure";
-        RestartSec = 1;
-        TimeoutStopSec = 10;
-      };
-    };
-  };
 
   # Input remapper for remapping inputs.
   services.input-remapper = {
@@ -211,10 +187,56 @@ in {
     enableUdevRules = true;
   };
 
+  # Enable printing and scanning
+  services.printing.enable = true;
+  hardware.sane.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  # Enable GDM+GNOME
+  # oh yeah also some GNOME configs and dconf
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
+  programs.dconf.enable = true;
+  environment.systemPackages = with pkgs.gnomeExtensions; [
+    forge # The WM.
+    space-bar # i3-like bar
+    blur-my-shell # Blur the shell.
+    tweaks-in-system-menu # Put Gnome Tweaks, Extensions, Extension Manager and any other application in the System menu
+    appindicator # Tray icons
+    pano # Clipboard manager
+    add-to-desktop # Add apps to the desktop
+    kando-integration # Cool launcher
+    custom-hot-corners-extended # Custom hot corners
+    paperwm # Replacement to Forge
+  ];
+
   # Enable fish
   programs.fish.enable = true;
 
-  system.stateVersion = "25.05"; # Don't change this value I guess.
+  # And enable Starship
+  programs.starship = {
+    enable = true;
+    # Additional configuration options can be added here.
+  };
+
+  # NUR!!
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball
+      "https://github.com/nix-community/NUR/archive/main.tar.gz") {
+        inherit pkgs;
+      };
+  };
+
+  # Waydroid (Disabled for now due to update being broken)
+  #virtualisation.waydroid.enable = true;
+
+  # QEMU/KVM
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
 
   # ╔────────────╗ #
   # │Gaming Stuff│ #
@@ -227,5 +249,22 @@ in {
   };
 
   # Flatpak!
-  services.flatpak.enable = true;
+  services.flatpak = {
+    enable = true;
+    packages = [
+      "com.github.tchx84.Flatseal"
+      "org.vinegarhq.Sober"
+      "org.vinegarhq.Vinegar"
+      # GNOME-related stuff
+      "com.rafaelmardojai.Blanket"
+      "org.gnome.Builder"
+      "com.github.wwmm.easyeffects"
+      "io.gitlab.adhami3310.Impression"
+      "org.gnome.Boxes"
+      "ar.xjuan.Cambalache"
+      "org.gnome.gitg"
+    ];
+  };
+
+  system.stateVersion = "25.05"; # Don't change this value I guess.
 }
