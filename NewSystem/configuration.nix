@@ -262,7 +262,6 @@ in {
       "io.gitlab.adhami3310.Impression"
       "org.gnome.Boxes"
       "ar.xjuan.Cambalache"
-      "org.gnome.gitg"
     ];
   };
 
