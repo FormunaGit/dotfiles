@@ -32,30 +32,39 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  };
 
-  outputs = { self, nixpkgs, home-manager, stylix, sops-nix, nix-flatpak, ... }@inputs: let
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./NewSystem/configuration.nix # The new configuration.nix file
-        nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
-        sops-nix.nixosModules.sops # Sops-nix: Secrets Manager
-        inputs.stylix.nixosModules.stylix # Stylix: Theme Manager
-        home-manager.nixosModules.home-manager # Home Manager: Home Manager
-        {
-          nix.settings.trusted-users = [ "formuna" ];
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.formuna = import ./NewSystem/Home.nix;
-          home-manager.backupFileExtension = "backup";
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
-        }
-      ];
+    # Neovim, but Nix.
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  outputs =
+    { self, nixpkgs, home-manager, sops-nix, nix-flatpak, nixvim, ... }@inputs:
+    let
+      #system = "x86_64-linux";
+      #pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          nixvim.nixosModules.nixvim # What if Neovim was combined with Nix?
+          ./NewSystem/configuration.nix # The new configuration.nix file
+          nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
+          sops-nix.nixosModules.sops # Sops-nix: Secrets Manager
+          inputs.stylix.nixosModules.stylix # Stylix: Theme Manager
+          home-manager.nixosModules.home-manager # Home Manager: Home Manager
+          {
+            nix.settings.trusted-users = [ "formuna" ];
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.formuna = import ./NewSystem/Home.nix;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
+          }
+        ];
+      };
+    };
 }

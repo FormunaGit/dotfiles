@@ -34,6 +34,8 @@
     kando # Neat Pie launcher
     ffmpeg # Audio.
     yt-dlp # Youtube video downloader
+    fd # Find tool
+    gnumake # Make command
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -57,5 +59,6 @@
     inputs.ignis.packages.${system}.ignis # Ignis
     black # Python file formatter
     dconf2nix # GNOME config to Nix tool for declarative GNOMing.
+    neovide # GUI Neovim
   ];
 }

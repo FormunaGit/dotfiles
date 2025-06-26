@@ -6,6 +6,7 @@ in {
     (import ./Packages.nix { inherit pkgs inputs; }) # System Packages.
     (import ./Stylix.nix) # Stylix.
     #./MicOverMumble.nix
+    (import ./Modules/Nixvim/default.nix)
   ];
 
   # Enable Flakes and the unified Nix command.
@@ -22,6 +23,8 @@ in {
     extraModprobeConfig = ''
       options v4l2loopback devices=1 video_nr=1 card_label="OBS VCAM" exclusive_caps=1
     '';
+
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   };
 
   # Nix-LD for binaries.
@@ -33,12 +36,12 @@ in {
     size = 6 * 1024;
   }];
 
-  # Mount external SSD.
-  fileSystems."/run/media/formuna/PreNiles" = {
-    device = "/dev/sda1";
-    fsType = "btrfs";
-    options = [ "users" "rw" "exec" ];
-  };
+  # Mount external SSD. Disabled because the drive is no longer used.
+  # fileSystems."/run/media/formuna/PreNiles" = {
+  #   device = "/dev/sda1";
+  #   fsType = "btrfs";
+  #   options = [ "users" "rw" "exec" ];
+  # };
 
   # Networking stuff + set the system hostname.
   networking = {
@@ -48,7 +51,11 @@ in {
       #64738 # Mumble server port
     ];
     #firewall.allowedTCPPorts = [ 64738 ];
-    networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
+    networkmanager = { # Enable NetworkManager since I need Wi-Fi.
+      enable = true;
+      wifi.powersave = false;
+    };
+    enableIPv6 = false;
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
@@ -111,6 +118,7 @@ in {
         "kvm" # Control over KVM-powered VMs
         "render"
         "video"
+        "libvirtd"
       ];
     };
   };
@@ -235,7 +243,10 @@ in {
   #virtualisation.waydroid.enable = true;
 
   # QEMU/KVM
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
+  };
   programs.virt-manager.enable = true;
 
   # ╔────────────╗ #
