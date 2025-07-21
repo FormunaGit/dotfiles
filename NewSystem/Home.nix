@@ -1,5 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   home.stateVersion = "24.11"; # Version of Home Manager.
+
+  imports = [ inputs.textfox.homeManagerModules.default ];
 
   # Sops-nix config
   sops = {
@@ -14,27 +16,6 @@
       openrouterApiKey.path = "/run/user/1000/secrets/openrouterApiKey";
     };
   };
-
-  # Enable HM Hyprland Module
-  # wayland.windowManager.hyprland = {
-  #   enable = true;
-  #   plugins = with pkgs.hyprlandPlugins; [
-  #     hypr-dynamic-cursors # Cool cursor animations
-  #     hyprspace # Workspace overview plugin
-  #   ];
-  #   extraConfig = toString (builtins.readFile ../Dotfiles/hypr/hyprland.conf);
-  #   package = null;
-  #   portalPackage = null; # Fix for Roblox Studio
-  # };
-
-  # Player Control Daemon
-  #services.playerctld.enable = true;
-
-  # Trayscale, GUI for Tailscale
-  # services.trayscale = {
-  #   enable = true;
-  #   hideWindow = true;
-  # };
 
   # OBS!
   programs.obs-studio = {
@@ -65,5 +46,10 @@
     target = ".config/nixpkgs/config.nix";
     text = ''
       { packageOverrides = pkgs: { nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; }; }; }'';
+  };
+
+  textfox = {
+    enable = true;
+    profile = "sroktgkn.default";
   };
 }

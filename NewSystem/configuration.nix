@@ -204,22 +204,27 @@ in {
   };
 
   # Enable GDM+GNOME
-  # oh yeah also some GNOME configs and dconf
+  # oh yeah also some GNOME configs, dconf and gsconnect
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs.gnomeExtensions; [
-    forge # The WM.
-    space-bar # i3-like bar
-    blur-my-shell # Blur the shell.
-    tweaks-in-system-menu # Put Gnome Tweaks, Extensions, Extension Manager and any other application in the System menu
     appindicator # Tray icons
-    pano # Clipboard manager
-    add-to-desktop # Add apps to the desktop
+    blur-my-shell # Blur the shell.
+    burn-my-windows # KABOOOM my windows
+    dash-to-dock
+    desktop-cube # Haven't used this in a while
+    forge # The WM.
     kando-integration # Cool launcher
-    custom-hot-corners-extended # Custom hot corners
-    paperwm # Replacement to Forge
+    pano # Clipboard manager
+    runcat # Funny cat that runs
+    space-bar # i3-like bar
+    tweaks-in-system-menu # system menu tweaks
   ];
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
+  };
 
   # Enable fish
   programs.fish.enable = true;
@@ -265,14 +270,13 @@ in {
       "com.github.tchx84.Flatseal"
       "org.vinegarhq.Sober"
       "org.vinegarhq.Vinegar"
+      "dev.overlayed.Overlayed"
       # GNOME-related stuff
       "com.rafaelmardojai.Blanket"
       "org.gnome.Builder"
       "com.github.wwmm.easyeffects"
-      "io.gitlab.adhami3310.Impression"
       "org.gnome.Boxes"
-      "ar.xjuan.Cambalache"
-      "com.jetpackduba.Gitnuro"
+      "org.godotengine.Godot"
     ];
   };
 

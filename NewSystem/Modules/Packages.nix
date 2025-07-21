@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     # Main stuff
     wl-clipboard # Wayland clipboard support
@@ -50,15 +50,15 @@
     monaspace # Awesome font for coding.
     rustup # Rust toolchain installer.
     gcc # GNU's C compiler.
-    godot_4 # Best game engine!
     gitkraken # Closed-source GUI for Git.
     nixd # Cool Nix LSP.
     nixfmt-classic # Cool Nix file formatter.
     vscodium # FOSS Code editor
     zed-editor # It's back...
-    inputs.ignis.packages.${system}.ignis # Ignis
+    #inputs.ignis.packages.${system}.ignis # Ignis
     black # Python file formatter
     dconf2nix # GNOME config to Nix tool for declarative GNOMing.
     neovide # GUI Neovim
+    cachix # Cachix
   ];
 }

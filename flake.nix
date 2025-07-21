@@ -24,8 +24,6 @@
     stylix.url = "github:danth/stylix/master";
     sops-nix.url = "github:Mic92/sops-nix";
 
-    ignis.url = "github:linkfrg/ignis";
-
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     nur = {
@@ -38,10 +36,13 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Textfox theme for Firefox
+    textfox.url = "github:adriankarlen/textfox";
   };
 
-  outputs =
-    { self, nixpkgs, home-manager, sops-nix, nix-flatpak, nixvim, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, sops-nix, nix-flatpak, nixvim
+    , textfox, ... }@inputs:
     let
       #system = "x86_64-linux";
       #pkgs = nixpkgs.legacyPackages.${system};
