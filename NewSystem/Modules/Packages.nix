@@ -25,7 +25,7 @@
     fastfetch # Faster Neofetch
     mangohud # Resource overlay for games
     firefox # TODO: Replace with Floorp.
-    neovim # Terminal Editor
+    #neovim # Terminal Editor
     beeper # Universal chat app. What more could I want?
     nh # A Nix helper.
     mumble # Mumble Client

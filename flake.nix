@@ -50,7 +50,7 @@
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          nixvim.nixosModules.nixvim # What if Neovim was combined with Nix?
+          nixvim.nixosModules.nixvim # Nixvim: Neovim Manager
           ./NewSystem/configuration.nix # The new configuration.nix file
           nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
           sops-nix.nixosModules.sops # Sops-nix: Secrets Manager

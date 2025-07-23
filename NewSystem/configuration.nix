@@ -1,10 +1,11 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, nixvim, ... }:
 let kernelpkgs = config.boot.kernelPackages;
 in {
   imports = [
     ./Modules/hardware-configuration.nix # System's preconfigured hardware module.
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # System Packages.
     (import ./Modules/Stylix.nix) # Stylix.
+    (import ./Modules/Nixvim.nix { inherit pkgs nixvim; }) # Nixvim.
     #./MicOverMumble.nix
   ];
 
