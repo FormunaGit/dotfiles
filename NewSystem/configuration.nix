@@ -1,12 +1,9 @@
-{ config, pkgs, inputs, nixvim, ... }:
-let kernelpkgs = config.boot.kernelPackages;
-in {
+{ config, pkgs, inputs, ... }: {
   imports = [
     ./Modules/hardware-configuration.nix # System's preconfigured hardware module.
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # System Packages.
     (import ./Modules/Stylix.nix) # Stylix.
-    (import ./Modules/Nixvim.nix { inherit pkgs nixvim; }) # Nixvim.
-    #./MicOverMumble.nix
+    (import ./Modules/Minecraft.nix { inherit pkgs; })
   ];
 
   # Enable Flakes and the unified Nix command.
@@ -18,44 +15,38 @@ in {
       systemd-boot.enable = true; # Systemd-boot. Simple.
       efi.canTouchEfiVariables = true;
     };
-    extraModulePackages = with kernelpkgs; [ v4l2loopback ]; # Kernel modules
+    extraModulePackages =
+      [ config.boot.kernelPackages.v4l2loopback ]; # Kernel modules
     kernelModules = [ "v4l2loopback" ]; # Activate(?) kernel modules
     extraModprobeConfig = ''
-      options v4l2loopback devices=1 video_nr=1 card_label="OBS VCAM" exclusive_caps=1
-    '';
+      options v4l2loopback devices=1 video_nr=1 card_label="OBS Virtual Camera" exclusive_caps=1
+    ''; # OBS Virtual Camera settings
 
-    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen; # Zen kernel
   };
 
   # Nix-LD for binaries.
   programs.nix-ld.enable = true;
 
-  # Add Swapfile | TODO: Lower this to 2GB some day.
+  # Add Swapfile
   swapDevices = [{
     device = "/var/lib/swapfile";
-    size = 6 * 1024;
+    size = 4 * 1024;
   }];
 
-  # Mount external SSD. Disabled because the drive is no longer used.
-  # fileSystems."/run/media/formuna/PreNiles" = {
-  #   device = "/dev/sda1";
-  #   fsType = "btrfs";
-  #   options = [ "users" "rw" "exec" ];
-  # };
+  # Mount secondary SSD.
+  fileSystems."/run/media/formuna/StrangeDrive" = {
+    device = "/dev/sda1";
+    fsType = "btrfs";
+    options = [ "users" "rw" "exec" ];
+  };
 
   # Networking stuff + set the system hostname.
   networking = {
     hostName = "unimag"; # System Hostname
-    firewall.allowedUDPPorts = [
-      51820 # WireGuard port
-      #64738 # Mumble server port
-    ];
-    #firewall.allowedTCPPorts = [ 64738 ];
-    networkmanager = { # Enable NetworkManager since I need Wi-Fi.
-      enable = true;
-      wifi.powersave = false;
-    };
+    networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
     enableIPv6 = false;
+    firewall.allowedUDPPorts = [ 51820 ];
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
@@ -71,17 +62,12 @@ in {
 
   # Bluetooth stuff
   hardware.bluetooth.enable = true;
-  #services.blueman.enable = true; # A GUI for managing Bluetooth devices
 
   # My timezone.
   time.timeZone = "America/Moncton";
 
   # Set "internationalisation properties"
   i18n.defaultLocale = "en_CA.UTF-8";
-
-  # Install ReGreet as an alternative to SDDM.
-  #services.displayManager.sddm.enable = true;
-  #services.desktopManager.plasma6.enable = true;
 
   # Enable sound with Pipewire (plus some backwards compatibility)
   security.rtkit.enable = true;
@@ -94,13 +80,13 @@ in {
   };
 
   # Enable Mumble server for mic_over_mumble
-  #services.murmur = {
-  #  enable = true;
-  #  bandwidth = 540000;
-  #  bonjour = true;
-  #  password = "thisMumbleServerIsntAccesibleThroughTheInternet!!";
-  #  autobanTime = 0;
-  #};
+  # services.murmur = {
+  #   enable = true;
+  #   bandwidth = 540000;
+  #   bonjour = true;
+  #   password = "thisMumbleServerIsntAccesibleThroughTheInternet!!";
+  #   autobanTime = 0;
+  # };
 
   # Define the "formuna" user account. (that's me!)
   users = {
@@ -112,13 +98,8 @@ in {
         "networkmanager" # Control over NetworkManager
         "wheel" # Sudo privs
         "adbusers" # Access to sudo-less ADB
-        "scanner" # Control over scanners ⟵┬{Printer-related groups}
-        "lp" # Control over printers      ⟵╯
         "uinput" # Not sure what this is for, but if it ain't broke...
         "kvm" # Control over KVM-powered VMs
-        "render"
-        "video"
-        "libvirtd"
       ];
     };
   };
@@ -132,48 +113,8 @@ in {
   # Polkit.
   security.polkit.enable = true;
 
-  # Small system-wide Hyprland config.
-  # programs.hyprland = {
-  #   enable = true;
-  #   withUWSM = true; # "Improves systemd support" by using UWSM. Why not.
-  #   xwayland.enable = true; # Enables xWayland.           ###################
-  #   package = hyprpkgs.hyprland; # Use updated     #
-  #   portalPackage = hyprpkgs.xdg-desktop-portal-hyprland; # flake packages. #
-  # }; # ##################
-
-  # Also set some XDG settings.
-  # Not sure if this is needed.
-  # xdg = {
-  #   autostart.enable = true;
-  #   portal = {
-  #     enable = true;
-  #     extraPortals = with pkgs; [ xdg-desktop-portal xdg-desktop-portal-gtk ];
-  #   };
-  # };
-
-  # Not sure if this is needed.
-  hardware.graphics = {
-    enable = true; # No idea why this isn't enabled by default...
-    enable32Bit = true; # 32-Bit drivers.
-    extraPackages = with pkgs; [ intel-media-driver vpl-gpu-rt ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver ];
-  };
-
-  # Power-related features (Auto-CPUFREQ+Thermald)
-  services.power-profiles-daemon.enable = false;
-  services.auto-cpufreq = {
-    enable = true;
-    settings = {
-      battery = { # Save when on battery
-        governor = "powersave";
-        turbo = "never";
-      };
-      charger = { # Go ALL OUT when charging
-        governor = "performance";
-        turbo = "auto";
-      };
-    };
-  };
+  # Power-related features (PPD for control in GNOME)
+  services.power-profiles-daemon.enable = true;
 
   # Weylus for using my phone as a stylus.
   programs.weylus = {
@@ -182,27 +123,13 @@ in {
     users = [ "formuna" ]; # Needed for accessing Weylus without root.
   };
 
-  # Stop the power button from being used to shut off the computer,
-  # and make closing the lid not cause the both screens to shut off.
-  services.logind.extraConfig = ''
-    HandlePowerKey=ignore
-    HandleLidSwitch=ignore
-  '';
-
   # Input remapper for remapping inputs.
   services.input-remapper = {
     enable = true;
     enableUdevRules = true;
   };
 
-  # Enable printing and scanning
-  services.printing.enable = true;
-  hardware.sane.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
+  # TODO: Fix printing.
 
   # Enable GDM+GNOME
   # oh yeah also some GNOME configs, dconf and gsconnect
@@ -215,7 +142,8 @@ in {
     burn-my-windows # KABOOOM my windows
     dash-to-dock
     desktop-cube # Haven't used this in a while
-    forge # The WM.
+    #forge # The WM.
+    pop-shell # The better shell.
     kando-integration # Cool launcher
     pano # Clipboard manager
     runcat # Funny cat that runs
@@ -244,20 +172,9 @@ in {
       };
   };
 
-  # Waydroid (Disabled for now due to update being broken)
-  #virtualisation.waydroid.enable = true;
-
-  # QEMU/KVM
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
-  };
-  programs.virt-manager.enable = true;
-
-  # ╔────────────╗ #
-  # │Gaming Stuff│ #
-  # ╚────────────╝ #
-  programs.steam = { # The best game launcher.
+  # Steam
+  programs.steam = {
+    # The best game launcher.
     enable = true;
     dedicatedServer.openFirewall = true; # Open firewall for servers.
     protontricks.enable = true; # Valve-flavored Winetricks.
@@ -268,16 +185,12 @@ in {
   services.flatpak = {
     enable = true;
     packages = [
-      "com.github.tchx84.Flatseal"
-      "org.vinegarhq.Sober"
-      "org.vinegarhq.Vinegar"
-      "dev.overlayed.Overlayed"
-      # GNOME-related stuff
-      "com.rafaelmardojai.Blanket"
-      "org.gnome.Builder"
-      "com.github.wwmm.easyeffects"
-      "org.gnome.Boxes"
-      "org.godotengine.Godot"
+      "com.github.tchx84.Flatseal" # GUI for Flatpak permissions
+      "org.vinegarhq.Sober" # Roblox
+      "org.vinegarhq.Vinegar" # Roblox Studio
+      "com.rafaelmardojai.Blanket" # Noises
+      "com.github.wwmm.easyeffects" # Audio effects
+      "org.godotengine.Godot" # Godot game engines
     ];
   };
 

@@ -68,7 +68,7 @@ in {
   stylix = {
     enable = true;
     autoEnable = true;
-    image = random-wallpapers.nix;
+    image = random-wallpapers.rhombus;
     base16Scheme = base16-theme;
     polarity = "dark";
   };

@@ -18,24 +18,20 @@
     git # Git and...
     gh # the GitHub CLI!
     ydotool # Automation tool
-    nodejs # I don't like JS, buuuut...
+    nodejs # I like JS
     ripgrep # Faster version of GNU grep
     unzip
     unrar # Unzip and Unrar command.
     fastfetch # Faster Neofetch
     mangohud # Resource overlay for games
     firefox # TODO: Replace with Floorp.
-    #neovim # Terminal Editor
-    beeper # Universal chat app. What more could I want?
     nh # A Nix helper.
     mumble # Mumble Client
     gnome-tweaks # Tweaks Gnome.
-    comma # Cool tool for Nix
     kando # Neat Pie launcher
     ffmpeg # Audio.
     yt-dlp # Youtube video downloader
-    fd # Find tool
-    gnumake # Make command
+    kitty # Terminal
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
