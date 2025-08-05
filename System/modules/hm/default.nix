@@ -1,4 +1,3 @@
-# Home Manager
 { ... }:
 
 {
@@ -16,20 +15,6 @@
   hydenix.hm = {
     #! Important options
     enable = true;
-    editors = {
-      default = "neovim"; # default text editor
-      vim = false; # disable vim module
-    };
-
-    shell = {
-      fish.enable = true; # enable fish shell
-      zsh = {
-        enable = false; # enable zsh shell
-        plugins = [ ]; # zsh plugins
-        configText = ""; # zsh config text
-      };
-    };
-
     /* ! Below are defaults, no need to uncomment them all
        comma.enable = true; # useful nix tool to run software without installing it first
        dolphin.enable = true; # file manager

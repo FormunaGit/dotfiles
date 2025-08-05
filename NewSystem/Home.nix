@@ -1,5 +1,5 @@
 { pkgs, inputs, ... }: {
-  home.stateVersion = "24.11"; # Version of Home Manager.
+  home.stateVersion = "25.05"; # Version of Home Manager.
 
   imports = [
     inputs.textfox.homeManagerModules.default
@@ -27,13 +27,13 @@
   };
 
   # GTK config to fix improper icon theme.
-  gtk = {
-    enable = true;
-    iconTheme = {
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
-    };
-  };
+  # gtk = {
+  #   enable = true;
+  #   iconTheme = {
+  #     package = pkgs.adwaita-icon-theme;
+  #     name = "Adwaita";
+  #   };
+  # };
 
   # Fish config for secrets
   programs.fish = {

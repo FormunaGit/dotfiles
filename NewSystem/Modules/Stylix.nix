@@ -66,8 +66,8 @@ let
 in {
   # Stylix
   stylix = {
-    enable = true;
-    autoEnable = true;
+    enable = false;
+    autoEnable = false;
     image = random-wallpapers.rhombus;
     base16Scheme = base16-theme;
     polarity = "dark";
