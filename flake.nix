@@ -39,6 +39,18 @@
 
     # Textfox theme for Firefox
     textfox.url = "github:adriankarlen/textfox";
+
+    # Nix-Minecraft
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+
+    # Hydenix
+    hydenix.url = "github:richen604/hydenix";
+
+    # Nix-index-database - for comma and command-not-found
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, sops-nix, nix-flatpak, nixvim
@@ -48,6 +60,7 @@
       #pkgs = nixpkgs.legacyPackages.${system};
     in {
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
+        inherit (inputs.hydenix.lib) system;
         specialArgs = { inherit inputs; };
         modules = [
           nixvim.nixosModules.nixvim # Nixvim: Neovim Manager
@@ -55,7 +68,8 @@
           nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
           sops-nix.nixosModules.sops # Sops-nix: Secrets Manager
           inputs.stylix.nixosModules.stylix # Stylix: Theme Manager
-          home-manager.nixosModules.home-manager # Home Manager: Home Manager
+          #home-manager.nixosModules.home-manager # Home Manager: Home Manager
+          inputs.hydenix.inputs.home-manager.nixosModules.home-manager
           {
             nix.settings.trusted-users = [ "formuna" ];
             home-manager.useGlobalPkgs = true;

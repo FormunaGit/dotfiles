@@ -1,9 +1,27 @@
-{ config, pkgs, inputs, ... }: {
+{ config, inputs, ... }:
+let
+  pkgs = import inputs.hydenix.inputs.hydenix-nixpkgs {
+    inherit (inputs.hydenix.lib) system;
+    config.allowUnfree = true;
+    overlays = [
+      inputs.hydenix.lib.overlays
+      (final: prev: {
+        userPkgs = import inputs.nixpkgs { config.allowUnfree = true; };
+      })
+    ];
+  };
+in {
   imports = [
     ./Modules/hardware-configuration.nix # System's preconfigured hardware module.
+
+    inputs.hydenix.lib.nixOsModules
+    inputs.hydenix.inputs.nixos-hardware.nixosModules.common-cpu-intel
+    inputs.hydenix.inputs.nixos-hardware.nixosModules.common-pc
+    inputs.hydenix.inputs.nixos-hardware.nixosModules.common-pc-ssd
+    #./Modules/Hydenix/System
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # System Packages.
     (import ./Modules/Stylix.nix) # Stylix.
-    (import ./Modules/Minecraft.nix { inherit pkgs; })
+    (import ./Modules/Minecraft.nix { inherit pkgs inputs; })
   ];
 
   # Enable Flakes and the unified Nix command.
@@ -96,10 +114,11 @@
       description = "Formuna"; # The human readable name of the user.
       extraGroups = [
         "networkmanager" # Control over NetworkManager
-        "wheel" # Sudo privs
+        "wheel" # Sudo privileges
         "adbusers" # Access to sudo-less ADB
         "uinput" # Not sure what this is for, but if it ain't broke...
         "kvm" # Control over KVM-powered VMs
+        "video" # For display/graphics access
       ];
     };
   };
@@ -192,6 +211,14 @@
       "com.github.wwmm.easyeffects" # Audio effects
       "org.godotengine.Godot" # Godot game engines
     ];
+  };
+
+  hydenix = {
+    enable = true;
+
+    hostname = "unimag";
+    timezone = "America/Moncton";
+    locale = "en_CA.UTF-8";
   };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.

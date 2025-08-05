@@ -32,6 +32,7 @@
     ffmpeg # Audio.
     yt-dlp # Youtube video downloader
     kitty # Terminal
+    tmux # Running Nix-Shell to get this is getting annoying.
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #

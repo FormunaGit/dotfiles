@@ -1,7 +1,12 @@
 { pkgs, inputs, ... }: {
   home.stateVersion = "24.11"; # Version of Home Manager.
 
-  imports = [ inputs.textfox.homeManagerModules.default ];
+  imports = [
+    inputs.textfox.homeManagerModules.default
+    inputs.hydenix.lib.homeModules
+    inputs.nix-index-database.hmModules.nix-index
+    ./Modules/Hydenix.nix
+  ];
 
   # Sops-nix config
   sops = {
