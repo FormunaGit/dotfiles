@@ -1,12 +1,7 @@
 { pkgs, inputs, ... }: {
   home.stateVersion = "25.05"; # Version of Home Manager.
 
-  imports = [
-    inputs.textfox.homeManagerModules.default
-    inputs.hydenix.lib.homeModules
-    inputs.nix-index-database.hmModules.nix-index
-    ./Modules/Hydenix.nix
-  ];
+  imports = [ inputs.textfox.homeManagerModules.default ];
 
   # Sops-nix config
   sops = {
@@ -27,13 +22,13 @@
   };
 
   # GTK config to fix improper icon theme.
-  # gtk = {
-  #   enable = true;
-  #   iconTheme = {
-  #     package = pkgs.adwaita-icon-theme;
-  #     name = "Adwaita";
-  #   };
-  # };
+  gtk = {
+    enable = true;
+    iconTheme = {
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+  };
 
   # Fish config for secrets
   programs.fish = {

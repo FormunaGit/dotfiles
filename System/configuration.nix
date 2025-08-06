@@ -15,6 +15,12 @@ let
   };
 in {
 
+  # Add Swapfile
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 4 * 1024;
+  }];
+
   # Set pkgs for hydenix globally, any file that imports pkgs will use this
   nixpkgs.pkgs = pkgs;
 
@@ -97,8 +103,9 @@ in {
     */
   };
 
+  programs.fish.enable = true;
   #! EDIT THESE VALUES (must match users defined above)
-  users.users.fares = {
+  users.users.formuna = {
     isNormalUser = true; # Regular user account
     extraGroups = [
       "wheel" # For sudo access

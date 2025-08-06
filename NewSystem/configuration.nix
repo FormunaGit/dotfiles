@@ -1,23 +1,7 @@
-{ inputs, ... }:
-let
-  pkgs = import inputs.hydenix.inputs.hydenix-nixpkgs {
-    inherit (inputs.hydenix.lib) system;
-    config.allowUnfree = true;
-    overlays = [
-      inputs.hydenix.lib.overlays
-      (final: prev: {
-        userPkgs = import inputs.nixpkgs { config.allowUnfree = true; };
-      })
-    ];
-  };
-in {
+{ config, pkgs, inputs, ... }: {
   imports = [
     ./Modules/hardware-configuration.nix # System's preconfigured hardware module.
 
-    inputs.hydenix.lib.nixOsModules
-    inputs.hydenix.inputs.nixos-hardware.nixosModules.common-cpu-intel
-    inputs.hydenix.inputs.nixos-hardware.nixosModules.common-pc
-    inputs.hydenix.inputs.nixos-hardware.nixosModules.common-pc-ssd
     #./Modules/Hydenix/System
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # System Packages.
     (import ./Modules/Stylix.nix) # Stylix.
@@ -28,20 +12,20 @@ in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader and OBS VCam settings
-  # boot = {
-  #   loader = {
-  #     # systemd-boot.enable = true; # Systemd-boot. Simple.
-  #     # efi.canTouchEfiVariables = true;
-  #   };
-  #   extraModulePackages =
-  #     [ config.boot.kernelPackages.v4l2loopback ]; # Kernel modules
-  #   kernelModules = [ "v4l2loopback" ]; # Activate(?) kernel modules
-  #   extraModprobeConfig = ''
-  #     options v4l2loopback devices=1 video_nr=1 card_label="OBS Virtual Camera" exclusive_caps=1
-  #   ''; # OBS Virtual Camera settings
+  boot = {
+    loader = {
+      systemd-boot.enable = true; # Systemd-boot. Simple.
+      efi.canTouchEfiVariables = true;
+    };
+    extraModulePackages =
+      [ config.boot.kernelPackages.v4l2loopback ]; # Kernel modules
+    kernelModules = [ "v4l2loopback" ]; # Activate(?) kernel modules
+    extraModprobeConfig = ''
+      options v4l2loopback devices=1 video_nr=1 card_label="OBS Virtual Camera" exclusive_caps=1
+    ''; # OBS Virtual Camera settings
 
-  #   kernelPackages = pkgs.linuxKernel.packages.linux_zen; # Zen kernel
-  # };
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen; # Zen kernel
+  };
 
   # Nix-LD for binaries.
   programs.nix-ld.enable = true;
@@ -152,7 +136,7 @@ in {
 
   # Enable GDM+GNOME
   # oh yeah also some GNOME configs, dconf and gsconnect
-  #services.displayManager.gdm.enable = true;
+  services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs.gnomeExtensions; [
@@ -211,14 +195,6 @@ in {
       "com.github.wwmm.easyeffects" # Audio effects
       "org.godotengine.Godot" # Godot game engines
     ];
-  };
-
-  hydenix = {
-    enable = true;
-
-    hostname = "unimag";
-    timezone = "America/Moncton";
-    locale = "en_CA.UTF-8";
   };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.

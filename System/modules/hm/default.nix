@@ -15,6 +15,11 @@
   hydenix.hm = {
     #! Important options
     enable = true;
+    shell = {
+      enable = true; # enable shell module
+      zsh.enable = false; # enable zsh shell
+      fish.enable = true; # enable fish shell
+    };
     /* ! Below are defaults, no need to uncomment them all
        comma.enable = true; # useful nix tool to run software without installing it first
        dolphin.enable = true; # file manager

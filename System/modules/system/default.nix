@@ -2,9 +2,9 @@
 
 {
   imports = [
-    (import ./Modules/Minecraft.nix {
-      inherit pkgs inputs;
-    }) # Semi-declarative Minecraft server configuration
+    # (import ./Modules/minecraft/default.nix {
+    #   inherit pkgs inputs;
+    # }) # Semi-declarative Minecraft server configuration
   ];
 
   environment.systemPackages = [
