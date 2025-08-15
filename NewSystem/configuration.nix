@@ -103,6 +103,7 @@
         "uinput" # Not sure what this is for, but if it ain't broke...
         "kvm" # Control over KVM-powered VMs
         "video" # For display/graphics access
+        "docker" # Docker. This is the insecure thing I was talking about in the comment for docker below.
       ];
     };
   };
@@ -193,9 +194,18 @@
       "org.vinegarhq.Vinegar" # Roblox Studio
       "com.rafaelmardojai.Blanket" # Noises
       "com.github.wwmm.easyeffects" # Audio effects
-      "org.godotengine.Godot" # Godot game engines
+      "org.godotengine.Godot" # Godot game engine
     ];
   };
+
+  # Hyprland!
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
+
+  # Probably insecure. Docker.
+  virtualisation.docker = { enable = true; };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }

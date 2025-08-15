@@ -68,7 +68,7 @@ in {
   stylix = {
     enable = true;
     autoEnable = true;
-    image = random-wallpapers.pacman;
+    image = random-wallpapers.mandelbrot_full;
     base16Scheme = base16-theme;
     polarity = "dark";
   };

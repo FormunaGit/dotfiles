@@ -33,6 +33,9 @@
     yt-dlp # Youtube video downloader
     kitty # Terminal
     tmux # Running Nix-Shell to get this is getting annoying.
+    swaynotificationcenter # Notification center
+    cliphist # Clipboard history manager
+    superfile # TUI file manager
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -43,6 +46,7 @@
     # ╔───────────╗ #
     # │Development│ #
     # ╚───────────╝ #
+    bun # JavaScript runtime
     nerd-fonts.jetbrains-mono # Awesome font for coding.
     monaspace # Awesome font for coding.
     rustup # Rust toolchain installer.
@@ -50,12 +54,14 @@
     gitkraken # Closed-source GUI for Git.
     nixd # Cool Nix LSP.
     nixfmt-classic # Cool Nix file formatter.
-    vscodium # FOSS Code editor
     zed-editor # It's back...
-    #inputs.ignis.packages.${system}.ignis # Ignis
     black # Python file formatter
-    dconf2nix # GNOME config to Nix tool for declarative GNOMing.
+    neovim # CLI Neovim
     neovide # GUI Neovim
     cachix # Cachix
+    #inputs.ignis.packages.${system}.ignis
+    playerctl # Control playing media
+    kdePackages.xwaylandvideobridge # Allow sharing Wayland windows in XWayland
+    rofi # Launcher
   ];
 }
