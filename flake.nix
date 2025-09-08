@@ -83,6 +83,6 @@
         modules = [
           ./Windel/configuration.nix
         ];
-      }
+      };
     };
 }
