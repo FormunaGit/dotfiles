@@ -6,6 +6,7 @@
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # System Packages.
     (import ./Modules/Stylix.nix) # Stylix.
     (import ./Modules/Minecraft.nix { inherit pkgs inputs; })
+    ./Modules/MicOverMumble.nix
   ];
 
   # Enable Flakes and the unified Nix command.
@@ -43,12 +44,19 @@
     options = [ "users" "rw" "exec" ];
   };
 
+  # Hardware accelerated graphics drivers?
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
   # Networking stuff + set the system hostname.
   networking = {
     hostName = "unimag"; # System Hostname
     networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
-    enableIPv6 = false;
-    firewall.allowedUDPPorts = [ 51820 ];
+    # enableIPv6 = false;
+    firewall.allowedUDPPorts = [ 51820 59100 ];
+    firewall.allowedTCPPorts = [ 59100 ];
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
@@ -82,13 +90,13 @@
   };
 
   # Enable Mumble server for mic_over_mumble
-  # services.murmur = {
-  #   enable = true;
-  #   bandwidth = 540000;
-  #   bonjour = true;
-  #   password = "thisMumbleServerIsntAccesibleThroughTheInternet!!";
-  #   autobanTime = 0;
-  # };
+  services.murmur = {
+    enable = false;
+    bandwidth = 540000;
+    bonjour = true;
+    password = "thisMumbleServerIsntAccesibleThroughTheInternet!!";
+    autobanTime = 0;
+  };
 
   # Define the "formuna" user account. (that's me!)
   users = {
@@ -103,7 +111,6 @@
         "uinput" # Not sure what this is for, but if it ain't broke...
         "kvm" # Control over KVM-powered VMs
         "video" # For display/graphics access
-        "docker" # Docker. This is the insecure thing I was talking about in the comment for docker below.
       ];
     };
   };
@@ -140,20 +147,6 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
   programs.dconf.enable = true;
-  environment.systemPackages = with pkgs.gnomeExtensions; [
-    appindicator # Tray icons
-    blur-my-shell # Blur the shell.
-    burn-my-windows # KABOOOM my windows
-    dash-to-dock
-    desktop-cube # Haven't used this in a while
-    #forge # The WM.
-    pop-shell # The better shell.
-    kando-integration # Cool launcher
-    pano # Clipboard manager
-    runcat # Funny cat that runs
-    space-bar # i3-like bar
-    tweaks-in-system-menu # system menu tweaks
-  ];
   programs.kdeconnect = {
     enable = true;
     package = pkgs.gnomeExtensions.gsconnect;
@@ -198,6 +191,9 @@
     ];
   };
 
+  # Waydroid
+  virtualisation.waydroid.enable = true;
+
   # Hyprland!
   programs.hyprland = {
     enable = true;
@@ -205,7 +201,7 @@
   };
 
   # Probably insecure. Docker.
-  virtualisation.docker = { enable = true; };
+  virtualisation.docker = { enable = false; };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }

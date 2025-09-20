@@ -36,6 +36,7 @@
     swaynotificationcenter # Notification center
     cliphist # Clipboard history manager
     superfile # TUI file manager
+    virt-manager # Virtualization manager
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -63,5 +64,8 @@
     playerctl # Control playing media
     kdePackages.xwaylandvideobridge # Allow sharing Wayland windows in XWayland
     rofi # Launcher
+    wireguard-tools # Wireguard tools
+    go # Golang
+    packwiz # CLI tool for Minecraft modpack development
   ];
 }

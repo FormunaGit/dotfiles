@@ -1,0 +1,30 @@
+[
+  {
+    // Use black to format the Shell's code
+    "label": "Format Shell (Black)",
+    "command": "black ./Shell/*.py",
+    // Use a new terminal tab instead of reusing the existing one.
+    "use_new_terminal": true
+  },
+  {
+    // Rebuild the system (NixOS)
+    "label": "Rebuild System (NixOS)",
+    "command": "sudo nixos-rebuild switch --impure --show-trace --accept-flake-config",
+    // Use a new terminal tab instead of reusing the existing one.
+    "use_new_terminal": true
+  },
+  {
+    // Update the flake (NixOS)
+    "label": "Update Flake (NixOS)",
+    "command": "sudo nix flake update && sudo nix flake lock && sudo nix flake archive",
+    // Use a new terminal tab instead of reusing the existing one.
+    "use_new_terminal": true
+  },
+  {
+    // Update the system (NixOS)
+    "label": "Update Flake + System (NixOS)",
+    "command": "sudo nix flake update && sudo nix flake lock && sudo nix flake archive && sudo nixos-rebuild switch --impure --show-trace --accept-flake-config",
+    // Use a new terminal tab instead of reusing the existing one.
+    "use_new_terminal": true
+  }
+]

@@ -27,23 +27,21 @@
     ];
   };
   services.pipewire.extraConfig.pipewire."98-virtual-mic" = {
-    "context.modules" = [
-      {
-        name = "libpipewire-module-loopback";
-        args = {
-          "audio.position" = "FL,FR";
-          "node.description" = "Mumble as Microphone";
-          "capture.props" = {
-            # Mumble's output node name.
-            "node.target" = "Mumble";
-            "node.passive" = true;
-          };
-          "playback.props" = {
-            "node.name" = "Virtual-Mumble-Microphone";
-            "media.class" = "Audio/Source";
-          };
+    "context.modules" = [{
+      name = "libpipewire-module-loopback";
+      args = {
+        "audio.position" = "FL,FR";
+        "node.description" = "Mumble as Microphone";
+        "capture.props" = {
+          # Mumble's output node name.
+          "node.target" = "Mumble";
+          "node.passive" = true;
         };
-      }
-    ];
+        "playback.props" = {
+          "node.name" = "Virtual-Mumble-Microphone";
+          "media.class" = "Audio/Source";
+        };
+      };
+    }];
   };
 }

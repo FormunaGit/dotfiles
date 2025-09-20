@@ -1,13 +1,13 @@
 import os
 import datetime
 import asyncio
-from ignis.menu_model import IgnisMenuModel, IgnisMenuItem, IgnisMenuSeparator # type: ignore
-from ignis import widgets, utils # type: ignore
-from ignis.css_manager import CssManager, CssInfoPath # type: ignore
-from ignis.services.audio import AudioService # type: ignore
-from ignis.services.system_tray import SystemTrayService, SystemTrayItem # type: ignore
-from ignis.services.hyprland import HyprlandService # type: ignore
-from ignis.services.mpris import MprisService, MprisPlayer # type: ignore
+from ignis.menu_model import IgnisMenuModel, IgnisMenuItem, IgnisMenuSeparator  # type: ignore
+from ignis import widgets, utils  # type: ignore
+from ignis.css_manager import CssManager, CssInfoPath  # type: ignore
+from ignis.services.audio import AudioService  # type: ignore
+from ignis.services.system_tray import SystemTrayService, SystemTrayItem  # type: ignore
+from ignis.services.hyprland import HyprlandService  # type: ignore
+from ignis.services.mpris import MprisService, MprisPlayer  # type: ignore
 
 css_manager = CssManager.get_default()
 
@@ -23,6 +23,7 @@ audio = AudioService.get_default()
 system_tray = SystemTrayService.get_default()
 hyprland = HyprlandService.get_default()
 mpris = MprisService.get_default()
+
 
 def workspace_button(workspace) -> widgets.Button:
     if hyprland.is_available:
@@ -96,7 +97,7 @@ def media() -> widgets.Box:
         spacing=10,
         child=[
             widgets.Label(
-                label="No media players",
+                label="",
                 visible=mpris.bind("players", lambda value: len(value) == 0),
             )
         ],
@@ -135,14 +136,12 @@ def speaker_volume() -> widgets.Box:
     return widgets.Box(
         child=[
             widgets.Icon(
-                image=audio.speaker.bind("icon_name"), style="margin-right: 5px;"
+                image=audio.speaker.bind("icon_name"), style="margin-right: 5px;"  # type: ignore
             ),
             widgets.Label(
-                label=audio.speaker.bind("volume", transform=lambda value: str(value))
+                label=audio.speaker.bind("volume", transform=lambda value: str(value))  # type: ignore
             ),
-            widgets.Label(
-                label="%"
-            ),
+            widgets.Label(label="%"),
         ]
     )
 
@@ -182,8 +181,8 @@ def speaker_slider() -> widgets.Scale:
         min=0,
         max=100,
         step=1,
-        value=audio.speaker.bind("volume"),
-        on_change=lambda x: audio.speaker.set_volume(x.value),
+        value=audio.speaker.bind("volume"),  # type: ignore
+        on_change=lambda x: audio.speaker.set_volume(x.value),  # type: ignore
         css_classes=["volume-slider"],  # we will customize style in style.css
     )
 
@@ -242,9 +241,7 @@ def power_menu() -> widgets.Button:
 
 
 def left() -> widgets.Box:
-    return widgets.Box(
-        child=[workspaces()], spacing=0
-    )
+    return widgets.Box(child=[workspaces()], spacing=0)
 
 
 def center() -> widgets.Box:

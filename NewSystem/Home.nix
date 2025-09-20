@@ -21,7 +21,7 @@
   # OBS!
   programs.obs-studio = {
     enable = true;
-    plugins = with pkgs.obs-studio-plugins; [ obs-3d-effect wlrobs ];
+    plugins = with pkgs.obs-studio-plugins; [ obs-3d-effect wlrobs obs-vkcapture ];
   };
 
   # GTK config to fix improper icon theme.
@@ -70,15 +70,9 @@
     addToPythonEnv = true;
 
     # Put a config directory from your flake into ~/.config/ignis
-    # NOTE: Home Manager will copy this directory to /nix/store
-    # and create a symbolic link to the copy.
     configDir = ../Shell;
 
     # Enable dependencies required by certain services.
-    # NOTE: This won't affect your NixOS system configuration.
-    # For example, to use NetworkService, you must also enable
-    # NetworkManager in your NixOS configuration:
-    #   networking.networkmanager.enable = true;
     services = {
       bluetooth.enable = true;
       recorder.enable = true;
@@ -102,6 +96,5 @@
     # ];
   };
 
-  home.sessionVariables.NIXOS_OZONE_WL =
-    "1"; # Hint to Electron apps to use Wayland
+  home.sessionVariables.NIXOS_OZONE_WL = "1"; # Tell some apps to Wayland-ify
 }
