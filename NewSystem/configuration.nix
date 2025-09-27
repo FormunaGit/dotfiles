@@ -1,4 +1,8 @@
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, inputs, ... }:
+let
+  hyprpkgs =
+    inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in {
   imports = [
     ./Modules/hardware-configuration.nix # System's preconfigured hardware module.
 
@@ -26,6 +30,7 @@
     ''; # OBS Virtual Camera settings
 
     kernelPackages = pkgs.linuxKernel.packages.linux_zen; # Zen kernel
+    blacklistedKernelModules = [ "rtw88_8821cu" ];
   };
 
   # Nix-LD for binaries.
@@ -45,9 +50,16 @@
   };
 
   # Hardware accelerated graphics drivers?
+  # hardware.graphics = {
+  #   enable = true;
+  #   enable32Bit = true;
+  # };
   hardware.graphics = {
-    enable = true;
+    package = hyprpkgs.mesa;
+
+    # if you also want 32-bit support (e.g for Steam)
     enable32Bit = true;
+    package32 = hyprpkgs.pkgsi686Linux.mesa;
   };
 
   # Networking stuff + set the system hostname.
@@ -56,7 +68,7 @@
     networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
     # enableIPv6 = false;
     firewall.allowedUDPPorts = [ 51820 59100 ];
-    firewall.allowedTCPPorts = [ 59100 ];
+    firewall.allowedTCPPorts = [ 59100 2234 ];
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
@@ -141,16 +153,18 @@
   };
 
   # TODO: Fix printing.
-
+  
+  # Forgot to leave GDM installed... Oh well, I always wanted to try a new DM.
+  services.displayManager.ly.enable = true;
   # Enable GDM+GNOME
   # oh yeah also some GNOME configs, dconf and gsconnect
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-  programs.dconf.enable = true;
-  programs.kdeconnect = {
-    enable = true;
-    package = pkgs.gnomeExtensions.gsconnect;
-  };
+  # services.displayManager.gdm.enable = true;
+  # services.desktopManager.gnome.enable = true;
+  # programs.dconf.enable = true;
+  # programs.kdeconnect = {
+  #   enable = true;
+  #   package = pkgs.gnomeExtensions.gsconnect;
+  # };
 
   # Enable fish
   programs.fish.enable = true;
@@ -198,6 +212,19 @@
   programs.hyprland = {
     enable = true;
     withUWSM = true;
+    # set the flake package
+    package =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    # make sure to also set the portal package, so that they are in sync
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+  };
+
+  # OpenRazer
+  hardware.openrazer = {
+    enable = true;
+    keyStatistics = true;
+    users = [ "formuna" ];
   };
 
   # Probably insecure. Docker.

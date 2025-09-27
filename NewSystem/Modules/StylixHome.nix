@@ -19,5 +19,11 @@ in {
     image = nix;
     base16Scheme = base16-theme;
     polarity = "dark";
+    targets = {
+      gtk = {
+        enable = true;
+        flatpakSupport.enable = true;
+      };
+    };
   };
 }

@@ -4,6 +4,8 @@
   imports = [
     inputs.textfox.homeManagerModules.default
     inputs.ignis.homeManagerModules.default
+    inputs.stylix.homeModules.stylix
+    ./Modules/StylixHome.nix
   ];
 
   # Sops-nix config
@@ -21,7 +23,11 @@
   # OBS!
   programs.obs-studio = {
     enable = true;
-    plugins = with pkgs.obs-studio-plugins; [ obs-3d-effect wlrobs obs-vkcapture ];
+    plugins = with pkgs.obs-studio-plugins; [
+      obs-3d-effect
+      wlrobs
+      obs-vkcapture
+    ];
   };
 
   # GTK config to fix improper icon theme.

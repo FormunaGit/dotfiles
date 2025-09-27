@@ -54,6 +54,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Hyprland
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs =
@@ -80,9 +82,7 @@
       };
       nixosConfigurations.windel = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
-        modules = [
-          ./Windel/configuration.nix
-        ];
+        modules = [ ./Windel/configuration.nix ];
       };
     };
 }

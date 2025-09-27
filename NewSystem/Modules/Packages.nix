@@ -37,6 +37,11 @@
     cliphist # Clipboard history manager
     superfile # TUI file manager
     virt-manager # Virtualization manager
+    openrazer-daemon # Daemon for OpenRazer devices
+    polychromatic # GUI for OpenRazer devices
+    nicotine-plus # Client for Soulseek network
+    hyprpaper # Wallpaper manager for Hyprland
+    hyprshot # Screenshot tool for Hyprland
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -44,6 +49,7 @@
     prismlauncher # Custom launcher for Minecraft.
     winetricks # GUI for managing Wine prefixes.
     r2modman # Mod manager for Unity-based games.
+    lutris-unwrapped # Game launcher
     # ╔───────────╗ #
     # │Development│ #
     # ╚───────────╝ #
@@ -67,5 +73,7 @@
     wireguard-tools # Wireguard tools
     go # Golang
     packwiz # CLI tool for Minecraft modpack development
+    pipx # Install and run Python applications in isolated environments
+    hyprls # Hyprland LSP
   ];
 }
