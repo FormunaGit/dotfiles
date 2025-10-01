@@ -2,16 +2,17 @@
 let
   hyprpkgs =
     inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  hypr = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+  obs_vcam_name = "OBS Virtual Camera";
 in {
   imports = [
     ./Modules/hardware-configuration.nix # System's preconfigured hardware module.
-
-    #./Modules/Hydenix/System
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # System Packages.
-    (import ./Modules/Stylix.nix) # Stylix.
-    (import ./Modules/Minecraft.nix { inherit pkgs inputs; })
-    ./Modules/MicOverMumble.nix
+    (import ./Dots) # Custom module for styling and configuring my apps.
   ];
+
+  # Allow non-FOSS packages.
+  nixpkgs.config.allowUnfree = true;
 
   # Enable Flakes and the unified Nix command.
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -26,11 +27,11 @@ in {
       [ config.boot.kernelPackages.v4l2loopback ]; # Kernel modules
     kernelModules = [ "v4l2loopback" ]; # Activate(?) kernel modules
     extraModprobeConfig = ''
-      options v4l2loopback devices=1 video_nr=1 card_label="OBS Virtual Camera" exclusive_caps=1
+      options v4l2loopback devices=1 video_nr=1 card_label="${obs_vcam_name}" exclusive_caps=1
     ''; # OBS Virtual Camera settings
 
     kernelPackages = pkgs.linuxKernel.packages.linux_zen; # Zen kernel
-    blacklistedKernelModules = [ "rtw88_8821cu" ];
+    blacklistedKernelModules = [ "rtw88_8821cu" ]; # Disable this Wifi driver
   };
 
   # Nix-LD for binaries.
@@ -42,33 +43,19 @@ in {
     size = 4 * 1024;
   }];
 
-  # Mount secondary SSD.
-  fileSystems."/run/media/formuna/StrangeDrive" = {
-    device = "/dev/sda1";
-    fsType = "btrfs";
-    options = [ "users" "rw" "exec" ];
-  };
-
-  # Hardware accelerated graphics drivers?
-  # hardware.graphics = {
-  #   enable = true;
-  #   enable32Bit = true;
-  # };
+  # Graphics drivers
   hardware.graphics = {
-    package = hyprpkgs.mesa;
-
-    # if you also want 32-bit support (e.g for Steam)
-    enable32Bit = true;
-    package32 = hyprpkgs.pkgsi686Linux.mesa;
+    package = hyprpkgs.mesa; # Use Hyprland's Mesa package
+    package32 = hyprpkgs.pkgsi686Linux.mesa; # Don't forget 32-bit!
+    enable32Bit = true; # Enable 32-bit support
   };
 
   # Networking stuff + set the system hostname.
   networking = {
     hostName = "unimag"; # System Hostname
     networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
-    # enableIPv6 = false;
-    firewall.allowedUDPPorts = [ 51820 59100 ];
-    firewall.allowedTCPPorts = [ 59100 2234 ];
+    firewall.allowedUDPPorts = [ 51820 ]; # WireGuard
+    firewall.allowedTCPPorts = [ 2234 ]; # Nicotine+ (Soulseek)
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
@@ -92,29 +79,20 @@ in {
   i18n.defaultLocale = "en_CA.UTF-8";
 
   # Enable sound with Pipewire (plus some backwards compatibility)
-  security.rtkit.enable = true;
+  security.rtkit.enable = true; # This is related to Pipewire so...
   services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
-
-  # Enable Mumble server for mic_over_mumble
-  services.murmur = {
-    enable = false;
-    bandwidth = 540000;
-    bonjour = true;
-    password = "thisMumbleServerIsntAccesibleThroughTheInternet!!";
-    autobanTime = 0;
+    enable = true; # Enable Pipewire
+    alsa.enable = true; # Enable ALSA support
+    alsa.support32Bit = true; # Enable 32-bit ALSA support
+    pulse.enable = true; # Enable PulseAudio support
+    jack.enable = true; # Enable JACK support
   };
 
   # Define the "formuna" user account. (that's me!)
   users = {
     defaultUserShell = pkgs.fish; # Sets Fish as the default shell.
     users.formuna = {
-      isNormalUser = true; # Says this account is a human's account.
+      isNormalUser = true; # This account is for a human.
       description = "Formuna"; # The human readable name of the user.
       extraGroups = [
         "networkmanager" # Control over NetworkManager
@@ -130,14 +108,8 @@ in {
   # ADB for controlling my phone via WIFI or USB
   programs.adb.enable = true;
 
-  # Allow non-FOSS packages.
-  nixpkgs.config.allowUnfree = true;
-
   # Polkit.
   security.polkit.enable = true;
-
-  # Power-related features (PPD for control in GNOME)
-  services.power-profiles-daemon.enable = true;
 
   # Weylus for using my phone as a stylus.
   programs.weylus = {
@@ -152,19 +124,8 @@ in {
     enableUdevRules = true;
   };
 
-  # TODO: Fix printing.
-  
   # Forgot to leave GDM installed... Oh well, I always wanted to try a new DM.
   services.displayManager.ly.enable = true;
-  # Enable GDM+GNOME
-  # oh yeah also some GNOME configs, dconf and gsconnect
-  # services.displayManager.gdm.enable = true;
-  # services.desktopManager.gnome.enable = true;
-  # programs.dconf.enable = true;
-  # programs.kdeconnect = {
-  #   enable = true;
-  #   package = pkgs.gnomeExtensions.gsconnect;
-  # };
 
   # Enable fish
   programs.fish.enable = true;
@@ -213,11 +174,9 @@ in {
     enable = true;
     withUWSM = true;
     # set the flake package
-    package =
-      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    package = hypr.hyprland;
     # make sure to also set the portal package, so that they are in sync
-    portalPackage =
-      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    portalPackage = hypr.xdg-desktop-portal-hyprland;
   };
 
   # OpenRazer
@@ -226,9 +185,6 @@ in {
     keyStatistics = true;
     users = [ "formuna" ];
   };
-
-  # Probably insecure. Docker.
-  virtualisation.docker = { enable = false; };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }

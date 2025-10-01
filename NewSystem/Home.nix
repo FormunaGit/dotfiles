@@ -4,8 +4,6 @@
   imports = [
     inputs.textfox.homeManagerModules.default
     inputs.ignis.homeManagerModules.default
-    inputs.stylix.homeModules.stylix
-    ./Modules/StylixHome.nix
   ];
 
   # Sops-nix config
@@ -31,13 +29,13 @@
   };
 
   # GTK config to fix improper icon theme.
-  gtk = {
-    enable = true;
-    iconTheme = {
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
-    };
-  };
+  # gtk = {
+  #   enable = true;
+  #   iconTheme = {
+  #     package = pkgs.adwaita-icon-theme;
+  #     name = "Adwaita";
+  #   };
+  # };
 
   # Fish config for secrets
   programs.fish = {

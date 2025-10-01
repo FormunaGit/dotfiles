@@ -80,9 +80,5 @@
           }
         ];
       };
-      nixosConfigurations.windel = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [ ./Windel/configuration.nix ];
-      };
     };
 }

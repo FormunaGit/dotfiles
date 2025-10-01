@@ -249,7 +249,7 @@ def center() -> widgets.Box:
         child=[
             client_title(),
             widgets.Separator(vertical=True, css_classes=["middle-separator"]),
-            media(),
+            #media(),
         ],
         spacing=10,
     )

@@ -1,3 +1,5 @@
+@use "/home/formuna/.config/gtk-4.0/gtk.css";
+
 * {
     all: unset;
     font-weight: bold;
@@ -12,8 +14,8 @@ $unactive: #181825;
 
 .bar {
     padding: 0 0;
-    background-color: var(--window-fg-color);
-    color: $fg;
+    background-color: var(--window-bg-color);
+    color: var(--window-fg-color);
 }
 
 .middle-separator {
@@ -28,7 +30,7 @@ $unactive: #181825;
     border-radius: 0;
 
     highlight {
-        background-color: $active;
+        background-color: var(--accent_color);
     }
 
     slider {

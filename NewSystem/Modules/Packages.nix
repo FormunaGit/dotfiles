@@ -59,7 +59,7 @@
     rustup # Rust toolchain installer.
     gcc # GNU's C compiler.
     gitkraken # Closed-source GUI for Git.
-    nixd # Cool Nix LSP.
+    nil # Cool Nix LSP.
     nixfmt-classic # Cool Nix file formatter.
     zed-editor # It's back...
     black # Python file formatter
