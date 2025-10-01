@@ -8,7 +8,7 @@ in {
   imports = [
     ./Modules/hardware-configuration.nix # System's preconfigured hardware module.
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # System Packages.
-    (import ./Dots) # Custom module for styling and configuring my apps.
+    (import ./Dots/System) # Custom module for styling and configuring my apps.
   ];
 
   # Allow non-FOSS packages.
