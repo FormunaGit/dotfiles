@@ -80,5 +80,11 @@
           }
         ];
       };
+      nixosConfigurations.eggs = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./Eggs/configuration.nix # The new configuration.nix file
+        ];
+      };
     };
 }

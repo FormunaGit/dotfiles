@@ -1,0 +1,111 @@
+{ config, pkgs, inputs, ... }: 
+{
+  imports = [  ];
+
+  # Allow non-FOSS packages.
+  nixpkgs.config.allowUnfree = true;
+
+  # Enable Flakes and the unified Nix command.
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Bootloader and OBS VCam settings
+  boot.loader = {
+    systemd-boot.enable = true; # Systemd-boot. Simple.
+    efi.canTouchEfiVariables = true;
+  };
+
+  # Nix-LD for binaries.
+  programs.nix-ld.enable = true;
+
+  # Add Swapfile
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 4 * 1024;
+  }];
+
+  # Networking stuff + set the system hostname.
+  networking = {
+    hostName = "eggs"; # System Hostname
+    networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
+  };
+  services.resolved.enable = true; # The systemd DNS resolver daemon.
+
+  # And then Tailscale!
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "both"; # This is dor.
+    openFirewall = true; # Opens port in firewall.
+  };
+
+  # Bluetooth stuff
+  hardware.bluetooth.enable = true;
+
+  # My timezone.
+  time.timeZone = "America/Moncton";
+
+  # Set "internationalisation properties"
+  i18n.defaultLocale = "en_CA.UTF-8";
+
+  # Enable sound with Pipewire (plus some backwards compatibility)
+  security.rtkit.enable = true; # This is related to Pipewire so...
+  services.pipewire = {
+    enable = true; # Enable Pipewire
+    alsa.enable = true; # Enable ALSA support
+    alsa.support32Bit = true; # Enable 32-bit ALSA support
+    pulse.enable = true; # Enable PulseAudio support
+    jack.enable = true; # Enable JACK support
+  };
+
+  # Define the "formuna" user account. (that's me!)
+  users = {
+    defaultUserShell = pkgs.fish; # Sets Fish as the default shell.
+    users.formuna = {
+      isNormalUser = true; # This account is for a human.
+      description = "Formuna"; # The human readable name of the user.
+      extraGroups = [
+        "networkmanager" # Control over NetworkManager
+        "wheel" # Sudo privileges
+        "adbusers" # Access to sudo-less ADB
+        "uinput" # Not sure what this is for, but if it ain't broke...
+        "kvm" # Control over KVM-powered VMs
+        "video" # For display/graphics access
+      ];
+    };
+  };
+
+  # ADB for controlling my phone via WIFI or USB
+  programs.adb.enable = true;
+
+  # Polkit.
+  security.polkit.enable = true;
+
+  # Enable fish
+  programs.fish.enable = true;
+
+  # And enable Starship
+  programs.starship = {
+    enable = true;
+    # Additional configuration options can be added here.
+  };
+
+  # NUR!!
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball
+      "https://github.com/nix-community/NUR/archive/main.tar.gz") {
+        inherit pkgs;
+      };
+  };
+
+  # SSH configuration
+  services.openssh = {
+    enable = true; # Enable SSH
+    ports = [ 22 ]; # Use the default port
+    settings = {
+      PermitRootLogin = "no"; # Disable root login
+      AllowUsers = [ "formuna" ]; # Only allow my account
+    };
+  };
+  services.fail2ban.enable = true; # Enable fail2ban so if someone tries to guess my password...
+
+  system.stateVersion = "25.05"; # Don't change this value I guess.
+}
