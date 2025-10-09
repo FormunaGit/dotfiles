@@ -1,6 +1,8 @@
 { config, pkgs, inputs, ... }: 
 {
-  imports = [  ];
+  imports = [ 
+    ./hardware-configuration.nix # System's preconfigured hardware module.
+  ];
 
   # Allow non-FOSS packages.
   nixpkgs.config.allowUnfree = true;
