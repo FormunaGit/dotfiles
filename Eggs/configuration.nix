@@ -32,8 +32,6 @@
   networking = {
     hostName = "eggs"; # System Hostname
     networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
-    firewall.allowedUDPPorts = [ 443 3478 ]; # WireGuard
-    firewall.allowedTCPPorts = [ 8080 80 8443 443 3478 ]; # SSH
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
