@@ -166,5 +166,20 @@
     enable = true;
   };
 
+  # Tailscale Serve Nextcloud systemd service
+  systemd.user.services.my-cool-user-service = {
+    enable = true;
+    # [Unit]
+    description = "Serve Nextcloud backend through Tailscale";
+    after = [ "network.target" ];
+    # [Service]
+    serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "/usr/bin/bash -c 'tailscale serve --bg http://127.0.0.1:11000'";
+    };
+    # [Install]
+    wantedBy = [ "multi-user.target" ];
+  };
+
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }
