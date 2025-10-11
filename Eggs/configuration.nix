@@ -32,6 +32,8 @@
   networking = {
     hostName = "eggs"; # System Hostname
     networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
+    firewall.allowedUDPPorts = [ 80 ]; # WireGuard
+    firewall.allowedTCPPorts = [ 80 ]; # SSH
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
@@ -131,7 +133,6 @@
   #     dbtype = "pgsql";
   #   };
   # };
-  environment.etc."nextcloud-admin-pass".text = "PWD";
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud31;
@@ -148,7 +149,11 @@
       # mail_smtpmode = "sendmail";
       # mail_sendmailmode = "pipe";
       mysql.utf8mb4 = true;
-      trusted_proxies = ["127.0.0.1"];
+      trusted_proxies = [
+        "127.0.0.1"
+        "100.106.83.119"
+        "localhost"
+      ];
     };
     maxUploadSize = "2G"; # also sets post_max_size and memory_limit
     phpOptions = {
