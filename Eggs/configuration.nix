@@ -136,7 +136,7 @@
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud31;
-    hostName = "eggs.tarpan-owl.ts.net";
+    hostName = "localhost";
     database.createLocally = true;
     configureRedis = true;
     config = {
@@ -152,7 +152,7 @@
       trusted_proxies = [
         "127.0.0.1"
         "100.106.83.119"
-        "localhost"
+        "eggs.tarpan-owl.ts.net"
       ];
     };
     maxUploadSize = "2G"; # also sets post_max_size and memory_limit
