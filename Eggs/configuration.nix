@@ -123,12 +123,35 @@
   ];
 
   # Nextcloud. I'm not sharing the admin password.
+  # services.nextcloud = {
+  #   enable = true;
+  #   hostName = "eggs.tarpan-owl.ts.net";
+  #   config = {
+  #     adminpassFile = "/etc/nextcloud-admin-pass";
+  #     dbtype = "pgsql";
+  #   };
+  # };
   services.nextcloud = {
     enable = true;
+    package = pkgs.nextcloud31;
     hostName = "eggs.tarpan-owl.ts.net";
+    database.createLocally = true;
+    configureRedis = true;
     config = {
+      adminuser = "formuna";
       adminpassFile = "/etc/nextcloud-admin-pass";
-      dbtype = "pgsql";
+      dbtype = "mysql";
+    };
+    settings = {
+      default_phone_region = "US";
+      # mail_smtpmode = "sendmail";
+      # mail_sendmailmode = "pipe";
+      mysql.utf8mb4 = true;
+      trusted_proxies = ["127.0.0.1"];
+    };
+    maxUploadSize = "2G"; # also sets post_max_size and memory_limit
+    phpOptions = {
+      "opcache.interned_strings_buffer" = "16";
     };
   };
 
