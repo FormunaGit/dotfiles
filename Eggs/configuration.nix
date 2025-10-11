@@ -109,5 +109,8 @@
   };
   services.fail2ban.enable = true; # Enable fail2ban so if someone tries to guess my password...
 
+  # XFCE
+  services.xserver.desktopManager.xfce.enable = true;
+
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }
