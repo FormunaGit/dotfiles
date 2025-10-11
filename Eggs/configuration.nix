@@ -76,6 +76,7 @@
         "uinput" # Not sure what this is for, but if it ain't broke...
         "kvm" # Control over KVM-powered VMs
         "video" # For display/graphics access
+        "docker" # For Docker
       ];
     };
   };
@@ -133,33 +134,38 @@
   #     dbtype = "pgsql";
   #   };
   # };
-  services.nextcloud = {
+  # services.nextcloud = {
+  #   enable = true;
+  #   package = pkgs.nextcloud31;
+  #   hostName = "localhost";
+  #   database.createLocally = true;
+  #   configureRedis = true;
+  #   config = {
+  #     adminuser = "formuna";
+  #     adminpassFile = "/etc/nextcloud-admin-pass";
+  #     dbtype = "mysql";
+  #   };
+  #   settings = {
+  #     default_phone_region = "US";
+  #     # mail_smtpmode = "sendmail";
+  #     # mail_sendmailmode = "pipe";
+  #     mysql.utf8mb4 = true;
+  #     trusted_proxies = [
+  #       "127.0.0.1"
+  #       "100.106.83.119"
+  #       "eggs.tarpan-owl.ts.net"
+  #       "10.0.0.230"
+  #     ];
+  #   };
+  #   maxUploadSize = "2G"; # also sets post_max_size and memory_limit
+  #   phpOptions = {
+  #     "opcache.interned_strings_buffer" = "16";
+  #   };
+  # };
+
+  # Docker
+  virtualisation.docker = {
     enable = true;
-    package = pkgs.nextcloud31;
-    hostName = "localhost";
-    database.createLocally = true;
-    configureRedis = true;
-    config = {
-      adminuser = "formuna";
-      adminpassFile = "/etc/nextcloud-admin-pass";
-      dbtype = "mysql";
-    };
-    settings = {
-      default_phone_region = "US";
-      # mail_smtpmode = "sendmail";
-      # mail_sendmailmode = "pipe";
-      mysql.utf8mb4 = true;
-      trusted_proxies = [
-        "127.0.0.1"
-        "100.106.83.119"
-        "eggs.tarpan-owl.ts.net"
-        "10.0.0.230"
-      ];
-    };
-    maxUploadSize = "2G"; # also sets post_max_size and memory_limit
-    phpOptions = {
-      "opcache.interned_strings_buffer" = "16";
-    };
   };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
