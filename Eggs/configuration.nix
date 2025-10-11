@@ -122,7 +122,7 @@
     btop
   ];
 
-  # Nextcloud. I'm not sharing the admin password.
+  # Nextcloud. Inaccessible outside my Tailnet.
   # services.nextcloud = {
   #   enable = true;
   #   hostName = "eggs.tarpan-owl.ts.net";
@@ -131,6 +131,7 @@
   #     dbtype = "pgsql";
   #   };
   # };
+  environment.etc."nextcloud-admin-pass".text = "PWD";
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud31;
