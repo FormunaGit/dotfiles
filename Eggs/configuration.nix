@@ -16,6 +16,9 @@
     efi.canTouchEfiVariables = true;
   };
 
+  # Allow all firmware regardless of license.
+  hardware.enableAllFirmware = true;
+
   # Nix-LD for binaries.
   programs.nix-ld.enable = true;
 
@@ -75,9 +78,6 @@
     };
   };
 
-  # ADB for controlling my phone via WIFI or USB
-  programs.adb.enable = true;
-
   # Polkit.
   security.polkit.enable = true;
 
@@ -111,6 +111,15 @@
 
   # XFCE
   services.xserver.desktopManager.xfce.enable = true;
+
+  # System Packages, soon to be moved into its own module.
+  environment.systemPackages = with pkgs; [
+    neovim
+    wget
+    git
+    curl
+    rg
+  ];
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }
