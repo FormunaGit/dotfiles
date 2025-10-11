@@ -122,5 +122,12 @@
     btop
   ];
 
+  # Nextcloud. I'm not sharing the admin password.
+  services.nextcloud = {
+    enable = true;
+    hostName = "eggs.tarpan-owl.ts.net";
+    config.adminpassFile = "/etc/nextcloud-admin-pass";
+  };
+
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }
