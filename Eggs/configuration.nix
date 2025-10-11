@@ -32,6 +32,8 @@
   networking = {
     hostName = "eggs"; # System Hostname
     networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
+    firewall.allowedUDPPorts = [ 443 3478 ]; # Stuff
+    firewall.allowedTCPPorts = [ 8080 80 8443 443 3478 ]; 
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
@@ -167,7 +169,7 @@
   };
 
   # Tailscale Serve Nextcloud systemd service
-  systemd.user.services.my-cool-user-service = {
+  systemd.user.services.tailscale-serve-nextcloud = {
     enable = true;
     # [Unit]
     description = "Serve Nextcloud backend through Tailscale";
