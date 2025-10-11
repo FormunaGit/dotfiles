@@ -153,6 +153,7 @@
         "127.0.0.1"
         "100.106.83.119"
         "eggs.tarpan-owl.ts.net"
+        "10.0.0.230"
       ];
     };
     maxUploadSize = "2G"; # also sets post_max_size and memory_limit
