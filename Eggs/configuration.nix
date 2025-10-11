@@ -126,7 +126,10 @@
   services.nextcloud = {
     enable = true;
     hostName = "eggs.tarpan-owl.ts.net";
-    config.adminpassFile = "/etc/nextcloud-admin-pass";
+    config = {
+      adminpassFile = "/etc/nextcloud-admin-pass";
+      dbtype = "pgsql";
+    };
   };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
