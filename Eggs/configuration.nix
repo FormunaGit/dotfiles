@@ -118,7 +118,7 @@
     wget
     git
     curl
-    rg
+    ripgrep
   ];
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
