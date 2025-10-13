@@ -40,7 +40,7 @@
   # And then Tailscale!
   services.tailscale = {
     enable = true;
-    useRoutingFeatures = "both"; # This is dor.
+    useRoutingFeatures = "client"; # This is dor.
     openFirewall = true; # Opens port in firewall.
   };
 
