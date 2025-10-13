@@ -134,6 +134,8 @@
   #     dbtype = "pgsql";
   #   };
   # };
+  services.postgresql.enable = true; # Enable PostgreSQL
+
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud31;
