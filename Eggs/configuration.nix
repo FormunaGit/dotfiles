@@ -168,19 +168,25 @@
     enable = true;
   };
 
-  # Tailscale Serve Nextcloud systemd service
-  systemd.user.services.tailscale-serve-nextcloud = {
+  # Home Assistant!
+  services.home-assistant = {
     enable = true;
-    # [Unit]
-    description = "Serve Nextcloud backend through Tailscale";
-    after = [ "network.target" ];
-    # [Service]
-    serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "/usr/bin/bash -c 'tailscale serve --bg http://127.0.0.1:11000'";
+    extraComponents = [
+      # Components required to complete the onboarding
+      "analytics"
+      "google_translate"
+      "met"
+      "radio_browser"
+      "shopping_list"
+      # Recommended for fast zlib compression
+      # https://www.home-assistant.io/integrations/isal
+      "isal"
+    ];
+    config = {
+      # Includes dependencies for a basic setup
+      # https://www.home-assistant.io/integrations/default_config/
+      default_config = {};
     };
-    # [Install]
-    wantedBy = [ "multi-user.target" ];
   };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
