@@ -134,34 +134,34 @@
   #     dbtype = "pgsql";
   #   };
   # };
-  # services.nextcloud = {
-  #   enable = true;
-  #   package = pkgs.nextcloud31;
-  #   hostName = "localhost";
-  #   database.createLocally = true;
-  #   configureRedis = true;
-  #   config = {
-  #     adminuser = "formuna";
-  #     adminpassFile = "/etc/nextcloud-admin-pass";
-  #     dbtype = "mysql";
-  #   };
-  #   settings = {
-  #     default_phone_region = "US";
-  #     # mail_smtpmode = "sendmail";
-  #     # mail_sendmailmode = "pipe";
-  #     mysql.utf8mb4 = true;
-  #     trusted_proxies = [
-  #       "127.0.0.1"
-  #       "100.106.83.119"
-  #       "eggs.tarpan-owl.ts.net"
-  #       "10.0.0.230"
-  #     ];
-  #   };
-  #   maxUploadSize = "2G"; # also sets post_max_size and memory_limit
-  #   phpOptions = {
-  #     "opcache.interned_strings_buffer" = "16";
-  #   };
-  # };
+  services.nextcloud = {
+    enable = true;
+    package = pkgs.nextcloud31;
+    hostName = "localhost";
+    database.createLocally = true;
+    configureRedis = true;
+    config = {
+      adminuser = "formuna";
+      adminpassFile = "/etc/nextcloud-admin-pass";
+      dbtype = "pgsql";
+    };
+    settings = {
+      default_phone_region = "US";
+      # mail_smtpmode = "sendmail";
+      # mail_sendmailmode = "pipe";
+      mysql.utf8mb4 = true;
+      trusted_proxies = [
+        "127.0.0.1"
+        "100.106.83.119"
+        "eggs.tarpan-owl.ts.net"
+        "10.0.0.230"
+      ];
+    };
+    maxUploadSize = "2G"; # also sets post_max_size and memory_limit
+    phpOptions = {
+      "opcache.interned_strings_buffer" = "16";
+    };
+  };
 
   # Docker
   virtualisation.docker = {
@@ -169,25 +169,25 @@
   };
 
   # Home Assistant!
-  services.home-assistant = {
-    enable = true;
-    extraComponents = [
-      # Components required to complete the onboarding
-      "analytics"
-      "google_translate"
-      "met"
-      "radio_browser"
-      "shopping_list"
-      # Recommended for fast zlib compression
-      # https://www.home-assistant.io/integrations/isal
-      "isal"
-    ];
-    config = {
-      # Includes dependencies for a basic setup
-      # https://www.home-assistant.io/integrations/default_config/
-      default_config = {};
-    };
-  };
+  # services.home-assistant = {
+  #   enable = true;
+  #   extraComponents = [
+  #     # Components required to complete the onboarding
+  #     "analytics"
+  #     "google_translate"
+  #     "met"
+  #     "radio_browser"
+  #     "shopping_list"
+  #     # Recommended for fast zlib compression
+  #     # https://www.home-assistant.io/integrations/isal
+  #     "isal"
+  #   ];
+  #   config = {
+  #     # Includes dependencies for a basic setup
+  #     # https://www.home-assistant.io/integrations/default_config/
+  #     default_config = {};
+  #   };
+  # };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }
