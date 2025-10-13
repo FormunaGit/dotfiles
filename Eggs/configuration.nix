@@ -134,36 +134,36 @@
   #     dbtype = "pgsql";
   #   };
   # };
-  services.postgresql.enable = true; # Enable PostgreSQL
+  # services.postgresql.enable = true; # Enable PostgreSQL
 
-  services.nextcloud = {
-    enable = true;
-    package = pkgs.nextcloud31;
-    hostName = "localhost";
-    database.createLocally = true;
-    configureRedis = true;
-    config = {
-      adminuser = "formuna";
-      adminpassFile = "/etc/nextcloud-admin-pass";
-      dbtype = "pgsql";
-    };
-    settings = {
-      default_phone_region = "US";
-      # mail_smtpmode = "sendmail";
-      # mail_sendmailmode = "pipe";
-      mysql.utf8mb4 = true;
-      trusted_proxies = [
-        "127.0.0.1"
-        "100.106.83.119"
-        "eggs.tarpan-owl.ts.net"
-        "10.0.0.230"
-      ];
-    };
-    maxUploadSize = "2G"; # also sets post_max_size and memory_limit
-    phpOptions = {
-      "opcache.interned_strings_buffer" = "16";
-    };
-  };
+  # services.nextcloud = {
+  #   enable = true;
+  #   package = pkgs.nextcloud31;
+  #   hostName = "localhost";
+  #   database.createLocally = true;
+  #   configureRedis = true;
+  #   config = {
+  #     adminuser = "formuna";
+  #     adminpassFile = "/etc/nextcloud-admin-pass";
+  #     dbtype = "pgsql";
+  #   };
+  #   settings = {
+  #     default_phone_region = "US";
+  #     # mail_smtpmode = "sendmail";
+  #     # mail_sendmailmode = "pipe";
+  #     mysql.utf8mb4 = true;
+  #     trusted_proxies = [
+  #       "127.0.0.1"
+  #       "100.106.83.119"
+  #       "eggs.tarpan-owl.ts.net"
+  #       "10.0.0.230"
+  #     ];
+  #   };
+  #   maxUploadSize = "2G"; # also sets post_max_size and memory_limit
+  #   phpOptions = {
+  #     "opcache.interned_strings_buffer" = "16";
+  #   };
+  # };
 
   # Docker
   virtualisation.docker = {

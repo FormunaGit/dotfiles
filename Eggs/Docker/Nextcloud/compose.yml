@@ -1,0 +1,35 @@
+# https://medium.com/elevate-tech/running-nextcloud-via-rootless-docker-compose-on-a-raspberry-pi-4a5524d6922f
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-co>
+    ports:
+      - 9022:3306
+    volumes:
+      - /home/<USER>/nextcloud/mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=nextcloud
+
+  nextcloud:
+    image: nextcloud
+    container_name: nextcloud
+    restart: always
+    ports:
+      - 8080:80
+    links:
+      - mariadb:mysql
+    volumes:
+      - /home/formuna/nextcloud-app/apache-servername.conf:/etc/apache2/conf-enabled/servername.conf
+      - /home/formuna/nextcloud/nextcloud:/var/www/html
+      - /home/formuna/nextcloud/apps:/var/www/html/custom_apps
+      - /home/formuna/nextcloud/config:/var/www/html/config
+      - /home/formuna/nextcloud-data:/var/www/html/data
+    environment:
+      - MYSQL_PASSWORD=nextcloud
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_HOST=mariadb
