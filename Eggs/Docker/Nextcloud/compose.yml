@@ -23,7 +23,7 @@ services:
     links:
       - mariadb:mysql
     volumes:
-      - /home/formuna/nextcloud-app/apache-servername.conf:/etc/apache2/conf-enabled/servername.conf
+      - /home/formuna/nixos/Docker/Nextcloud/apache-servername.conf:/etc/apache2/conf-enabled/servername.conf
       - /home/formuna/nextcloud/nextcloud:/var/www/html
       - /home/formuna/nextcloud/apps:/var/www/html/custom_apps
       - /home/formuna/nextcloud/config:/var/www/html/config
