@@ -42,6 +42,8 @@
     nicotine-plus # Client for Soulseek network
     hyprpaper # Wallpaper manager for Hyprland
     hyprshot # Screenshot tool for Hyprland
+    waybar # Status bar for Wayland
+    inotify-tools # File system event monitoring
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -54,12 +56,10 @@
     # │Development│ #
     # ╚───────────╝ #
     bun # JavaScript runtime
-    nerd-fonts.jetbrains-mono # Awesome font for coding.
-    monaspace # Awesome font for coding.
     rustup # Rust toolchain installer.
     gcc # GNU's C compiler.
     gitkraken # Closed-source GUI for Git.
-    nil # Cool Nix LSP.
+    nixd # Cool Nix LSP.
     nixfmt-classic # Cool Nix file formatter.
     zed-editor # It's back...
     black # Python file formatter
@@ -75,5 +75,10 @@
     packwiz # CLI tool for Minecraft modpack development
     pipx # Install and run Python applications in isolated environments
     hyprls # Hyprland LSP
+  ];
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono # Awesome font for coding.
+    nerd-fonts.monaspace # Awesome font for coding.
   ];
 }

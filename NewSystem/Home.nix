@@ -1,22 +1,21 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
   home.stateVersion = "25.05"; # Version of Home Manager.
 
   imports = [
     inputs.textfox.homeManagerModules.default
     inputs.ignis.homeManagerModules.default
-    ./Dots/HM/
+    ./Dots/HM
   ];
 
   # Sops-nix config
   sops = {
-    age.keyFile =
-      "/home/formuna/.config/sops/age/keys.txt"; # DON'T SHARE THESE KEYS!!
+    age.keyFile = "/home/formuna/.config/sops/age/keys.txt"; # DON'T SHARE THESE KEYS!!
     defaultSopsFile = ../secrets.json; # Secrets file, use `sops edit` to edit.
     defaultSymlinkPath = "/run/user/1000/secrets"; # Secrets path.
     defaultSecretsMountPoint = "/run/user/1000/secrets.d"; # Secrets path 2.
 
-    secrets.openrouterApiKey.path =
-      "/run/user/1000/secrets/openrouterApiKey"; # API key for OpenRouter
+    secrets.openrouterApiKey.path = "/run/user/1000/secrets/openrouterApiKey"; # API key for OpenRouter
   };
 
   # OBS!
@@ -49,8 +48,7 @@
   # ~/.config/nixpkgs/config.nix
   home.file.npkgsconfig = {
     target = ".config/nixpkgs/config.nix";
-    text = ''
-      { packageOverrides = pkgs: { nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; }; }; }'';
+    text = ''{ packageOverrides = pkgs: { nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; }; }; }'';
   };
 
   # TUI theme for GNOME.
