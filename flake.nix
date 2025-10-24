@@ -42,18 +42,6 @@
     # Textfox theme for Firefox
     textfox.url = "github:adriankarlen/textfox";
 
-    # Nix-Minecraft
-    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-
-    # Ignis
-    ignis = {
-      url = "github:ignis-sh/ignis";
-      # ! Important to override
-      # Nix will not allow overriding dependencies if the input
-      # doesn't follow your system pkgs
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Hyprland
     hyprland.url = "github:hyprwm/Hyprland";
   };

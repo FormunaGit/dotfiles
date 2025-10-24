@@ -55,7 +55,8 @@
     # ╔───────────╗ #
     # │Development│ #
     # ╚───────────╝ #
-    bun # JavaScript runtime
+    vscode-fhs # Sighh...
+    pnpm # JavaScript runtime
     rustup # Rust toolchain installer.
     gcc # GNU's C compiler.
     gitkraken # Closed-source GUI for Git.
@@ -68,7 +69,7 @@
     cachix # Cachix
     #inputs.ignis.packages.${system}.ignis
     playerctl # Control playing media
-    kdePackages.xwaylandvideobridge # Allow sharing Wayland windows in XWayland
+    #kdePackages.xwaylandvideobridge # Allow sharing Wayland windows in XWayland
     rofi # Launcher
     wireguard-tools # Wireguard tools
     go # Golang
