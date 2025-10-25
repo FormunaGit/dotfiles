@@ -119,6 +119,7 @@
     ripgrep
     btop
     nh
+    gh
   ];
 
   # Docker
