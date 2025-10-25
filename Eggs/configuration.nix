@@ -120,18 +120,11 @@
     btop
     nh
     gh
+    caddy
   ];
 
   # Docker
   virtualisation.docker.enable = true;
-
-  # Caddy
-  services.caddy = {
-    enable = true;
-    virtualHosts."localhost".extraConfig = ''
-      respond "Hello World!"
-    '';
-  };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }
