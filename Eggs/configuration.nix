@@ -33,7 +33,7 @@
     hostName = "eggs"; # System Hostname
     networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
     firewall.allowedUDPPorts = [ 443 3478 25565 25575 ]; # Stuff
-    firewall.allowedTCPPorts = [ 8080 80 8443 443 3478 25565 25575 ]; 
+    firewall.allowedTCPPorts = [ 8080 80 8443 443 3478 25565 25575 80 443 ]; 
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
@@ -124,6 +124,14 @@
 
   # Docker
   virtualisation.docker.enable = true;
+
+  # Caddy
+  services.caddy = {
+    enable = true;
+    virtualHosts."localhost".extraConfig = ''
+      respond "Hello World!"
+    '';
+  };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }
