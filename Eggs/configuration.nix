@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }: 
+{ pkgs, ... }: 
 {
   imports = [ 
     ./hardware-configuration.nix # System's preconfigured hardware module.
@@ -32,16 +32,14 @@
   networking = {
     hostName = "eggs"; # System Hostname
     networkmanager.enable = true; # Enable NetworkManager since I need Wi-Fi.
-    firewall.allowedUDPPorts = [ 443 3478 ]; # Stuff
-    firewall.allowedTCPPorts = [ 8080 80 8443 443 3478 ]; 
+    firewall.allowedUDPPorts = [ 443 3478 25565 25575 ]; # Stuff
+    firewall.allowedTCPPorts = [ 8080 80 8443 443 3478 25565 25575 ]; 
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
   # And then Tailscale!
   services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "client"; # This is dor.
-    openFirewall = true; # Opens port in firewall.
+    enable = false;
   };
 
   # Bluetooth stuff
@@ -93,27 +91,24 @@
     # Additional configuration options can be added here.
   };
 
-  # NUR!!
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball
-      "https://github.com/nix-community/NUR/archive/main.tar.gz") {
-        inherit pkgs;
-      };
-  };
-
   # SSH configuration
   services.openssh = {
     enable = true; # Enable SSH
-    ports = [ 22 ]; # Use the default port
+    ports = [ 2222 ]; # Use a new port
+    openFirewall = true;
     settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
       PermitRootLogin = "no"; # Disable root login
       AllowUsers = [ "formuna" ]; # Only allow my account
     };
   };
   services.fail2ban.enable = true; # Enable fail2ban so if someone tries to guess my password...
-
-  # XFCE
-  services.xserver.desktopManager.xfce.enable = true;
+  services.endlessh = { # Why not?
+    enable = true;
+    port = 22;
+    openFirewall = true;
+  };
 
   # System Packages, soon to be moved into its own module.
   environment.systemPackages = with pkgs; [
@@ -123,73 +118,11 @@
     curl
     ripgrep
     btop
+    nh
   ];
 
-  # Nextcloud. Inaccessible outside my Tailnet.
-  # services.nextcloud = {
-  #   enable = true;
-  #   hostName = "eggs.tarpan-owl.ts.net";
-  #   config = {
-  #     adminpassFile = "/etc/nextcloud-admin-pass";
-  #     dbtype = "pgsql";
-  #   };
-  # };
-  # services.postgresql.enable = true; # Enable PostgreSQL
-
-  # services.nextcloud = {
-  #   enable = true;
-  #   package = pkgs.nextcloud31;
-  #   hostName = "localhost";
-  #   database.createLocally = true;
-  #   configureRedis = true;
-  #   config = {
-  #     adminuser = "formuna";
-  #     adminpassFile = "/etc/nextcloud-admin-pass";
-  #     dbtype = "pgsql";
-  #   };
-  #   settings = {
-  #     default_phone_region = "US";
-  #     # mail_smtpmode = "sendmail";
-  #     # mail_sendmailmode = "pipe";
-  #     mysql.utf8mb4 = true;
-  #     trusted_proxies = [
-  #       "127.0.0.1"
-  #       "100.106.83.119"
-  #       "eggs.tarpan-owl.ts.net"
-  #       "10.0.0.230"
-  #     ];
-  #   };
-  #   maxUploadSize = "2G"; # also sets post_max_size and memory_limit
-  #   phpOptions = {
-  #     "opcache.interned_strings_buffer" = "16";
-  #   };
-  # };
-
   # Docker
-  virtualisation.docker = {
-    enable = true;
-  };
-
-  # Home Assistant!
-  # services.home-assistant = {
-  #   enable = true;
-  #   extraComponents = [
-  #     # Components required to complete the onboarding
-  #     "analytics"
-  #     "google_translate"
-  #     "met"
-  #     "radio_browser"
-  #     "shopping_list"
-  #     # Recommended for fast zlib compression
-  #     # https://www.home-assistant.io/integrations/isal
-  #     "isal"
-  #   ];
-  #   config = {
-  #     # Includes dependencies for a basic setup
-  #     # https://www.home-assistant.io/integrations/default_config/
-  #     default_config = {};
-  #   };
-  # };
+  virtualisation.docker.enable = true;
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }
