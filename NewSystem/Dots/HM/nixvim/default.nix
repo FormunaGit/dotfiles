@@ -10,7 +10,8 @@
     nixpkgs.useGlobalPackages = true;
     defaultEditor = true;
     clipboard.providers.wl-copy.enable = true;
-    colorscheme.gruvbox.enable = true;
+    colorschemes.gruvbox.enable = true;
+    globals.mapleader = " ";
     imports = [ ./options.nix ];
 
     keymaps = [{
@@ -60,6 +61,8 @@
       oil.enable = true; # Neat file explorer
       treesitter.enable = true; # Parsers and highlighting
       luasnip.enable = true; # Snippet engine
+      web-devicons.enable = true; # Icons
+      windsurf-nvim.enable = true; # Coding AI
     };
   };
 }
