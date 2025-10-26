@@ -1,0 +1,19 @@
+192.168.2.27 {
+    # Nextcloud's WebDAV and CalDAV/CardDAV discovery redirects
+    # Essential for desktop/mobile clients and calendar/contact sync.
+    redir /.well-known/carddav /remote.php/dav 301
+    redir /.well-known/caldav /remote.php/dav 301
+    
+    # Security Headers - recommended for Nextcloud
+    header {
+        # Strict-Transport-Security tells browsers to only use HTTPS for this domain
+        Strict-Transport-Security "max-age=15768000;"
+        # Nextcloud wants these headers to correctly detect the client's IP and protocol
+        X-Forwarded-For {http.request.remote}
+        X-Forwarded-Proto {scheme}
+    }
+
+    # Proxy all traffic to the Nextcloud container
+    # 'nextcloud' is the service name in the docker-compose.yml
+    reverse_proxy nextcloud:80 
+}

@@ -1,5 +1,6 @@
 # https://medium.com/elevate-tech/running-nextcloud-via-rootless-docker-compose-on-a-raspberry-pi-4a5524d6922f
 services:
+  # The database
   mariadb:
     image: mariadb
     restart: always
@@ -13,17 +14,18 @@ services:
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_PASSWORD=nextcloud
-
+  
+  # Nextcloud itself
   nextcloud:
     image: nextcloud
     container_name: nextcloud
     restart: always
-    ports:
-      - 8080:80
+    #ports:
+    #  - 8080:80
     links:
       - mariadb:mysql
     volumes:
-      - /home/formuna/nixos/Docker/Nextcloud/apache-servername.conf:/etc/apache2/conf-enabled/servername.conf
+      - /etc/nixos/Eggs/Docker/Nextcloud/apache-servername.conf:/etc/apache2/conf-enabled/servername.conf
       - /home/formuna/nextcloud/nextcloud:/var/www/html
       - /home/formuna/nextcloud/apps:/var/www/html/custom_apps
       - /home/formuna/nextcloud/config:/var/www/html/config
@@ -33,3 +35,17 @@ services:
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=mariadb
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/nixos/Caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - /home/formuna/nextcloud/caddy_data:/data
+      - /home/formuna/nextcloud/caddy_config:/config
+    depends_on:
+      - nextcloud
