@@ -1,4 +1,4 @@
-{ pkgs, ... }: 
+{ pkgs, config, ... }: 
 {
   imports = [ 
     ./hardware-configuration.nix # System's preconfigured hardware module.
@@ -121,10 +121,48 @@
     nh
     gh
     caddy
+    lazygit
   ];
 
   # Docker
   virtualisation.docker.enable = true;
+
+  # Nextcloud and related
+  services.nginx.virtualHosts = {
+    "cloud.formuna.is-a.dev" = {
+      forceSSL = true;
+      enableACME = true;
+    };
+  };
+
+  services.nextcloud = {
+    enable = true;
+    hostName = "cloud.formuna.is-a.dev";
+
+    package = pkgs.nextcloud32;
+
+    database.createLocally = true;
+
+    configureRedis = true;
+
+    maxUploadSize = "16G";
+    https = true;
+    enableBrokenCiphersForSSE = false;
+
+    autoUpdateApps.enable = true;
+    extraAppsEnable = true;
+    extraApps = with config.services.nextcloud.package.packages.apps; {
+      inherit calendar contacts mail notes tasks;
+    };
+
+    config = {
+      overwriteProtocol = "https";
+      defaultPhoneRegion = "CA"; # https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+      dbtype = "pgsql";
+      adminuser = "formuna";
+      adminpassFile = "/etc/nextcloud-admin-pass";
+    };
+  };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }
