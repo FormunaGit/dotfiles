@@ -122,6 +122,7 @@
     gh
     caddy
     lazygit
+    kitty
   ];
 
   # Docker
@@ -133,6 +134,11 @@
       forceSSL = true;
       enableACME = true;
     };
+  };
+
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = (builtins.readFile /etc/my-email);
   };
 
   services.nextcloud = {
@@ -147,20 +153,22 @@
 
     maxUploadSize = "16G";
     https = true;
-    enableBrokenCiphersForSSE = false;
 
     autoUpdateApps.enable = true;
     extraAppsEnable = true;
     extraApps = with config.services.nextcloud.package.packages.apps; {
-      inherit calendar contacts mail notes tasks;
+      inherit calendar contacts mail notes;
     };
 
     config = {
-      overwriteProtocol = "https";
-      defaultPhoneRegion = "CA"; # https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+      #overwriteProtocol = "https";
       dbtype = "pgsql";
       adminuser = "formuna";
       adminpassFile = "/etc/nextcloud-admin-pass";
+    };
+    settings = {
+      default_phone_region = "CA";
+      trusted_domains = [ "192.168.2.27" ];
     };
   };
 
