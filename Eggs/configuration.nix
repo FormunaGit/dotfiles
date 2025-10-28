@@ -167,11 +167,5 @@
     };
   };
 
-  services.tailscale = {
-    enable = true;
-    openFirewall = true;
-    useRoutingFeatures = "both";
-  };
-
   system.stateVersion = "25.05"; # Don't change this value I guess.
 }
