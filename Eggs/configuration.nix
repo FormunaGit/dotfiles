@@ -37,11 +37,6 @@
   };
   services.resolved.enable = true; # The systemd DNS resolver daemon.
 
-  # And then Tailscale!
-  services.tailscale = {
-    enable = false;
-  };
-
   # Bluetooth stuff
   hardware.bluetooth.enable = true;
 
@@ -162,6 +157,12 @@
       adminuser = "formuna";
       adminpassFile = "/etc/nextcloud-admin-pass";
     };
+  };
+
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+    useRoutingFeatures = "both";
   };
 
   system.stateVersion = "25.05"; # Don't change this value I guess.
