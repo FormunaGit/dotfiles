@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+WLR_BACKENDS=headless WLR_LIBINPUT_NO_DEVICES=1 WLR_RENDERER=pixman XDG_CURRENT_DESKTOP=sway sway -c /etc/nixos/NewSystem/Dots/HM/Sway/sway.cfg
+

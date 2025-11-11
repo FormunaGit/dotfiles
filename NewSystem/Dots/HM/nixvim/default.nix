@@ -30,7 +30,7 @@
           nixd.enable = true;
 
           # TypeScript/JavaScript
-          tsserver.enable = true;
+          ts_ls.enable = true;
         };
       };
 

@@ -44,6 +44,10 @@
     hyprshot # Screenshot tool for Hyprland
     waybar # Status bar for Wayland
     inotify-tools # File system event monitoring
+    #xorg.xvfb # Virtual framebuffer for headless desktop
+    #lxsession # Lightweight desktop environment for virtual display
+    qwen-code # Neat coding agent
+    dmenu-rs # Dmenu in rust. I guess.
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -76,6 +80,7 @@
     packwiz # CLI tool for Minecraft modpack development
     pipx # Install and run Python applications in isolated environments
     hyprls # Hyprland LSP
+    lazygit # TUI for Git
   ];
 
   fonts.packages = with pkgs; [
