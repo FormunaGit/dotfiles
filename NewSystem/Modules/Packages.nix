@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   environment.systemPackages = with pkgs; [
     # Main stuff
     wl-clipboard # Wayland clipboard support
@@ -47,7 +47,7 @@
     #xorg.xvfb # Virtual framebuffer for headless desktop
     #lxsession # Lightweight desktop environment for virtual display
     qwen-code # Neat coding agent
-    dmenu-rs # Dmenu in rust. I guess.
+    inputs.awww.packages.${pkgs.system}.awww
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -81,6 +81,7 @@
     pipx # Install and run Python applications in isolated environments
     hyprls # Hyprland LSP
     lazygit # TUI for Git
+    jq # JSON Parser
   ];
 
   fonts.packages = with pkgs; [

@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [ inputs.nixvim.homeModules.nixvim ];
 
   home.shellAliases.v = "nvim";
@@ -31,6 +31,13 @@
 
           # TypeScript/JavaScript
           ts_ls.enable = true;
+
+          # Rust
+          rust_analyzer = {
+            enable = true;
+            installRustc = true;
+	    installCargo = true;
+          };
         };
       };
 
@@ -62,7 +69,7 @@
       treesitter.enable = true; # Parsers and highlighting
       luasnip.enable = true; # Snippet engine
       web-devicons.enable = true; # Icons
-      windsurf-nvim.enable = true; # Coding AI
+      aider.enable = true; # Coding AI
     };
   };
 }

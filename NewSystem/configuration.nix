@@ -35,11 +35,6 @@ in {
   # WayVNC
   programs.wayvnc.enable = true;
 
-  # Also add an environment variable to make sure applications know about the virtual display
-  environment.variables = {
-    DISPLAY = ":99";
-  };
-
   # Allow non-FOSS packages.
   nixpkgs.config.allowUnfree = true;
 
@@ -61,7 +56,7 @@ in {
 
     #kernelPackages = pkgs.linuxKernel.packages.linux_zen; # Zen kernel
     blacklistedKernelModules = [ "rtw88_8821cu" ]; # Disable this Wifi drivers
-    kernelParams = [ "video=DP-1:1920x1080R@60D" ];
+    kernelParams = [ "video=DP-1:1920x1080@60" ];
   };
 
   # Allow all firmware regardless of license.
@@ -77,12 +72,12 @@ in {
   }];
 
   # Mount my data drive
-  #fileSystems.datadrive = {
-  #  enable = true;
-  #  fsType = "xfs";
-  #  device = "/dev/sda1";
-  #  mountPoint = "/media/formuna/Data";
-  #};
+  fileSystems."/run/media/formuna/Data" = {
+    enable = false;
+    fsType = "btrfs";
+    device = "/dev/sda1";
+    options = [ "users" "rw" "exec" "user" "umask=000" ];
+  };
 
   # Graphics drivers
   hardware.graphics = {
@@ -167,8 +162,8 @@ in {
 
   # Input remapper for remapping inputs.
   services.input-remapper = {
-    enable = true;
-    enableUdevRules = true;
+    enable = false;
+    enableUdevRules = false;
   };
 
   # Forgot to leave GDM installed... Oh well, I always wanted to try a new DM.

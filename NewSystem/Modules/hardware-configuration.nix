@@ -23,6 +23,11 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
+  fileSystems."/home/formuna/Data" =
+    { device = "/dev/disk/by-uuid/927779d5-20a4-4f8b-9954-24fbc00e8471";
+      fsType = "btrfs";
+    };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
