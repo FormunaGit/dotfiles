@@ -38,6 +38,9 @@
             installRustc = true;
 	    installCargo = true;
           };
+
+	  # Go
+	  gopls.enable = true;
         };
       };
 
