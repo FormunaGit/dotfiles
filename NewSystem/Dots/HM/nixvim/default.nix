@@ -39,8 +39,8 @@
 	    installCargo = true;
           };
 
-	  # Go
-	  gopls.enable = true;
+	  # Lua
+	  luau_lsp.enable = true;
         };
       };
 

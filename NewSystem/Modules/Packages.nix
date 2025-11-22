@@ -82,6 +82,7 @@
     hyprls # Hyprland LSP
     lazygit # TUI for Git
     jq # JSON Parser
+    lune # Luau runtime
   ];
 
   fonts.packages = with pkgs; [
