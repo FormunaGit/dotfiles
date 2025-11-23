@@ -59,7 +59,6 @@
     # ╔───────────╗ #
     # │Development│ #
     # ╚───────────╝ #
-    vscode-fhs # Sighh...
     pnpm # JavaScript runtime
     rustup # Rust toolchain installer.
     gcc # GNU's C compiler.
@@ -83,6 +82,7 @@
     lazygit # TUI for Git
     jq # JSON Parser
     lune # Luau runtime
+    stylua # Lua(u) code formatter
   ];
 
   fonts.packages = with pkgs; [
