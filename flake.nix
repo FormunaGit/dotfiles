@@ -44,6 +44,10 @@
 
     # Hyprland
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
 
     # AWWW
     awww.url = "git+https://codeberg.org/LGFae/awww";
