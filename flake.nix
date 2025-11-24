@@ -51,10 +51,13 @@
 
     # AWWW
     awww.url = "git+https://codeberg.org/LGFae/awww";
+
+    # Copyparty
+    copyparty.url = "github:9001/copyparty";
   };
 
   outputs =
-    { nixpkgs, home-manager, sops-nix, nix-flatpak, nixvim, ... }@inputs: {
+    { nixpkgs, home-manager, sops-nix, nix-flatpak, nixvim, copyparty, ... }@inputs: {
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
@@ -64,6 +67,7 @@
           sops-nix.nixosModules.sops # Sops-nix: Secrets Manager
           inputs.stylix.nixosModules.stylix # Stylix: Theme Manager
           home-manager.nixosModules.home-manager # Home Manager: Home Manager
+	  copyparty.nixosModules.default # Copyparty: Portable file server
           {
             nix.settings.trusted-users = [ "formuna" ];
             home-manager.useGlobalPkgs = true;

@@ -48,6 +48,7 @@
     #lxsession # Lightweight desktop environment for virtual display
     qwen-code # Neat coding agent
     inputs.awww.packages.${pkgs.system}.awww
+    btop
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
