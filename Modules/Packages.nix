@@ -1,4 +1,5 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
   environment.systemPackages = with pkgs; [
     # Main stuff
     wl-clipboard # Wayland clipboard support
@@ -44,11 +45,11 @@
     hyprshot # Screenshot tool for Hyprland
     waybar # Status bar for Wayland
     inotify-tools # File system event monitoring
-    #xorg.xvfb # Virtual framebuffer for headless desktop
-    #lxsession # Lightweight desktop environment for virtual display
     qwen-code # Neat coding agent
-    inputs.awww.packages.${pkgs.system}.awww
-    btop
+    inputs.awww.packages.${pkgs.system}.awww # Wallpaper manager
+    btop # System monitor
+    eza # Alternative to ls
+    zoxide # Alternative to cd
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -64,9 +65,8 @@
     rustup # Rust toolchain installer.
     gcc # GNU's C compiler.
     gitkraken # Closed-source GUI for Git.
-    nixd # Cool Nix LSP.
+    nil # Cool Nix LSP.
     nixfmt-classic # Cool Nix file formatter.
-    zed-editor # It's back...
     black # Python file formatter
     neovim # CLI Neovim
     neovide # GUI Neovim
@@ -84,6 +84,7 @@
     jq # JSON Parser
     lune # Luau runtime
     stylua # Lua(u) code formatter
+    cloudflared # Cloudflare client
   ];
 
   fonts.packages = with pkgs; [

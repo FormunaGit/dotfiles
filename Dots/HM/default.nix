@@ -1,7 +1,7 @@
 { ... }: {
   imports = [
     ./kitty.nix # Kitty terminal
-    ./nixvim # Neovim config
     ./Hypr # Hyprland config
+    ./nixvim # Nixvim config (kickstart.nixvim)
   ];
 }

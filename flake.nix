@@ -23,7 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix.url = "github:danth/stylix/master";
     sops-nix.url = "github:Mic92/sops-nix";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
@@ -33,11 +32,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Neovim, but Nix.
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Nix-ified kickstart.nvim
+    kickstart-nixvim.url = "github:JMartJonesy/kickstart.nixvim";
 
     # Textfox theme for Firefox
     textfox.url = "github:adriankarlen/textfox";
@@ -57,22 +53,28 @@
   };
 
   outputs =
-    { nixpkgs, home-manager, sops-nix, nix-flatpak, nixvim, copyparty, ... }@inputs: {
+    {
+      nixpkgs,
+      home-manager,
+      sops-nix,
+      nix-flatpak,
+      copyparty,
+      ...
+    }@inputs:
+    {
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          nixvim.nixosModules.nixvim # Nixvim: Neovim Manager
-          ./NewSystem/configuration.nix # The new configuration.nix file
+          ./configuration.nix # The configuration.nix file
           nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
           sops-nix.nixosModules.sops # Sops-nix: Secrets Manager
-          inputs.stylix.nixosModules.stylix # Stylix: Theme Manager
           home-manager.nixosModules.home-manager # Home Manager: Home Manager
-	  copyparty.nixosModules.default # Copyparty: Portable file server
+          copyparty.nixosModules.default # Copyparty: Portable file server
           {
             nix.settings.trusted-users = [ "formuna" ];
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.formuna = import ./NewSystem/Home.nix;
+            home-manager.users.formuna = import ./Modules/Home.nix;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
