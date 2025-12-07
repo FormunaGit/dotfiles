@@ -1,4 +1,10 @@
-{ pkgs, inputs, ... }: {
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
+{
   # The overlay
   nixpkgs.overlays = [ inputs.copyparty.overlays.default ];
 
@@ -11,16 +17,21 @@
 
     # Accounts
     accounts = {
-      formuna.passwordFile =
-        "/home/formuna/Data/ServerSettings/Copyparty/Formuna-User-Pass"; # My account
-      kat.passwordFile =
-        "/home/formuna/Data/ServerSettings/Copyparty/Kat-User-Pass"; # A friend
+      formuna.passwordFile = "/home/formuna/Data/ServerSettings/Copyparty/Formuna-User-Pass"; # My account
+      kat.passwordFile = "/home/formuna/Data/ServerSettings/Copyparty/Kat-User-Pass";
+      starry.passwordFile = "/home/formuna/Data/ServerSettings/Copyparty/Starry-User-Pass";
     };
 
     # Groups
     groups = {
       # People in the Bookworms group get to access the Books volume
-      bookworms = [ "formuna" "kat" ];
+      bookworms = [ "kat" ];
+
+      # and people in the trusted group get acces to the Private volume
+      trusted = [
+        "formuna"
+        "starry"
+      ];
     };
 
     # Volumes
@@ -34,7 +45,9 @@
           rw = [ "formuna" ]; # but only I can write.
         };
 
-        flags = { scan = 60; };
+        flags = {
+          scan = 60;
+        };
       };
 
       # My book collection.
@@ -46,12 +59,28 @@
           rw = [ "formuna" ];
         };
 
-        flags = { scan = 60; };
+        flags = {
+          scan = 60;
+        };
+      };
+
+      # My private shared files
+      "/private" = {
+        path = "/home/formuna/Data/Copyparty/Private";
+
+        access = {
+          r = "@trusted";
+          rw = [ "@trusted" ];
+        };
+
+        flags = {
+          scan = 60;
+        };
       };
     };
 
-    settings = { 
-      i = "0.0.0.0"; 
+    settings = {
+      i = "0.0.0.0";
     };
   };
 }

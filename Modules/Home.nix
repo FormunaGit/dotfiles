@@ -4,7 +4,7 @@
 
   imports = [
     inputs.textfox.homeManagerModules.default
-    ./Dots/HM
+    ../Dots/HM
   ];
 
   # Sops-nix config
