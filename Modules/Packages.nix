@@ -85,6 +85,8 @@
     lune # Luau runtime
     stylua # Lua(u) code formatter
     cloudflared # Cloudflare client
+    gleam # Gleam language
+    erlang # Erlang (to run Gleam code)
   ];
 
   fonts.packages = with pkgs; [

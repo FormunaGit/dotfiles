@@ -1,18 +1,17 @@
-{ ... }:
-let
-  scripts = "/home/formuna/Data/ServerSettings/PrivateScripts";
-in
+{ pkgs, ... }:
 {
-  systemd.services.copyparty-tunnel = {
-    wantedBy = [ "multi-user.target" ]; # run when the system is up...
-    after = [ "network.target" ]; # ...but after the network has been set up.
+  systemd.services = {
+    copyparty-tunnel = {
+      wantedBy = [ "multi-user.target" ]; # run when the system is up...
+      after = [ "network-online.target" ]; # ...but after the network has been set up.
 
-    description = "Start a Cloudflared tunnel to tunnel Copyparty";
+      description = "Start a Cloudflared tunnel to tunnel Copyparty";
 
-    serviceConfig = {
-      Type = "notify";
+      serviceConfig = {
+        Type = "notify";
 
-      ExecStart = ''${scripts}/CopypartyTunnel.sh'';
+        ExecStart = ''${pkgs.cloudflared}/bin/cloudflared tunnel --origincert /home/formuna/.cloudflared/cert.pem run Copyparty'';
+      };
     };
   };
 }

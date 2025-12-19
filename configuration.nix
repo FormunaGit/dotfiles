@@ -135,6 +135,7 @@ in
         "kvm" # Control over KVM-powered VMs
         "video" # For display/graphics access
         "xorg" # For X11 access
+        "docker" # For Docker
       ];
     };
   };
@@ -153,8 +154,9 @@ in
   };
 
   # LightDM.
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
+  # Disabled cuz it's causing me issues.
+  services.xserver.enable = false;
+  services.xserver.displayManager.lightdm.enable = false;
 
   # Enable fish
   programs.fish.enable = true;
@@ -254,7 +256,6 @@ in
   services.nextcloud = {
     enable = true;
     hostName = "cloud.formuna.is-a.dev"; # I should get my own domain some day.
-    home = "/home/formuna/Data/Nextcloud/Home"; # The home directory on my external drive
 
     package = pkgs.nextcloud32; # The newest version nixpkgs has.
 

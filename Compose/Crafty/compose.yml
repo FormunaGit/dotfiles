@@ -12,8 +12,8 @@ services:
             - "25565:25565"     # MC SERVER
             - "25575:25575"     # RCON
         volumes:
-            - ~/crafty/backups:/crafty/backups
-            - ~/crafty/logs:/crafty/logs
-            - ~/crafty/servers:/crafty/servers
-            - ~/crafty/config:/crafty/app/config
-            - ~/crafty/import:/crafty/import
+            - /srv/crafty/backups:/crafty/backups
+            - /srv/crafty/logs:/crafty/logs
+            - /srv/crafty/servers:/crafty/servers
+            - /srv/crafty/config:/crafty/app/config
+            - /srv/crafty/import:/crafty/import
