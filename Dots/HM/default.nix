@@ -5,5 +5,6 @@
     ./Hypr # Hyprland config
     ./Neovim.nix # Nixvim config (kickstart.nixvim)
     ./Zellij.nix # Zellij config
+    ./Chromium.nix # Chromium/Thorium config
   ];
 }

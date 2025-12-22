@@ -87,6 +87,7 @@
     cloudflared # Cloudflare client
     gleam # Gleam language
     erlang # Erlang (to run Gleam code)
+    distrobox # Aughhh
   ];
 
   fonts.packages = with pkgs; [

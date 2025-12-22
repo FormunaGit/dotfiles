@@ -1,9 +1,11 @@
 {
   pkgs,
   inputs,
-  config,
   ...
 }:
+let
+  PasswordDir = "/home/formuna/Data/ServerSettings/Copyparty/";
+in
 {
   # The overlay
   nixpkgs.overlays = [ inputs.copyparty.overlays.default ];
@@ -17,9 +19,10 @@
 
     # Accounts
     accounts = {
-      formuna.passwordFile = "/home/formuna/Data/ServerSettings/Copyparty/Formuna-User-Pass"; # My account
-      kat.passwordFile = "/home/formuna/Data/ServerSettings/Copyparty/Kat-User-Pass";
-      starry.passwordFile = "/home/formuna/Data/ServerSettings/Copyparty/Starry-User-Pass";
+      formuna.passwordFile = PasswordDir + "Formuna-User-Pass"; # My account
+      kat.passwordFile = PasswordDir + "Kat-User-Pass";
+      starry.passwordFile = PasswordDir + "Starry-User-Pass";
+      nico.passwordFile = PasswordDir + "Nico-User-Pass";
     };
 
     # Groups
@@ -31,6 +34,7 @@
       trusted = [
         "formuna"
         "starry"
+        "nico"
       ];
     };
 
