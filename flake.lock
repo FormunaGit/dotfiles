@@ -757,6 +757,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_8": {
+      "locked": {
+        "lastModified": 1766070988,
+        "narHash": "sha256-G/WVghka6c4bAzMhTwT2vjLccg/awmHkdKSd2JrycLc=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c6245e83d836d0433170a16eb185cefe0572f8b8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixvim": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -836,7 +852,8 @@
         "nixpkgs": "nixpkgs_5",
         "nur": "nur",
         "sops-nix": "sops-nix",
-        "textfox": "textfox"
+        "textfox": "textfox",
+        "thorium": "thorium"
       }
     },
     "rust-overlay": {
@@ -924,6 +941,24 @@
       "original": {
         "owner": "adriankarlen",
         "repo": "textfox",
+        "type": "github"
+      }
+    },
+    "thorium": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_8"
+      },
+      "locked": {
+        "lastModified": 1766197666,
+        "narHash": "sha256-sQ/tHYFxzwbIKq0I0TYD6EB+2j1OSovkOtoFiwVRxbw=",
+        "owner": "Rishabh5321",
+        "repo": "thorium_flake",
+        "rev": "e48c0e42152bd710f3160f4ae16c357bf683dbd2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Rishabh5321",
+        "repo": "thorium_flake",
         "type": "github"
       }
     },

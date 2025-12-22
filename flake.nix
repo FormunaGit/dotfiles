@@ -50,9 +50,6 @@
 
     # Copyparty
     copyparty.url = "github:9001/copyparty";
-
-    # Thorium
-    thorium.url = "github:Rishabh5321/thorium_flake";
   };
 
   outputs =
