@@ -53,6 +53,9 @@
 
     # MCP server config
     mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
+
+    # NixOS FHS Compat
+    nixos-fhs-compat = "github:balsoft/nixos-fhs-compat";
   };
 
   outputs =

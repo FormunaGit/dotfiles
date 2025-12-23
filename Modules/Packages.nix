@@ -45,7 +45,7 @@
     hyprshot # Screenshot tool for Hyprland
     waybar # Status bar for Wayland
     inotify-tools # File system event monitoring
-    qwen-code # Neat coding agent
+    gemini-cli # Neat coding agent
     inputs.awww.packages.${pkgs.system}.awww # Wallpaper manager
     btop # System monitor
     eza # Alternative to ls
