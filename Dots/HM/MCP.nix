@@ -1,14 +1,14 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
-    inputs.nix-mcp-servers.homeManagerModules.default
+    inputs.mcp-servers-nix.homeManagerModules.default
   ];
 
   services.mcp-servers = {
     enable = true;
 
     # Define your servers declaratively
-    servers = {
+    settings.mcpServers = {
       nixos = {
         command = "nix";
         args = [
@@ -19,6 +19,7 @@
       };
 
       open-websearch = {
+        command = "${pkgs.nodejs}/bin/npx";
         args = [
           "-y"
           "@iflow-mcp/open-websearch@latest"

@@ -52,7 +52,7 @@
     copyparty.url = "github:9001/copyparty";
 
     # MCP server config
-    nix-mcp-servers.url = "github:ismail-kattakath/nix-mcp-servers";
+    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
   };
 
   outputs =
