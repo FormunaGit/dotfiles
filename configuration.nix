@@ -255,7 +255,7 @@ in
   ## Nextcloud itself ##
   services.nextcloud = {
     enable = true;
-    hostName = "cloud.formuna.is-a.dev"; # I should get my own domain some day.
+    hostName = "cloud.formuna.qzz.io"; # Got my own domain!
 
     package = pkgs.nextcloud32; # The newest version nixpkgs has.
 
@@ -285,7 +285,7 @@ in
 
     settings = {
       default_phone_region = "CA";
-      trusted_domains = [ "192.168.2.23" ]; # Local IP for testing
+      trusted_domains = [ "localhost" ]; # Local IP for testing
     };
   };
 

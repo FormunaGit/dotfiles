@@ -50,6 +50,9 @@
 
     # Copyparty
     copyparty.url = "github:9001/copyparty";
+
+    # MCP server config
+    nix-mcp-servers.url = "github:ismail-kattakath/nix-mcp-servers";
   };
 
   outputs =
