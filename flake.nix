@@ -51,11 +51,9 @@
     # Copyparty
     copyparty.url = "github:9001/copyparty";
 
-    # MCP server config
-    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
-
-    # NixOS FHS Compat
-    nixos-fhs-compat.url = "github:balsoft/nixos-fhs-compat";
+    # AGS & Astal
+    astal.url = "github:aylur/astal";
+    ags.url = "github:aylur/ags";
   };
 
   outputs =
