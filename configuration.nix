@@ -233,11 +233,11 @@ in
   # Nextcloud-related stuff
   ## NGINX Thing ##
   services.nginx.virtualHosts = {
-    "cloud.formuna.is-a.dev" = {
+    "cloud.formuna.qzz.io" = {
       forceSSL = true;
       enableACME = true;
     };
-    "vault.formuna.is-a.dev" = {
+    "vault.formuna.qzz.io" = {
       enableACME = true;
       forceSSL = true;
       locations."/" = {
@@ -305,49 +305,13 @@ in
     environmentFile = "/var/lib/vaultwarden/vaultwarden.env";
     config = {
       # Refer to https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
-      DOMAIN = "https://vault.formuna.is-a.dev";
+      DOMAIN = "https://vault.formuna.qzz.io";
       SIGNUPS_ALLOWED = false;
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = 8222;
       ROCKET_LOG = "critical";
     };
   };
-
-  # Adguard Home
-  #services.adguardhome = {
-  #  enable = true;
-  #  openFirewall = true;
-  #  settings = {
-  #    http = {
-  #      # You can select any ip and port, just make sure to open firewalls where needed
-  #      address = "127.0.0.1:3003";
-  #    };
-  #    dns = {
-  #      port = 55;
-  #      upstream_dns = [
-  #        # Example config with quad9
-  #        "9.9.9.9#dns.quad9.net"
-  #        "149.112.112.112#dns.quad9.net"
-  #        # Uncomment the following to use a local DNS service (e.g. Unbound)
-  #        # Additionally replace the address & port as needed
-  #        # "127.0.0.1:5335"
-  #      ];
-  #    };
-  #    filtering = {
-  #      protection_enabled = true;
-  #      filtering_enabled = true;
-
-  #      parental_enabled = false;  # Parental control-based DNS requests filtering.
-  #    };
-  #    # The following notation uses map
-  #    # to not have to manually create {enabled = true; url = "";} for every filter
-  #    # This is, however, fully optional
-  #    filters = map(url: { enabled = true; url = url; }) [
-  #      "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"  # The Big List of Hacked Malware Web Sites
-  #      "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt" # malicious url blocklist
-  #    ];
-  #  };
-  #};
 
   # Kavita
   services.kavita = {
@@ -357,7 +321,7 @@ in
 
   # Code server
   services.code-server = {
-    enable = true;
+    enable = false; # DISABLED
     disableTelemetry = true;
     auth = "none";
     host = "100.79.29.23";

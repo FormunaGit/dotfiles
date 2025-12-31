@@ -6,5 +6,6 @@
     ./Neovim.nix # Nixvim config (kickstart.nixvim)
     ./Zellij.nix # Zellij config
     ./AGS.nix # AGS config
+    ./DarkMode.nix # Dark mode for the system
   ];
 }

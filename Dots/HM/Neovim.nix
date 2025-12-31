@@ -21,6 +21,8 @@
       pyright.enable = true; # PyRight for Python
       tombi.enable = true; # Tombi for TOML
       gleam.enable = true; # Gleam
+      ts_ls.enable = true; # TypeScript / JavaScript
+      eslint.enable = true; # JS/TS linter
     };
   };
 }
