@@ -47,7 +47,6 @@ in
     hyprpicker # Needed for Hyprcap
     waybar # Status bar for Wayland
     inotify-tools # File system event monitoring
-    gemini-cli # Neat coding agent
     inputs.awww.packages.${pkgs.system}.awww # Wallpaper manager
     btop # System monitor
     eza # Alternative to ls
