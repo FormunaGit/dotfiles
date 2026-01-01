@@ -51,9 +51,11 @@
     # Copyparty
     copyparty.url = "github:9001/copyparty";
 
-    # AGS & Astal
-    astal.url = "github:aylur/astal";
-    ags.url = "github:aylur/ags";
+    # Ignis
+    ignis = {
+      url = "github:ignis-sh/ignis";
+      inputs.nixpkgs.follows = "nixpkgs"; # recommended
+    };
   };
 
   outputs =

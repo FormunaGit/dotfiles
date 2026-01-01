@@ -1,13 +1,35 @@
-{ pkgs, inputs, ... }:
 {
+  pkgs,
+  inputs,
+  ...
+}:
+let
+  hyprbarsLoad = "hyprctl plugin load ${
+    inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
+  }/lib/libhyprbars.so";
+in
+{
+  imports = [ inputs.hyprland.homeManagerModules.default ];
+
+  home.file.".config/hypr/loadplugins.sh" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      ${hyprbarsLoad}'';
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
-    extraConfig = (builtins.readFile ./hyprland.conf); # TODO: Disable this soonTM
-    plugins = with inputs.hyprland-plugins.packages.${pkgs.system}; [
+    extraConfig = (builtins.readFile ./hyprland.conf);
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+
+    plugins = with inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}; [
       hyprbars
     ];
 
-    # TODO: Finish the Nix-ified config vvv
     #settings = {
     #  monitor = "HDMI-1, 1680x1050, 0x0, 1";
     #
@@ -17,11 +39,18 @@
     #  "$menu" = "rofi -show drun"; # TODO: Replace with widget system
     #
     #  # Autostarts
-    #  exec-once = "swaync"; # TODO: Replace with widget system
-    #  exec-once = "waybar"; # TODO: ^^^
-    #  exec-once = "wl-paste --type text --watch cliphist store"; # TODO: Replace
-    #  exec-once = "wl-paste --type image --watch cliphist store"; # TODO: ^^^
-    #  exec-once = "";
+    #  exec-once = [
+    #    # Background services
+    #    "swaync" # TODO: Replace with Ignis
+    #    "waybar" # TODO: ^^^^^^^^^^^^^^^^^^
+    #    "wl-paste --type text --watch cliphist store" # Clipboard daemon
+    #    "wl-paste --type image --watch cliphist store" # ^^^^^^^^^^^^^^^
+    #    "awww-daemon" # Wallpaper daemon
+    #
+    #    # User applications
+    #    "[workspace 1 silent] legcord" # Open Discord in workspace 1
+    #    "[workspace 2 silent] firefox" # Open Firefox in workspace 2
+    #  ];
     #};
   };
 }

@@ -1,4 +1,9 @@
 { pkgs, inputs, ... }:
+let
+  hyprcapCode = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/alonso-herreros/hyprcap/refs/heads/main/hyprcap";
+  };
+in
 {
   environment.systemPackages = with pkgs; [
     # Main stuff
@@ -10,39 +15,36 @@
     legcord # Discord 3rd-party client
     blender # 3D modelling software
     mission-center # Windows Task Manager
-    krita # Cool drawing program
     wget # No idea why this doesn't come by default.
     qemu # QEMU.
     age # Age and Sops!
     sops # Used with Sops-nix.
     motrix # Download manager
     git # Git and...
-    gh # the GitHub CLI!
+    gh # ...the GitHub CLI!
     ydotool # Automation tool
-    nodejs # I like JS
+    nodejs # Chaotic neutral.
     ripgrep # Faster version of GNU grep
-    unzip
-    unrar # Unzip and Unrar command.
+    unzip # Unzip and...
+    unrar # ...Unrar command.
     fastfetch # Faster Neofetch
     mangohud # Resource overlay for games
     firefox # TODO: Replace with Floorp.
     nh # A Nix helper.
-    mumble # Mumble Client
-    gnome-tweaks # Tweaks Gnome.
-    kando # Neat Pie launcher
-    ffmpeg # Audio.
+    kando # Neat pie launcher
+    ffmpeg # For converting media types
     yt-dlp # Youtube video downloader
     kitty # Terminal
-    tmux # Running Nix-Shell to get this is getting annoying.
     swaynotificationcenter # Notification center
     cliphist # Clipboard history manager
     superfile # TUI file manager
     virt-manager # Virtualization manager
     openrazer-daemon # Daemon for OpenRazer devices
     polychromatic # GUI for OpenRazer devices
-    nicotine-plus # Client for Soulseek network
-    hyprpaper # Wallpaper manager for Hyprland
-    hyprshot # Screenshot tool for Hyprland
+    (pkgs.writeShellScriptBin "hyprcap" (builtins.readFile hyprcapCode)) # Better screenshot tool for Hyprland
+    slurp # Needed for Hyprcap
+    grim # Needed for Hyprcap
+    hyprpicker # Needed for Hyprcap
     waybar # Status bar for Wayland
     inotify-tools # File system event monitoring
     gemini-cli # Neat coding agent
@@ -61,7 +63,6 @@
     # ╔───────────╗ #
     # │Development│ #
     # ╚───────────╝ #
-    pnpm # JavaScript runtime
     rustup # Rust toolchain installer.
     gcc # GNU's C compiler.
     gitkraken # Closed-source GUI for Git.
@@ -70,28 +71,21 @@
     black # Python file formatter
     neovim # CLI Neovim
     neovide # GUI Neovim
-    cachix # Cachix
-    #inputs.ignis.packages.${system}.ignis
     playerctl # Control playing media
-    #kdePackages.xwaylandvideobridge # Allow sharing Wayland windows in XWayland
     rofi # Launcher
     wireguard-tools # Wireguard tools
     go # Golang
     packwiz # CLI tool for Minecraft modpack development
-    pipx # Install and run Python applications in isolated environments
     hyprls # Hyprland LSP
     lazygit # TUI for Git
     jq # JSON Parser
     lune # Luau runtime
     stylua # Lua(u) code formatter
     cloudflared # Cloudflare client
-    gleam # Gleam language
-    erlang # Erlang (to run Gleam code)
     distrobox # Aughhh
   ];
 
   fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono # Awesome font for coding.
     nerd-fonts.monaspace # Awesome font for coding.
   ];
 }
