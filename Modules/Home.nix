@@ -5,6 +5,7 @@
   imports = [
     inputs.textfox.homeManagerModules.default
     ../Dots/HM
+    (import ../Dots/Shared/Theme.nix)
   ];
 
   # Sops-nix config

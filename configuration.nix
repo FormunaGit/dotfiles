@@ -13,6 +13,7 @@ in
     ./Modules/hardware-configuration.nix # System's preconfigured hardware module.
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # System Packages.
     (import ./Dots/System) # Custom module for styling and configuring my apps.
+    (import ./Dots/Shared/Theme.nix) # Current theme
   ];
 
   # Allow non-FOSS packages.
