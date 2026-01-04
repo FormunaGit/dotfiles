@@ -56,6 +56,9 @@
       url = "github:ignis-sh/ignis";
       inputs.nixpkgs.follows = "nixpkgs"; # recommended
     };
+
+    # Nixcord
+    nixcord.url = "github:kaylorben/nixcord";
   };
 
   outputs =
