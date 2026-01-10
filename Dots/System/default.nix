@@ -13,5 +13,6 @@
     ./Users.nix # Users config
     ./Hyprland.nix # Hyprland config
     ./ServerServices.nix # Services config
+    ./Gaming.nix # Gaming stuff config
   ];
 }
