@@ -4,7 +4,10 @@
 
   programs.nixcord = {
     enable = true;
-    discord.equicord.enable = true; # Enable Equicord
+    discord = {
+      equicord.enable = true; # Enable Equicord
+      vencord.enable = false;
+    };
     config = {
       autoUpdate = true;
       autoUpdateNotification = true;
@@ -30,7 +33,6 @@
         homeTyping.enable = true;
         iconViewer.enable = true;
         iLoveSpam.enable = true;
-        keyboardNavigation.enable = true;
         memberCount.enable = true;
         messageLinkEmbeds.enable = true;
         messageLoggerEnhanced.enable = true;
@@ -70,8 +72,8 @@
 
         betterQuickReact = {
           enable = true;
-          rows = 4;
-          columns = 6;
+          rows = 4.0;
+          columns = 6.0;
         };
 
         betterSessions = {

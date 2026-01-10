@@ -1,10 +1,17 @@
 { ... }:
 {
   imports = [
-    ./Copyparty # Neat file server
-    ./fish.nix # Fish shell
-    ./Cloudflared-Tunnels # Tunnels config (powered by systemd)
-    ./HomeAssistant.nix # Home Assistant
+    ./Copyparty.nix # Neat file server
+    ./Shell.nix # Shell config
+    ./CloudflaredTunnels.nix # Tunnels config (powered by systemd)
+    ./HomeAssistant.nix # Home Assistant config
     ./Syncthing.nix # Syncthing config
+    ./Nix.nix # Nix config
+    ./Hardware.nix # Hardware config (not to be confused with hardware-configuration)
+    ./Networking.nix # Networking config
+    ./Preferences.nix # System preferences
+    ./Users.nix # Users config
+    ./Hyprland.nix # Hyprland config
+    ./ServerServices.nix # Services config
   ];
 }

@@ -59,6 +59,7 @@
 
     # Nixcord
     nixcord.url = "github:kaylorben/nixcord";
+
   };
 
   outputs =
@@ -68,6 +69,7 @@
       sops-nix,
       nix-flatpak,
       copyparty,
+      nur,
       ...
     }@inputs:
     {
@@ -79,6 +81,7 @@
           sops-nix.nixosModules.sops # Sops-nix: Secrets Manager
           home-manager.nixosModules.home-manager # Home Manager: Home Manager
           copyparty.nixosModules.default # Copyparty: Portable file server
+          nur.modules.nixos.default # NUR: The AUR of Nix
           {
             nix.settings.trusted-users = [ "formuna" ];
             home-manager.useGlobalPkgs = true;
