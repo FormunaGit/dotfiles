@@ -32,6 +32,7 @@
       gleam.enable = true; # Gleam
       ts_ls.enable = true; # TypeScript / JavaScript
       eslint.enable = true; # JS/TS linter
+      luau_lsp.enable = true; # Luau LSP
     };
   };
 }

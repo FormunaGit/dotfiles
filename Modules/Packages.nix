@@ -82,6 +82,7 @@ in
     stylua # Lua(u) code formatter
     cloudflared # Cloudflare client
     distrobox # Aughhh
+    godot # Game engine
   ];
 
   fonts.packages = with pkgs; [

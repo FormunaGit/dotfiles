@@ -64,6 +64,7 @@ in
     hostName = "cloud.formuna.qzz.io"; # Got my own domain!
 
     package = pkgs.nextcloud32; # The newest version nixpkgs has.
+    home = "/home/formuna/Data/Nextcloud/Home/";
 
     database.createLocally = true;
 
@@ -123,14 +124,6 @@ in
   services.kavita = {
     enable = true;
     tokenKeyFile = /home/formuna/.config/tokenkeyfile;
-  };
-
-  # Code server
-  services.code-server = {
-    enable = false; # DISABLED
-    disableTelemetry = true;
-    auth = "none";
-    host = "100.79.29.23";
   };
 
   # Cloudflared

@@ -2,6 +2,7 @@
 {
   imports = [
     ./Copyparty.nix # Neat file server
+    ./UptimeKuma.nix # Uptime Kuma "config"
     ./Shell.nix # Shell config
     ./CloudflaredTunnels.nix # Tunnels config (powered by systemd)
     ./HomeAssistant.nix # Home Assistant config

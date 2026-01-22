@@ -12,6 +12,8 @@
         "adbusers" # Access to sudo-less ADB
         "video" # For display/graphics access
         "docker" # Sudo-less docker
+        "scanner"
+        "lp"
       ];
     };
   };

@@ -46,7 +46,7 @@ in
 
         access = {
           r = "*"; # All users can read this volume,
-          rw = [ "formuna" ]; # but only I can write.
+          A = [ "formuna" ]; # but only I can write.
         };
 
         flags = {
@@ -60,7 +60,7 @@ in
 
         access = {
           r = "@bookworms";
-          rw = [ "formuna" ];
+          A = [ "formuna" ];
         };
 
         flags = {
@@ -74,7 +74,7 @@ in
 
         access = {
           r = "@trusted";
-          rw = [ "@trusted" ];
+          A = [ "@trusted" ];
         };
 
         flags = {
@@ -85,6 +85,7 @@ in
 
     settings = {
       i = "0.0.0.0";
+      og-ua = "(Discord|Twitter|Slack)bot";
     };
   };
 }

@@ -63,4 +63,21 @@ in
     pulse.enable = true; # Enable Pulseaudio support
     jack.enable = true; # Enable JACK support
   };
+
+  # Printer and scanner
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      cups-filters
+      cups-browsed
+    ];
+  };
+
+  hardware.sane.enable = true;
 }
