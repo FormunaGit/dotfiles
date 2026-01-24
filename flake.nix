@@ -23,8 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    sops-nix.url = "github:Mic92/sops-nix";
-
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     nur = {
@@ -66,7 +64,6 @@
     {
       nixpkgs,
       home-manager,
-      sops-nix,
       nix-flatpak,
       copyparty,
       nur,
@@ -76,9 +73,8 @@
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          ./configuration.nix # The configuration.nix file
+          ./Hosts/unimag/configuration.nix # The configuration.nix file
           nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
-          sops-nix.nixosModules.sops # Sops-nix: Secrets Manager
           home-manager.nixosModules.home-manager # Home Manager: Home Manager
           copyparty.nixosModules.default # Copyparty: Portable file server
           nur.modules.nixos.default # NUR: The AUR of Nix
@@ -86,10 +82,9 @@
             nix.settings.trusted-users = [ "formuna" ];
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.formuna = import ./Modules/Home.nix;
+            home-manager.users.formuna = import ./Hosts/unimag/Modules/Home.nix;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
           }
         ];
       };

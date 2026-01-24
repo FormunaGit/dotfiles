@@ -12,7 +12,7 @@
       autoUpdate = true;
       autoUpdateNotification = true;
       plugins = {
-        AmITyping.enable = true;
+        #amITyping.enable = true;
         alwaysExpandProfiles.enable = true;
         betterCommands.enable = true;
         betterSettings.enable = true;

@@ -4,9 +4,6 @@
   inputs,
   ...
 }:
-let
-  hypr = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
-in
 {
   imports = [
     ./Modules/hardware-configuration.nix # System's preconfigured hardware module.
@@ -14,9 +11,6 @@ in
     (import ./Dots/System) # Custom module for styling and configuring my apps.
     (import ./Dots/Shared/Theme.nix) # Current theme
   ];
-
-  # ADB for controlling my phone via WIFI or USB
-  programs.adb.enable = true;
 
   # Polkit.
   security.polkit.enable = true;
@@ -64,7 +58,7 @@ in
     hostName = "cloud.formuna.qzz.io"; # Got my own domain!
 
     package = pkgs.nextcloud32; # The newest version nixpkgs has.
-    home = "/home/formuna/Data/Nextcloud/Home/";
+    home = "/home/formuna/Data/Nextcloud/Home";
 
     database.createLocally = true;
 

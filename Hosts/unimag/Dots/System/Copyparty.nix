@@ -22,7 +22,6 @@ in
       formuna.passwordFile = PasswordDir + "Formuna-User-Pass"; # My account
       kat.passwordFile = PasswordDir + "Kat-User-Pass";
       starry.passwordFile = PasswordDir + "Starry-User-Pass";
-      nico.passwordFile = PasswordDir + "Nico-User-Pass";
     };
 
     # Groups
@@ -34,7 +33,6 @@ in
       trusted = [
         "formuna"
         "starry"
-        "nico"
       ];
     };
 
@@ -45,17 +43,17 @@ in
         path = "/home/formuna/Data/Copyparty/Shared";
 
         access = {
-          r = "*"; # All users can read this volume,
-          A = [ "formuna" ]; # but only I can write.
+          r = "*"; # All users can read this volume.
+          A = [ "formuna" ];
         };
 
         flags = {
-          scan = 60;
+          scan = 60; # Scan every minute.
         };
       };
 
       # My book collection.
-      "/books" = {
+      "/Books" = {
         path = "/home/formuna/Data/Copyparty/Books";
 
         access = {
@@ -69,12 +67,12 @@ in
       };
 
       # My private shared files
-      "/private" = {
+      "/Private" = {
         path = "/home/formuna/Data/Copyparty/Private";
 
         access = {
           r = "@trusted";
-          A = [ "@trusted" ];
+          A = [ "formuna" ];
         };
 
         flags = {
@@ -85,7 +83,8 @@ in
 
     settings = {
       i = "0.0.0.0";
-      og-ua = "(Discord|Twitter|Slack)bot";
+      og = true;
+      og-ua = "'(Discord|Twitter|Slack)bot'";
     };
   };
 }

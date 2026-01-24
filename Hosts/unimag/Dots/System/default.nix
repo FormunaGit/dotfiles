@@ -5,7 +5,7 @@
     ./UptimeKuma.nix # Uptime Kuma "config"
     ./Shell.nix # Shell config
     ./CloudflaredTunnels.nix # Tunnels config (powered by systemd)
-    ./HomeAssistant.nix # Home Assistant config
+    #./HomeAssistant.nix # Home Assistant config
     ./Syncthing.nix # Syncthing config
     ./Nix.nix # Nix config
     ./Hardware.nix # Hardware config (not to be confused with hardware-configuration)
