@@ -46,11 +46,13 @@ in
     grim # Needed for Hyprcap
     hyprpicker # Needed for Hyprcap
     waybar # Status bar for Wayland
-    inotify-tools # File system event monitoring
     inputs.awww.packages.${pkgs.system}.awww # Wallpaper manager
     btop # System monitor
     eza # Alternative to ls
     zoxide # Alternative to cd
+    playerctl # Control playing media
+    trashy # Alternative to rm
+    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default # Noctalia shell!
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
@@ -62,22 +64,15 @@ in
     # ╔───────────╗ #
     # │Development│ #
     # ╚───────────╝ #
-    rustup # Rust toolchain installer.
-    gcc # GNU's C compiler.
-    gitkraken # Closed-source GUI for Git.
-    nil # Cool Nix LSP.
-    nixfmt-classic # Cool Nix file formatter.
+    nil # Nix LSP
+    nixfmt # Nix file formatter
     black # Python file formatter
-    neovim # CLI Neovim
-    neovide # GUI Neovim
-    playerctl # Control playing media
     rofi # Launcher
     wireguard-tools # Wireguard tools
     go # Golang
     packwiz # CLI tool for Minecraft modpack development
     hyprls # Hyprland LSP
     lazygit # TUI for Git
-    jq # JSON Parser
     lune # Luau runtime
     stylua # Lua(u) code formatter
     cloudflared # Cloudflare client

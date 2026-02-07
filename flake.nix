@@ -49,15 +49,14 @@
     # Copyparty
     copyparty.url = "github:9001/copyparty";
 
-    # Ignis
-    ignis = {
-      url = "github:ignis-sh/ignis";
+    # Noctalia
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs"; # recommended
     };
 
     # Nixcord
     nixcord.url = "github:kaylorben/nixcord";
-
   };
 
   outputs =
@@ -73,7 +72,7 @@
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          ./Hosts/unimag/configuration.nix # The configuration.nix file
+          ./configuration.nix # The configuration.nix file
           nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
           home-manager.nixosModules.home-manager # Home Manager: Home Manager
           copyparty.nixosModules.default # Copyparty: Portable file server

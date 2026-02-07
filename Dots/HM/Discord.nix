@@ -54,7 +54,6 @@
         readAllNotificationsButton.enable = true;
         relationshipNotifier.enable = true;
         remixRevived.enable = true;
-        richMagnetLinks.enable = true;
         sendTimestamps.enable = true;
         serverInfo.enable = true;
         showHiddenChannels.enable = true;
@@ -69,6 +68,7 @@
         voiceMessages.enable = true;
         volumeBooster.enable = true;
         whoReacted.enable = true;
+        quoter.enable = true;
 
         betterQuickReact = {
           enable = true;
@@ -89,11 +89,6 @@
         favoriteGifSearch = {
           enable = true;
           searchOption = "url";
-        };
-
-        quoter = {
-          enable = true;
-          watermark = "truly a legendary quote";
         };
       };
     };

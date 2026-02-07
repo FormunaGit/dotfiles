@@ -7,7 +7,7 @@
 let
   kernelPackages = config.boot.kernelPackages;
   hyprPackages = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-  swapsize = 4;
+  swapsize = 1;
 in
 {
   # Boot configuration
@@ -80,4 +80,7 @@ in
   };
 
   hardware.sane.enable = true;
+
+  # Power Profiles Daemon
+  services.power-profiles-daemon.enable = true;
 }

@@ -49,6 +49,7 @@ in
 
         flags = {
           scan = 60; # Scan every minute.
+          rss = true;
         };
       };
 

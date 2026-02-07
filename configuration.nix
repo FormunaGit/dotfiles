@@ -54,7 +54,7 @@
 
   ## Nextcloud itself ##
   services.nextcloud = {
-    enable = true;
+    enable = false;
     hostName = "cloud.formuna.qzz.io"; # Got my own domain!
 
     package = pkgs.nextcloud32; # The newest version nixpkgs has.
