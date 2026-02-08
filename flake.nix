@@ -81,7 +81,7 @@
             nix.settings.trusted-users = [ "formuna" ];
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.formuna = import ./Hosts/unimag/Modules/Home.nix;
+            home-manager.users.formuna = import ./Modules/Home.nix;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
           }
