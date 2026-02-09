@@ -15,6 +15,5 @@
     ./Hyprland.nix # Hyprland config
     ./ServerServices.nix # Services config
     ./Gaming.nix # Gaming stuff config
-    ./Automation.nix # n8n "config"
   ];
 }
