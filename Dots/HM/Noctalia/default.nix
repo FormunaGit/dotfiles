@@ -2,10 +2,11 @@
 {
   imports = [
     inputs.noctalia.homeModules.default
-    ./settings.nix
-    ./plugins.nix
-    ./colors.nix
   ];
 
-  programs.noctalia.enable = true;
+  programs.noctalia-shell = {
+    enable = true;
+    settings = ./settings.json;
+    plugins = ./plugins.json;
+  };
 }
