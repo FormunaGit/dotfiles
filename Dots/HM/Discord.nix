@@ -3,7 +3,7 @@
   imports = [ inputs.nixcord.homeModules.nixcord ];
 
   programs.nixcord = {
-    enable = true;
+    enable = false;
     discord = {
       equicord.enable = true; # Enable Equicord
       vencord.enable = false;

@@ -29,7 +29,7 @@
   # ~/.config/nixpkgs/config.nix
   home.file.npkgsconfig = {
     target = ".config/nixpkgs/config.nix";
-    text = ''{ packageOverrides = pkgs: { nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; }; }; }'';
+    text = ''{ packageOverrides = pkgs: { nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; }; }; allowUnfree = true; }'';
   };
 
   # TUI theme for Firefox.

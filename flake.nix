@@ -63,6 +63,9 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # My custom packages!
+    amprPackages.url = "github:FormunaGit/amprPackages";
   };
 
   outputs =
@@ -73,11 +76,16 @@
       copyparty,
       nur,
       sops-nix,
+      amprPackages,
       ...
     }@inputs:
     {
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+          inherit inputs;
+          inherit amprPackages;
+        };
+        system = "x86_64-linux";
         modules = [
           ./configuration.nix # The configuration.nix file
           nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak

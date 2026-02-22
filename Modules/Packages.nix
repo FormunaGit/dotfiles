@@ -61,6 +61,7 @@ in
     winetricks # GUI for managing Wine prefixes.
     r2modman # Mod manager for Unity-based games.
     lutris-unwrapped # Game launcher
+    inputs.amprPackages.packages.${system}.classicube
     # ╔───────────╗ #
     # │Development│ #
     # ╚───────────╝ #
