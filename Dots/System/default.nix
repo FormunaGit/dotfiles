@@ -16,5 +16,6 @@
     ./ServerServices.nix # Services config
     ./Gaming.nix # Gaming stuff config
     ./Secrets.nix # Sops-Nix based secrets config
+    ./QT.nix # QT Config
   ];
 }
