@@ -46,7 +46,6 @@ in
     grim # Needed for Hyprcap
     hyprpicker # Needed for Hyprcap
     waybar # Status bar for Wayland
-    inputs.awww.packages.${pkgs.system}.awww # Wallpaper manager
     btop # System monitor
     eza # Alternative to ls
     zoxide # Alternative to cd
@@ -65,6 +64,8 @@ in
     # ╔───────────╗ #
     # │Development│ #
     # ╚───────────╝ #
+    rustup # Rust
+    gcc # for Rust C linker
     nil # Nix LSP
     nixfmt # Nix file formatter
     black # Python file formatter

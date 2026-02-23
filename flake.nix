@@ -43,9 +43,6 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    # AWWW
-    awww.url = "git+https://codeberg.org/LGFae/awww";
-
     # Copyparty
     copyparty.url = "github:9001/copyparty";
 
@@ -100,6 +97,7 @@
             home-manager.users.formuna = import ./Modules/Home.nix;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
           }
         ];
       };

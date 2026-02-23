@@ -15,7 +15,6 @@
       enable = true;
       colorscheme = config.currentTheme.name_nvim;
     };
-    #colorschemes.gruvbox-material.enable = true; # ...and enable Gruvbox (Material)
 
     plugins = {
       barbar.enable = true; # Tabline plugin
@@ -33,6 +32,7 @@
       ts_ls.enable = true; # TypeScript / JavaScript
       eslint.enable = true; # JS/TS linter
       luau_lsp.enable = true; # Luau LSP
+      rust-analyzer.enable = true; # Rust LSP
     };
   };
 }
