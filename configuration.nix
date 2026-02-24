@@ -10,6 +10,7 @@
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # System Packages.
     (import ./Dots/System) # Custom module for styling and configuring my apps.
     (import ./Dots/Shared/Theme.nix) # Current theme
+    inputs.sops-nix.nixosModules.sops
   ];
 
   # Polkit.
@@ -46,15 +47,15 @@
     };
   };
 
-  ## ACME settings (currently just my email) ## TODO: Use secrets for this
+  ## ACME settings (currently just my email)
   security.acme = {
     acceptTerms = true;
-    defaults.email = (builtins.readFile /etc/my-email);
+    defaults.email = (builtins.readFile config.sops.secrets.email.path);
   };
 
   ## Nextcloud itself ##
   services.nextcloud = {
-    enable = false;
+    enable = true;
     hostName = "cloud.formuna.qzz.io"; # Got my own domain!
 
     package = pkgs.nextcloud32; # The newest version nixpkgs has.
@@ -111,23 +112,6 @@
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = 8222;
       ROCKET_LOG = "critical";
-    };
-  };
-
-  # Kavita
-  services.kavita = {
-    enable = true;
-    tokenKeyFile = /home/formuna/.config/tokenkeyfile;
-  };
-
-  # Cloudflared
-  services.cloudflared = {
-    enable = false;
-    tunnels = {
-      "a7988dd9-81db-440a-b223-3b1c737eb020" = {
-        credentialsFile = "${config.sops.secrets.cloudflared-creds.path}";
-        default = "http_status:404";
-      };
     };
   };
 

@@ -2,6 +2,7 @@
 let
   hyprcapCode = builtins.fetchurl {
     url = "https://raw.githubusercontent.com/alonso-herreros/hyprcap/refs/heads/main/hyprcap";
+    sha256 = "10gwsgr4nrmnshx3n62293xjayrgp5jd0g2r20v2mf8q76q4spyi";
   };
 in
 {

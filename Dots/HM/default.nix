@@ -8,6 +8,5 @@
     ./DarkMode.nix # Dark mode for the system
     ./Discord.nix # Nixcord config
     ./Noctalia # Noctalia Config
-    ./Secrets.nix # Secrets management config
   ];
 }
