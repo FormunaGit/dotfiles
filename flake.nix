@@ -43,6 +43,9 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    # Nix-Openclaw
+    nix-openclaw.url = "github:openclaw/nix-openclaw";
+
     # Copyparty
     copyparty.url = "github:9001/copyparty";
 
@@ -74,8 +77,16 @@
       nur,
       sops-nix,
       amprPackages,
+      nix-openclaw,
       ...
     }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ nix-openclaw.overlays.default ];
+      };
+    in
     {
       nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
         specialArgs = {
@@ -84,6 +95,9 @@
         };
         system = "x86_64-linux";
         modules = [
+          {
+            nixpkgs.overlays = [ nix-openclaw.overlays.default ];
+          }
           ./configuration.nix # The configuration.nix file
           nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
           home-manager.nixosModules.home-manager # Home Manager: Home Manager

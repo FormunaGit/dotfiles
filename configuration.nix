@@ -10,7 +10,6 @@
     (import ./Modules/Packages.nix { inherit pkgs inputs; }) # System Packages.
     (import ./Dots/System) # Custom module for styling and configuring my apps.
     (import ./Dots/Shared/Theme.nix) # Current theme
-    inputs.sops-nix.nixosModules.sops
   ];
 
   # Polkit.
