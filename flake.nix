@@ -43,9 +43,6 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    # Nix-Openclaw
-    nix-openclaw.url = "github:openclaw/nix-openclaw";
-
     # Copyparty
     copyparty.url = "github:9001/copyparty";
 
@@ -66,54 +63,67 @@
 
     # My custom packages!
     amprPackages.url = "github:FormunaGit/amprPackages";
+
+    # Snowfall lib
+    snowfall-lib = {
+      url = "github:snowfallorg/lib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    {
-      nixpkgs,
-      home-manager,
-      nix-flatpak,
-      copyparty,
-      nur,
-      sops-nix,
-      amprPackages,
-      nix-openclaw,
-      ...
-    }@inputs:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ nix-openclaw.overlays.default ];
-      };
-    in
-    {
-      nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          inherit amprPackages;
-        };
-        system = "x86_64-linux";
-        modules = [
-          {
-            nixpkgs.overlays = [ nix-openclaw.overlays.default ];
-          }
-          ./configuration.nix # The configuration.nix file
-          nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
-          home-manager.nixosModules.home-manager # Home Manager: Home Manager
-          copyparty.nixosModules.default # Copyparty: Portable file server
-          nur.modules.nixos.default # NUR: The AUR of Nix
-          sops-nix.nixosModules.sops # Sops-Nix: Atomic secret provisioning
-          {
-            nix.settings.trusted-users = [ "formuna" ];
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.formuna = import ./Modules/Home.nix;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
-          }
-        ];
-      };
+    inputs:
+    inputs.snowfall-lib.mkFlake {
+      inherit inputs;
+      src = ./.;
+
+      systems.hosts.unimag.modules = with inputs; [
+        nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
+        copyparty.nixosModules.default # Portable file server
+        nur.modules.nixos.default # The AUR of Nix
+        sops-nix.nixosModules.sops # Secrets management
+      ];
+
+      homes.users."formuna@unimag".modules = with inputs; [
+        sops-nix.homeManagerModules.sops
+      ];
     };
+
+  #outputs =
+  #  {
+  #    nixpkgs,
+  #    home-manager,
+  #    nix-flatpak,
+  #    copyparty,
+  #    nur,
+  #    sops-nix,
+  #    amprPackages,
+  #    ...
+  #  }@inputs:
+  #  {
+  #    nixosConfigurations.unimag = nixpkgs.lib.nixosSystem {
+  #      specialArgs = {
+  #        inherit inputs;
+  #        inherit amprPackages;
+  #      };
+  #      system = "x86_64-linux";
+  #      modules = [
+  #        ./configuration.nix # The configuration.nix file
+  #        nix-flatpak.nixosModules.nix-flatpak # Declarative Flatpak
+  #        home-manager.nixosModules.home-manager # Home Manager: Home Manager
+  #        copyparty.nixosModules.default # Copyparty: Portable file server
+  #        nur.modules.nixos.default # NUR: The AUR of Nix
+  #        sops-nix.nixosModules.sops # Sops-Nix: Atomic secret provisioning
+  #        {
+  #          nix.settings.trusted-users = [ "formuna" ];
+  #          home-manager.useGlobalPkgs = true;
+  #          home-manager.useUserPackages = true;
+  #          home-manager.users.formuna = import ./Modules/Home.nix;
+  #          home-manager.backupFileExtension = "backup";
+  #          home-manager.extraSpecialArgs = { inherit inputs; };
+  #          home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
+  #        }
+  #      ];
+  #    };
+  #  };
 }
