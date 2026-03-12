@@ -17,17 +17,6 @@ in
       efi.canTouchEfiVariables = true; # Already had this enabled
     };
 
-    # Add kernel packages
-    extraModulePackages = with kernelPackages; [ v4l2loopback ];
-
-    # Load kernel modules
-    kernelModules = [ "v4l2loopback" ];
-
-    # Configure modprobe (currently for OBS vcam)
-    extraModprobeConfig = ''
-      options v4l2loopback devices=1 video_nr=1 card_label="OBS Cam" exclusive_caps=1
-    '';
-
     # Disable certain modules (currently for a WiFi card)
     blacklistedKernelModules = [ "rtw88_8821cu" ];
   };
@@ -40,6 +29,9 @@ in
       size = swapsize * 1024; # Size is in megabytes
     }
   ];
+
+  # OBS Vcam
+  programs.obs-studio.enableVirtualCamera = true;
 
   # Graphics configuration
   hardware.graphics = {
