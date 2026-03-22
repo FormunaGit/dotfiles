@@ -16,5 +16,6 @@
     ./ServerServices.nix # Services config
     ./Gaming.nix # Gaming stuff config
     ./Secrets.nix # Secrets management config
+    ./Fonts.nix # Fonts config
   ];
 }

@@ -3,20 +3,8 @@
   inputs,
   ...
 }:
-let
-  hyprbarsLoad = "hyprctl plugin load ${
-    inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
-  }/lib/libhyprbars.so";
-in
 {
   imports = [ inputs.hyprland.homeManagerModules.default ];
-
-  home.file.".config/hypr/loadplugins.sh" = {
-    executable = true;
-    text = ''
-      #!/usr/bin/env bash
-      ${hyprbarsLoad}'';
-  };
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -25,10 +13,6 @@ in
 
     portalPackage =
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-
-    plugins = with inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}; [
-      hyprbars
-    ];
 
     #settings = {
     #  monitor = "HDMI-1, 1680x1050, 0x0, 1";

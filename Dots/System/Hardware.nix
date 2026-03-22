@@ -1,17 +1,16 @@
 {
   inputs,
-  config,
   pkgs,
   ...
 }:
 let
-  kernelPackages = config.boot.kernelPackages;
   hyprPackages = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   swapsize = 1;
 in
 {
   # Boot configuration
   boot = {
+    kernelPackages = pkgs.linuxPackages_zen;
     loader = {
       systemd-boot.enable = true; # EFI boot manager
       efi.canTouchEfiVariables = true; # Already had this enabled

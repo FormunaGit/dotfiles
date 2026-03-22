@@ -65,6 +65,7 @@ in
     # ╔───────────╗ #
     # │Development│ #
     # ╚───────────╝ #
+    zed-editor # Zed editor
     rustup # Rust
     gcc # for Rust C linker
     nil # Nix LSP
