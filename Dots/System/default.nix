@@ -18,5 +18,6 @@
     ./Secrets.nix # Secrets management config
     ./Fonts.nix # Fonts config
     ./Wayfire.nix # Wayfire config
+    ./COSMIC.nix # COSMIC config
   ];
 }
