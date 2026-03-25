@@ -17,5 +17,6 @@
     ./Gaming.nix # Gaming stuff config
     ./Secrets.nix # Secrets management config
     ./Fonts.nix # Fonts config
+    ./Wayfire.nix # Wayfire config
   ];
 }

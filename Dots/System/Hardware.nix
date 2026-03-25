@@ -1,11 +1,11 @@
 {
-  inputs,
+  # inputs,
   pkgs,
   ...
 }:
 let
-  hyprPackages = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-  swapsize = 1;
+  #hyprPackages = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  swapsize = 2;
 in
 {
   # Boot configuration
@@ -33,11 +33,11 @@ in
   programs.obs-studio.enableVirtualCamera = true;
 
   # Graphics configuration
-  hardware.graphics = {
-    package = hyprPackages.mesa; # Use Hyprland's Mesa package
-    package32 = hyprPackages.pkgsi686Linux.mesa; # 32-bit support
-    enable32Bit = true;
-  };
+  # hardware.graphics = {
+  #   package = hyprPackages.mesa; # Use Hyprland's Mesa package
+  #   package32 = hyprPackages.pkgsi686Linux.mesa; # 32-bit support
+  #   enable32Bit = true;
+  # };
 
   # Allow all firmware regardless of license
   hardware.enableAllFirmware = true;

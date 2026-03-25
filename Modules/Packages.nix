@@ -9,10 +9,7 @@ in
   environment.systemPackages = with pkgs; [
     # Main stuff
     wl-clipboard # Wayland clipboard support
-    kdePackages.kdenlive # Cool open-source video editor
     libnotify # CLI for notifications
-    neo-cowsay # Faster Cowsay
-    dotacat # Faster Lolcat
     legcord # Discord 3rd-party client
     blender # 3D modelling software
     mission-center # Windows Task Manager
@@ -20,25 +17,19 @@ in
     qemu # QEMU.
     age # Age and Sops!
     sops # Used with Sops-nix.
-    motrix # Download manager
     git # Git and...
     gh # ...the GitHub CLI!
     ydotool # Automation tool
-    nodejs # Chaotic neutral.
     ripgrep # Faster version of GNU grep
     unzip # Unzip and...
     unrar # ...Unrar command.
     fastfetch # Faster Neofetch
-    mangohud # Resource overlay for games
     firefox # TODO: Replace with Floorp.
     nh # A Nix helper.
-    kando # Neat pie launcher
     ffmpeg # For converting media types
     yt-dlp # Youtube video downloader
     kitty # Terminal
-    swaynotificationcenter # Notification center
     cliphist # Clipboard history manager
-    superfile # TUI file manager
     virt-manager # Virtualization manager
     openrazer-daemon # Daemon for OpenRazer devices
     polychromatic # GUI for OpenRazer devices
@@ -53,15 +44,19 @@ in
     playerctl # Control playing media
     trashy # Alternative to rm
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default # Noctalia shell!
+    (pkgs.gimp-with-plugins.override {
+      plugins = with pkgs.gimpPlugins; [
+        gmic
+      ];
+    })
     # ╔────────────╗ #
     # │Gaming Stuff│ #
     # ╚────────────╝ #
-    wineWowPackages.stable # Windows app compatibility layer with 64-bit support.
-    prismlauncher # Custom launcher for Minecraft.
+    wineWow64Packages.stable # Windows app compatibility layer with 64-bit support.
     winetricks # GUI for managing Wine prefixes.
     r2modman # Mod manager for Unity-based games.
     lutris-unwrapped # Game launcher
-    inputs.amprPackages.packages.${system}.classicube
+    #inputs.amprPackages.packages.${system}.classicube
     # ╔───────────╗ #
     # │Development│ #
     # ╚───────────╝ #
