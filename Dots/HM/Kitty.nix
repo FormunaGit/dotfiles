@@ -1,9 +1,9 @@
-{ config, ... }:
+{ ... }:
 {
   programs.kitty = {
     enable = true;
     enableGitIntegration = true;
-    themeFile = config.currentTheme.name_kitty;
+    themeFile = "GruvboxMaterialDarkMedium";
     settings = {
       cursor_trail = 1;
       font_family = "MonaspiceAr Nerd Font Mono";

@@ -21,18 +21,16 @@ in
     accounts = {
       formuna.passwordFile = PasswordDir + "Formuna-User-Pass"; # My account
       kat.passwordFile = PasswordDir + "Kat-User-Pass";
-      starry.passwordFile = PasswordDir + "Starry-User-Pass";
+      friend.passwordFile = PasswordDir + "Friend-User-Pass";
     };
 
     # Groups
     groups = {
-      # People in the Bookworms group get to access the Books volume
-      bookworms = [ "kat" ];
 
       # and people in the trusted group get acces to the Private volume
       trusted = [
         "formuna"
-        "starry"
+        "friend"
       ];
     };
 
@@ -50,20 +48,6 @@ in
         flags = {
           scan = 60; # Scan every minute.
           rss = true;
-        };
-      };
-
-      # My book collection.
-      "/Books" = {
-        path = "/home/formuna/Data/Copyparty/Books";
-
-        access = {
-          r = "@bookworms";
-          A = [ "formuna" ];
-        };
-
-        flags = {
-          scan = 60;
         };
       };
 

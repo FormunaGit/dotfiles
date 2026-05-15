@@ -7,16 +7,15 @@
     firewall = {
       allowedUDPPorts = [
         51820 # Wireguard
-        443 # HTTPS
         25565 # MC Java
         19132 # MC Bedrock
+        6567 # Mindustry Server
       ];
 
       allowedTCPPorts = [
-        80 # HTTP
-        443 # HTTPS
         25565 # MC Java
         19132 # MC Bedrock
+        6567 # Mindustry Server
       ];
     };
 

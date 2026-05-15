@@ -1,5 +1,0 @@
-{ pkgs, config, ... }:
-let
-in
-{
-}

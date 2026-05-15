@@ -5,7 +5,6 @@
   imports = [
     inputs.textfox.homeManagerModules.default
     ../Dots/HM
-    (import ../Dots/Shared/Theme.nix)
   ];
 
   # OBS!
@@ -13,7 +12,11 @@
     enable = true;
     plugins = with pkgs.obs-studio-plugins; [
       obs-3d-effect
-      wlrobs
+      obs-pipewire-audio-capture
+      waveform
+      obs-tuna
+      obs-retro-effects
+      droidcam-obs
     ];
   };
 
@@ -26,19 +29,11 @@
     };
   };
 
-  # ~/.config/nixpkgs/config.nix
-  home.file.npkgsconfig = {
-    target = ".config/nixpkgs/config.nix";
-    text = ''{ packageOverrides = pkgs: { nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") { inherit pkgs; }; }; allowUnfree = true; }'';
-  };
-
   # TUI theme for Firefox.
   textfox = {
     enable = true;
     profile = "sroktgkn.default";
   };
-
-  services.hyprpolkitagent.enable = true;
 
   home.sessionVariables.NIXOS_OZONE_WL = "1"; # Tell some apps to Wayland-ify
 }

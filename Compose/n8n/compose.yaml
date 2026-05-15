@@ -1,6 +1,6 @@
 services:
   n8n:
-    image: docker.n8n.io/n8nio/n8n
+    build: .
     restart: always
     ports:
       - "127.0.0.1:5678:5678"
@@ -9,16 +9,29 @@ services:
       - N8N_HOST=${SUBDOMAIN}.${DOMAIN_NAME}
       - N8N_PORT=5678
       - N8N_PROTOCOL=https
+      - NODE_FUNCTION_ALLOW_EXTERNAL=*
+      - NODE_FUNCTION_ALLOW_BUILTIN=fs,zlib,crypto
+      - NODE_PATH=/usr/local/lib/node_modules
+      - N8N_RUNNER_TYPE=direct
       - NODE_ENV=production
-      - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/webhook/
+      - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
       - TZ=${GENERIC_TIMEZONE}
     volumes:
       - n8n_data:/home/node/.n8n
       - ./local-files:/files
-      - ./custom-nodes:/home/node/custom-extensions
+      - /home/formuna:/home/node/home
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:6-alpine
+    restart: always
+    volumes:
+      - redis_data:/data
 
 volumes:
   n8n_data:
+  redis_data:

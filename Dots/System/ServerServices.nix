@@ -16,13 +16,6 @@
   # Temp-ban anyone who keeps trying to connect without a key
   services.fail2ban.enable = true;
 
-  # SSH tarpit
-  services.endlessh = {
-    enable = true;
-    port = 22; # Uses the standard port for rookie bots
-    openFirewall = true; # Obviously.
-  };
-
   # Docker
-  virtualisation.docker.enable = false;
+  virtualisation.docker.enable = true;
 }

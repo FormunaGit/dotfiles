@@ -1,7 +1,6 @@
 {
   inputs,
   lib,
-  config,
   ...
 }:
 {
@@ -13,7 +12,7 @@
     colorschemes.tokyonight.enable = lib.mkForce false; # Force-disable Tokyo Night...
     colorschemes.base16 = {
       enable = true;
-      colorscheme = config.currentTheme.name_nvim;
+      colorscheme = "gruvbox-material-dark-medium";
     };
 
     plugins = {

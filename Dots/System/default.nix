@@ -14,6 +14,5 @@
     ./Secrets.nix # Secrets management config
     ./Fonts.nix # Fonts config
     ./COSMIC.nix # COSMIC config
-    ./Podman.nix # Podman config
   ];
 }

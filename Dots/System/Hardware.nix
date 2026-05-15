@@ -4,7 +4,6 @@
   ...
 }:
 let
-  #hyprPackages = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   swapsize = 2;
 in
 {
@@ -15,13 +14,9 @@ in
       systemd-boot.enable = true; # EFI boot manager
       efi.canTouchEfiVariables = true; # Already had this enabled
     };
-
-    # Disable certain modules (currently for a WiFi card)
-    blacklistedKernelModules = [ "rtw88_8821cu" ];
   };
 
   # Swapfile configuration
-  # TODO: Make the swapfile size change with the maximum RAM
   swapDevices = [
     {
       device = "/var/lib/swapfile";
