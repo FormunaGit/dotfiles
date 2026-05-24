@@ -14,7 +14,6 @@
 
       allowedTCPPorts = [
         25565 # MC Java
-        19132 # MC Bedrock
         6567 # Mindustry Server
       ];
     };

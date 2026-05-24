@@ -5,8 +5,9 @@ in
 {
   systemd.services = {
     copyparty-tunnel = {
-      wantedBy = [ "multi-user.target" ]; # run when the system is up...
-      after = [ "network-online.target" ]; # ...but after the network has been set up.
+      wantedBy = [ "multi-user.target" ];
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
 
       description = "Start a Cloudflared tunnel to tunnel Copyparty";
 
@@ -18,8 +19,9 @@ in
     };
 
     n8n-tunnel = {
-      wantedBy = [ "multi-user.target" ]; # run when the system is up...
-      after = [ "network-online.target" ]; # ...but after the network has been set up.
+      wantedBy = [ "multi-user.target" ];
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
 
       description = "Start a Cloudflared tunnel to tunnel n8n";
 

@@ -22,17 +22,11 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
-    # Nix-ified kickstart.nvim
-    kickstart-nixvim.url = "github:JMartJonesy/kickstart.nixvim";
-
     # Textfox theme for Firefox
     textfox.url = "github:adriankarlen/textfox";
 
     # Copyparty
     copyparty.url = "github:9001/copyparty";
-
-    # Nixcord
-    nixcord.url = "github:kaylorben/nixcord";
 
     # Sops-Nix for secrets
     sops-nix = {

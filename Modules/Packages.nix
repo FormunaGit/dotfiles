@@ -40,6 +40,7 @@
     zed-editor # Zed editor
     rustup # Rust
     gcc # for Rust C linker
+    neovim # Nvim
     nil # Nix LSP
     nixfmt # Nix file formatter
     black # Python file formatter

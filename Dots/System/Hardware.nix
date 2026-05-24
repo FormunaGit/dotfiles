@@ -27,13 +27,6 @@ in
   # OBS Vcam
   programs.obs-studio.enableVirtualCamera = true;
 
-  # Graphics configuration
-  # hardware.graphics = {
-  #   package = hyprPackages.mesa; # Use Hyprland's Mesa package
-  #   package32 = hyprPackages.pkgsi686Linux.mesa; # 32-bit support
-  #   enable32Bit = true;
-  # };
-
   # Allow all firmware regardless of license
   hardware.enableAllFirmware = true;
 
@@ -69,4 +62,18 @@ in
 
   # Power Profiles Daemon
   services.power-profiles-daemon.enable = true;
+
+  # Intel GPU acceleration
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-vaapi-driver
+      vulkan-intel
+      libva-vdpau-driver
+      libvdpau-va-gl
+      intel-compute-runtime
+    ];
+  };
 }

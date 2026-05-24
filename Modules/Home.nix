@@ -1,4 +1,9 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
 {
   home.stateVersion = "25.05"; # Version of Home Manager.
 
@@ -6,6 +11,9 @@
     inputs.textfox.homeManagerModules.default
     ../Dots/HM
   ];
+
+  # Setup XDG
+  xdg.enable = true;
 
   # OBS!
   programs.obs-studio = {
@@ -32,8 +40,11 @@
   # TUI theme for Firefox.
   textfox = {
     enable = true;
-    profile = "sroktgkn.default";
+    profiles = [ "sroktgkn.default" ];
   };
+
+  # Silence NixOS firefox error
+  programs.firefox.configPath = ".mozilla/firefox";
 
   home.sessionVariables.NIXOS_OZONE_WL = "1"; # Tell some apps to Wayland-ify
 }

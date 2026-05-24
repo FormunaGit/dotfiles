@@ -20,7 +20,6 @@ in
     # Accounts
     accounts = {
       formuna.passwordFile = PasswordDir + "Formuna-User-Pass"; # My account
-      kat.passwordFile = PasswordDir + "Kat-User-Pass";
       friend.passwordFile = PasswordDir + "Friend-User-Pass";
     };
 
