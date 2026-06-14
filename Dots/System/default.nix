@@ -13,6 +13,7 @@
     ./Gaming.nix # Gaming stuff config
     ./Secrets.nix # Secrets management config
     ./Fonts.nix # Fonts config
-    ./COSMIC.nix # COSMIC config
+    ./GNOME.nix # GNOME config
+    ./AI.nix # AI config
   ];
 }

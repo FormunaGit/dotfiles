@@ -33,9 +33,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Hermes Agent
-    hermes-agent.url = "github:NousResearch/hermes-agent";
   };
 
   outputs =
@@ -45,7 +42,6 @@
       nix-flatpak,
       copyparty,
       sops-nix,
-      hermes-agent,
       ...
     }@inputs:
     {
@@ -60,7 +56,6 @@
           home-manager.nixosModules.home-manager # Home Manager: Home Manager
           copyparty.nixosModules.default # Copyparty: Portable file server
           sops-nix.nixosModules.sops # Sops-Nix: Atomic secret provisioning
-          hermes-agent.nixosModules.default # Hermes Agent:
           {
             nix.settings.trusted-users = [ "formuna" ];
             home-manager.useGlobalPkgs = true;
