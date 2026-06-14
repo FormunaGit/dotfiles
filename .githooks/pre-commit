@@ -1,0 +1,4 @@
+#!/bin/sh
+# autodump the latest dconf settings to the repo before committing
+dconf dump / > $(git rev-parse --show-toplevel)/Dots/HM/dconf.ini
+git add $(git rev-parse --show-toplevel)/Dots/HM/dconf.ini

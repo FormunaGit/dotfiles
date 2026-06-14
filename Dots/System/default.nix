@@ -14,6 +14,7 @@
     ./Secrets.nix # Secrets management config
     ./Fonts.nix # Fonts config
     ./GNOME.nix # GNOME config
-    ./AI.nix # AI config
+    ./Ollama.nix # Ollama config
+    ./Git.nix # Git config
   ];
 }

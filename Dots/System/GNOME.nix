@@ -21,5 +21,6 @@
     compiz-alike-magic-lamp-effect
     compiz-windows-effect
     desktop-cube
+    pop-shell
   ];
 }

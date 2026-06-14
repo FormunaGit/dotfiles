@@ -5,6 +5,6 @@
     ./Neovim.nix # Neovim config
     ./Zellij.nix # Zellij config
     ./DarkMode.nix # Dark mode for the system
-
+    ./dconf.nix # dconf config
   ];
 }
