@@ -17,17 +17,20 @@ services:
       - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
       - TZ=${GENERIC_TIMEZONE}
+      - N8N_CUSTOM_EXTENSIONS=/custom-nodes
+      - DEBUG=mineflayer-viaproxy:*
     volumes:
       - n8n_data:/home/node/.n8n
       - ./local-files:/files
       - /home/formuna:/home/node/home
+      - /home/formuna/Data/Projects/n8n-nodes-mineflayer-elyby:/custom-nodes/n8n-nodes-mineflayer-elyby
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
       - redis
 
   redis:
-    image: redis:6-alpine
+    image: redis/redis-stack-server:latest
     restart: always
     volumes:
       - redis_data:/data

@@ -70,7 +70,6 @@ in
     extraPackages = with pkgs; [
       intel-media-driver
       intel-vaapi-driver
-      vulkan-intel
       libva-vdpau-driver
       libvdpau-va-gl
       intel-compute-runtime

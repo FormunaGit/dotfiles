@@ -18,10 +18,24 @@ let
       cp $src $out/share/fonts/opentype/MARIO_Font_v3_Solid.otf
     '';
   };
+  finger-paint-font = pkgs.stdenv.mkDerivation {
+    name = "finger-paint-font";
+    src = pkgs.fetchurl {
+      url = "https://github.com/google/fonts/raw/main/ofl/fingerpaint/FingerPaint-Regular.ttf";
+      hash = "sha256-/OAArgKLCcpTlJFyqDgoLGeHluFULSWebaNz4lc3f8g=";
+    };
+    dontUnpack = true;
+    installPhase = ''
+      mkdir -p $out/share/fonts/truetype
+      cp $src $out/share/fonts/truetype/FingerPaint-Regular.ttf
+    '';
+  };
+
 in
 {
   fonts.packages = [
     college-font
     mario-font
+    finger-paint-font
   ];
 }
