@@ -50,6 +50,7 @@
     cloudflared # Cloudflare client
     distrobox # Aughhh
     android-tools # For ADB
+    poetry # Python management
   ];
 
   fonts.packages = with pkgs; [
